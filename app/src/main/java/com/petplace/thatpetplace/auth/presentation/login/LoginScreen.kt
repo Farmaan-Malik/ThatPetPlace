@@ -17,16 +17,20 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.petplace.thatpetplace.auth.presentation.common.CircleLogo
 import com.petplace.thatpetplace.auth.presentation.common.CustomButton
 import com.petplace.thatpetplace.auth.presentation.common.CustomButtonLow
 import com.petplace.thatpetplace.auth.presentation.common.CustomFont
 import com.petplace.thatpetplace.auth.presentation.common.CustomOutlinedInput
 import com.petplace.thatpetplace.auth.presentation.common.CustomPasswordInput
+import com.petplace.thatpetplace.common.navigation.Routes
 import com.petplace.thatpetplace.ui.theme.alegrya
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(
+    navHostController: NavHostController
+) {
     var username = remember {
         mutableStateOf("")
     }
@@ -69,7 +73,11 @@ fun LoginScreen() {
                 modifier = Modifier.padding(top = 20.dp),
             )
             Spacer(modifier = Modifier.height(10.dp))
-            CustomButtonLow(label = "Sign up", onClick = {/*TODO*/})
+
+
+            CustomButtonLow(label = "Sign up"){
+                navHostController.navigate(Routes.AuthRoutes.SIGNUP_SCREEN)
+            }
         }
     }
 }

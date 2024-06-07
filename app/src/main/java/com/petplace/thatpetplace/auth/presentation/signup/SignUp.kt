@@ -31,6 +31,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.petplace.thatpetplace.R
 import com.petplace.thatpetplace.auth.presentation.common.CircleLogo
 import com.petplace.thatpetplace.auth.presentation.common.CustomButton
@@ -38,9 +39,11 @@ import com.petplace.thatpetplace.auth.presentation.common.CustomFont
 import com.petplace.thatpetplace.auth.presentation.common.CustomOutlinedInput
 
 @Composable
-fun SignUp() {
+fun SignUp(
+    navHostController: NavHostController
+) {
     Scaffold(modifier = Modifier.fillMaxSize(), topBar = {
-        IconButton(onClick = { /*TODO*/ }, modifier = Modifier.padding(top = 10.dp)) {
+        IconButton(onClick = { navHostController.popBackStack() }, modifier = Modifier.padding(top = 10.dp)) {
             Icon(
                 imageVector = Icons.Default.KeyboardArrowLeft,
                 contentDescription = "Back",
