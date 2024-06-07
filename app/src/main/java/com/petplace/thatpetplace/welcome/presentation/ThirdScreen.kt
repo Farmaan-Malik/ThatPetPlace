@@ -35,7 +35,7 @@ import com.petplace.thatpetplace.ui.theme.encodeNormal
 import com.petplace.thatpetplace.welcome.common.PageIndicator
 
 @Composable
-fun FirstScreen( navHostController: NavHostController) {
+fun ThirdScreen( navHostController: NavHostController) {
     Scaffold(modifier = Modifier
         .fillMaxSize()
         .padding(top = 20.dp), topBar = {
@@ -58,7 +58,7 @@ fun FirstScreen( navHostController: NavHostController) {
 
         ) {
             Image(
-                painter = painterResource(id = R.drawable.illustration),
+                painter = painterResource(id = R.drawable.dogillustrations),
                 contentDescription = "Welcome Images",
                 modifier = Modifier
                     .fillMaxWidth()
@@ -71,18 +71,18 @@ fun FirstScreen( navHostController: NavHostController) {
                     .height(30.dp),
                 Alignment.Center
             ) {
-                PageIndicator(pageCount = 3, currentPage = 0)
+                PageIndicator(pageCount = 3, currentPage = 2)
             }
             Text(
-                text = "Welcome to Pet Care",
+                text = "Reliable reviews",
                 fontSize = 24.sp,
                 textAlign = TextAlign.Center,
                 fontFamily = encode,
                 modifier = Modifier.fillMaxWidth()
             )
             Text(
-                text = "All types of services for your pet in one\n" +
-                        " place, instantly searchable.",
+                text = "A review can be left only by a user\n" +
+                        "who used the service.",
                 fontSize = 16.sp,
                 textAlign = TextAlign.Center,
                 fontFamily = encodeNormal,
@@ -92,12 +92,12 @@ fun FirstScreen( navHostController: NavHostController) {
             )
             Spacer(modifier = Modifier.height(48.dp))
             Button(
-                onClick = { navHostController.navigate(Routes.WelcomeRoutes.SECOND_SCREEN) },
+                onClick = { navHostController.navigate(Routes.AuthRoutes.SIGNUP_SCREEN) },
                 shape = RoundedCornerShape(50),
                 colors = ButtonDefaults.buttonColors(Color(0xFFFDA8A5)),
                 modifier = Modifier.width(260.dp).height(46.dp)
             ) {
-                Text(text = "Next")
+                Text(text = "Get Started")
             }
         }
     }

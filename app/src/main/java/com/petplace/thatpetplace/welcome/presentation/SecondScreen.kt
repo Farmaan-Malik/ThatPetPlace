@@ -28,13 +28,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.petplace.thatpetplace.R
+import com.petplace.thatpetplace.common.navigation.Routes
 import com.petplace.thatpetplace.ui.theme.encode
 import com.petplace.thatpetplace.ui.theme.encodeNormal
 import com.petplace.thatpetplace.welcome.common.PageIndicator
 
 @Composable
-fun SecondScreen() {
+fun SecondScreen( navHostController: NavHostController) {
     Scaffold(modifier = Modifier
         .fillMaxSize()
         .padding(top = 20.dp), topBar = {
@@ -46,7 +48,7 @@ fun SecondScreen() {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(end = 30.dp)
-                .clickable { /*TODO*/ })
+                .clickable { navHostController.navigate(Routes.AuthRoutes.LOGIN_SCREEN) })
     }) { paddingValues ->
         Column(
             modifier = Modifier
@@ -70,7 +72,7 @@ fun SecondScreen() {
                     .height(30.dp),
                 Alignment.Center
             ) {
-                PageIndicator(pageCount = 3, currentPage = 0)
+                PageIndicator(pageCount = 3, currentPage = 1)
             }
             Text(
                 text = "Proven experts",
@@ -91,7 +93,7 @@ fun SecondScreen() {
             )
             Spacer(modifier = Modifier.height(48.dp))
             Button(
-                onClick = { /*TODO*/ },
+                onClick = { navHostController.navigate(Routes.WelcomeRoutes.THIRD_SCREEN) },
                 shape = RoundedCornerShape(50),
                 colors = ButtonDefaults.buttonColors(Color(0xFFFDA8A5)),
                 modifier = Modifier.width(260.dp).height(46.dp)

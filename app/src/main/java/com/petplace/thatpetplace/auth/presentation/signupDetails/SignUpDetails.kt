@@ -1,9 +1,7 @@
 package com.petplace.thatpetplace.auth.presentation.signupDetails
 
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -11,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
@@ -24,31 +21,24 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shadow
-import androidx.compose.ui.graphics.drawscope.DrawStyle
-import androidx.compose.ui.graphics.drawscope.Fill
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.petplace.thatpetplace.R
 import com.petplace.thatpetplace.auth.presentation.common.CustomButton
-import com.petplace.thatpetplace.auth.presentation.common.CustomFont
 import com.petplace.thatpetplace.auth.presentation.common.CustomOutlinedInput
 import com.petplace.thatpetplace.auth.presentation.common.CustomPasswordInput
-import com.petplace.thatpetplace.ui.theme.alegrya
 import com.petplace.thatpetplace.ui.theme.alfa
 import com.petplace.thatpetplace.ui.theme.rozha
 
 @Composable
-fun SignUpDetails() {
+fun SignUpDetails( navHostController: NavHostController) {
     Scaffold(modifier = Modifier.fillMaxSize(), topBar = {
-        IconButton(onClick = { /*TODO*/ }, modifier = Modifier.padding(top = 10.dp)) {
+        IconButton(onClick = { navHostController.popBackStack() }, modifier = Modifier.padding(top = 10.dp)) {
             Icon(
                 imageVector = Icons.Default.KeyboardArrowLeft,
                 contentDescription = "Back",
@@ -86,11 +76,7 @@ fun SignUpDetails() {
                     fontSize = 20.sp,
                     fontFamily = alfa,
                     color = Color.White,
-                    style = TextStyle(
-                        shadow = Shadow(
-                            Color.DarkGray, offset = Offset(x = 8.0f, y = -2.0f)
-                        )
-                    )
+
                 )
                 Spacer(modifier = Modifier.height(24.dp))
                 CustomOutlinedInput(label = "Full Name")

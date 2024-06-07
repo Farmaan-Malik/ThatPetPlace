@@ -21,11 +21,11 @@ import androidx.navigation.NavHostController
 import com.petplace.thatpetplace.auth.presentation.common.CircleLogo
 import com.petplace.thatpetplace.auth.presentation.common.CustomButton
 import com.petplace.thatpetplace.auth.presentation.common.CustomButtonLow
-import com.petplace.thatpetplace.auth.presentation.common.CustomFont
 import com.petplace.thatpetplace.auth.presentation.common.CustomOutlinedInput
 import com.petplace.thatpetplace.auth.presentation.common.CustomPasswordInput
 import com.petplace.thatpetplace.common.navigation.Routes
 import com.petplace.thatpetplace.ui.theme.alegrya
+import com.petplace.thatpetplace.ui.theme.rozha
 
 @Composable
 fun LoginScreen(
@@ -56,7 +56,13 @@ fun LoginScreen(
         )
         {
             Spacer(modifier = Modifier.height(42.dp))
-            CustomFont("That Pet Place", 40.sp)
+            Text(
+                text = "That Pet Place",
+                fontSize = 40.sp,
+                fontFamily = rozha,
+                color = Color.White,
+                modifier = Modifier.padding(bottom = 15.dp)
+            )
             Spacer(modifier = Modifier.height(18.dp))
             CircleLogo()
             Spacer(modifier = Modifier.height(10.dp))

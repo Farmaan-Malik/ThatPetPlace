@@ -28,6 +28,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -35,21 +36,34 @@ import androidx.navigation.NavHostController
 import com.petplace.thatpetplace.R
 import com.petplace.thatpetplace.auth.presentation.common.CircleLogo
 import com.petplace.thatpetplace.auth.presentation.common.CustomButton
-import com.petplace.thatpetplace.auth.presentation.common.CustomFont
 import com.petplace.thatpetplace.auth.presentation.common.CustomOutlinedInput
+import com.petplace.thatpetplace.common.navigation.Routes
+import com.petplace.thatpetplace.ui.theme.rozha
 
 @Composable
 fun SignUp(
     navHostController: NavHostController
 ) {
     Scaffold(modifier = Modifier.fillMaxSize(), topBar = {
-        IconButton(onClick = { navHostController.popBackStack() }, modifier = Modifier.padding(top = 10.dp)) {
-            Icon(
-                imageVector = Icons.Default.KeyboardArrowLeft,
-                contentDescription = "Back",
-                modifier = Modifier.size(40.dp),
-                tint = Color.White
+        Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+        IconButton(
+            onClick = { navHostController.navigate(Routes.AuthRoutes.LOGIN_SCREEN) },
+        ) {
+
+                Icon(
+                    imageVector = Icons.Default.KeyboardArrowLeft,
+                    contentDescription = "Back",
+                    modifier = Modifier.size(35.dp),
+                    tint = Color.White
+                )
+            }
+            Text(
+                text = "Login", fontSize = 16.sp,
+                letterSpacing = 2.sp,
+                fontWeight = FontWeight(600),
+                color = Color.White,
             )
+
         }
     }) { paddingValues ->
 
@@ -69,12 +83,20 @@ fun SignUp(
             horizontalAlignment = Alignment.CenterHorizontally
         )
         {
-            CustomFont("That Pet Place",40.sp)
+            Text(
+                text = "That Pet Place",
+                fontSize = 40.sp,
+                fontFamily = rozha,
+                color = Color.White,
+                modifier = Modifier.padding(bottom = 15.dp)
+            )
             CircleLogo()
             Spacer(modifier = Modifier.height(42.dp))
             CustomOutlinedInput(label = "Username")
             Spacer(modifier = Modifier.height(20.dp))
-            CustomButton(label = "Continue", onClick = {/*TODO*/ })
+            CustomButton(
+                label = "Continue",
+                onClick = { navHostController.navigate(Routes.AuthRoutes.SIGNUP_DETAILS_SCREEN) })
             Spacer(modifier = Modifier.height(15.dp))
             Box(
                 modifier = Modifier
@@ -110,9 +132,14 @@ fun SignUp(
                     )
                 }
                 IconButton(
-                    onClick = { /*TODO*/ }, modifier = Modifier.padding(8.dp).clip(
-                        CircleShape
-                    ).border(2.dp,Color(0xFF0C3C77), CircleShape).width(32.dp).height(32.dp)
+                    onClick = { /*TODO*/ }, modifier = Modifier
+                        .padding(8.dp)
+                        .clip(
+                            CircleShape
+                        )
+                        .border(2.dp, Color(0xFF0C3C77), CircleShape)
+                        .width(32.dp)
+                        .height(32.dp)
 
                         .background(Color(0xFF0C3C77))
                 ) {
