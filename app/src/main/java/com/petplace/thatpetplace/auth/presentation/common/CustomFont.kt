@@ -10,14 +10,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.petplace.thatpetplace.ui.theme.rozha
 
 @Composable
-fun PetPlaceText() {
+fun CustomFont(label: String, fontSize:TextUnit) {
     Text(
-        text = "That Pet Place",
+        text = label,
         modifier = Modifier
             .width(348.dp)
             .height(71.dp),
@@ -32,6 +33,6 @@ fun PetPlaceText() {
             )
         ),
         textAlign = TextAlign.Center,
-        fontSize = 40.sp
+        fontSize = fontSize
     )
 }

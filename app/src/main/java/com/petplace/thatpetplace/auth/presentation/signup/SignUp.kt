@@ -34,8 +34,8 @@ import androidx.compose.ui.unit.sp
 import com.petplace.thatpetplace.R
 import com.petplace.thatpetplace.auth.presentation.common.CircleLogo
 import com.petplace.thatpetplace.auth.presentation.common.CustomButton
+import com.petplace.thatpetplace.auth.presentation.common.CustomFont
 import com.petplace.thatpetplace.auth.presentation.common.CustomOutlinedInput
-import com.petplace.thatpetplace.auth.presentation.common.PetPlaceText
 
 @Composable
 fun SignUp() {
@@ -66,8 +66,7 @@ fun SignUp() {
             horizontalAlignment = Alignment.CenterHorizontally
         )
         {
-            Spacer(modifier = Modifier.height(42.dp))
-            PetPlaceText()
+            CustomFont("That Pet Place",40.sp)
             CircleLogo()
             Spacer(modifier = Modifier.height(42.dp))
             CustomOutlinedInput(label = "Username")
@@ -110,7 +109,7 @@ fun SignUp() {
                 IconButton(
                     onClick = { /*TODO*/ }, modifier = Modifier.padding(8.dp).clip(
                         CircleShape
-                    ).border(2.dp, Color.Black).width(32.dp).height(32.dp)
+                    ).border(2.dp,Color(0xFF0C3C77), CircleShape).width(32.dp).height(32.dp)
 
                         .background(Color(0xFF0C3C77))
                 ) {

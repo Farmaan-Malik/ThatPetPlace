@@ -4,10 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -28,7 +24,7 @@ import com.petplace.thatpetplace.R
 
 @Composable
 fun CustomPasswordInput(label: String) {
-    val textState = remember {
+    val passwordText = remember {
         mutableStateOf("")
     }
     val passwordVisible = remember {
@@ -61,8 +57,8 @@ fun CustomPasswordInput(label: String) {
         label = { Text(text = label) },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
         visualTransformation = if (passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
-        value = textState.value,
-        onValueChange = { textState.value = it },
+        value = passwordText.value,
+        onValueChange = { passwordText.value = it },
         textStyle = TextStyle(fontSize = 14.sp, color = Color.Black),
         colors = OutlinedTextFieldDefaults.colors(
             unfocusedBorderColor = Color.White,
@@ -71,7 +67,7 @@ fun CustomPasswordInput(label: String) {
             unfocusedLabelColor = Color.White,
             focusedTextColor = Color.Black,
             unfocusedTextColor = Color.White,
-            focusedContainerColor = Color.White,
+            focusedContainerColor = Color.Transparent,
         ),
     )
 }

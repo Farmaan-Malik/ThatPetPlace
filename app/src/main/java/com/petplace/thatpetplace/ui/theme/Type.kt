@@ -36,3 +36,4 @@ val Typography = Typography(
 )
 val rozha = FontFamily(Font(R.font.rozha))
 val alegrya= FontFamily(Font(R.font.alegrayasc))
+val alfa = FontFamily(Font(R.font.alfa))

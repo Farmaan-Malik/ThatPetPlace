@@ -15,6 +15,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.petplace.thatpetplace.auth.presentation.login.LoginScreen
 import com.petplace.thatpetplace.auth.presentation.signup.SignUp
+import com.petplace.thatpetplace.auth.presentation.signupDetails.SignUpDetails
+import com.petplace.thatpetplace.common.Navigation
 import com.petplace.thatpetplace.ui.theme.ThatPetPlaceTheme
 
 class MainActivity : ComponentActivity() {
@@ -25,7 +27,7 @@ class MainActivity : ComponentActivity() {
         auth = Firebase.auth
         setContent {
             ThatPetPlaceTheme {
-                SignUp()
+
             }
         }
     }
