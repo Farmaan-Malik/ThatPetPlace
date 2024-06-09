@@ -1,4 +1,4 @@
-package com.petplace.thatpetplace.auth.presentation.common
+package com.petplace.thatpetplace.auth.presentation.common.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

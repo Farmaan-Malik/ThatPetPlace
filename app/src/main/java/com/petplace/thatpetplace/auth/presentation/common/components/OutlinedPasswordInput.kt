@@ -1,4 +1,4 @@
-package com.petplace.thatpetplace.auth.presentation.common
+package com.petplace.thatpetplace.auth.presentation.common.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.height
@@ -9,6 +9,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -23,14 +24,16 @@ import androidx.compose.ui.unit.sp
 import com.petplace.thatpetplace.R
 
 @Composable
-fun CustomPasswordInput(label: String) {
+fun CustomPasswordInput(label: String,value: MutableState<String>) {
     val passwordText = remember {
         mutableStateOf("")
     }
     val passwordVisible = remember {
         mutableStateOf(false)
     }
-
+    fun update(){
+        value.value = passwordText.value
+    }
     fun setVisibility() {
         passwordVisible.value = !passwordVisible.value
     }
@@ -58,7 +61,8 @@ fun CustomPasswordInput(label: String) {
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
         visualTransformation = if (passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
         value = passwordText.value,
-        onValueChange = { passwordText.value = it },
+        onValueChange = { passwordText.value = it
+                        update()},
         textStyle = TextStyle(fontSize = 14.sp, color = Color.Black),
         colors = OutlinedTextFieldDefaults.colors(
             unfocusedBorderColor = Color.White,
