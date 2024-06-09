@@ -92,7 +92,7 @@ fun ThirdScreen( navHostController: NavHostController) {
             )
             Spacer(modifier = Modifier.height(48.dp))
             Button(
-                onClick = { navHostController.navigate(Routes.AuthRoutes.SIGNUP_SCREEN) },
+                onClick = { navHostController.navigate(Routes.AuthRoutes.LOGIN_SCREEN) },
                 shape = RoundedCornerShape(50),
                 colors = ButtonDefaults.buttonColors(Color(0xFFFDA8A5)),
                 modifier = Modifier.width(260.dp).height(46.dp)

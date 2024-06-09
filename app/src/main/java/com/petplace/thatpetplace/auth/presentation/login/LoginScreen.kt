@@ -18,20 +18,23 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.petplace.thatpetplace.auth.presentation.common.CircleLogo
-import com.petplace.thatpetplace.auth.presentation.common.CustomButton
-import com.petplace.thatpetplace.auth.presentation.common.CustomButtonLow
-import com.petplace.thatpetplace.auth.presentation.common.CustomOutlinedInput
-import com.petplace.thatpetplace.auth.presentation.common.CustomPasswordInput
+import com.google.firebase.auth.FirebaseAuth
+import com.petplace.thatpetplace.auth.presentation.common.components.CircleLogo
+import com.petplace.thatpetplace.auth.presentation.common.components.CustomButton
+import com.petplace.thatpetplace.auth.presentation.common.components.CustomButtonLow
+import com.petplace.thatpetplace.auth.presentation.common.components.CustomOutlinedInput
+import com.petplace.thatpetplace.auth.presentation.common.components.CustomPasswordInput
 import com.petplace.thatpetplace.common.navigation.Routes
 import com.petplace.thatpetplace.ui.theme.alegrya
 import com.petplace.thatpetplace.ui.theme.rozha
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun LoginScreen(
-    navHostController: NavHostController
+    navHostController: NavHostController,
+    viewModel: LoginViewModel= koinViewModel()
 ) {
-    var username = remember {
+    var email = remember {
         mutableStateOf("")
     }
     var password = remember {
@@ -66,11 +69,18 @@ fun LoginScreen(
             Spacer(modifier = Modifier.height(18.dp))
             CircleLogo()
             Spacer(modifier = Modifier.height(10.dp))
-            CustomOutlinedInput("Email or Username")
+            CustomOutlinedInput("Email or Username", value =email)
             Spacer(modifier = Modifier.height(10.dp))
-            CustomPasswordInput(label = "Password")
+            CustomPasswordInput(label = "Password", value = password)
             Spacer(modifier = Modifier.height(15.dp))
-            CustomButton(label = "Login", onClick = {/*TODO*/})
+            CustomButton(label = "Login", onClick = {
+                viewModel.loginUser(email = email.value, password = password.value).invokeOnCompletion {
+                    if (viewModel.registerState.value.isSignInSuccessful){
+                        navHostController.navigate(Routes.HomeScreenRoutes.HOME_SCREEN)
+                    }
+                }
+
+            })
             Text(
                 text = "Don't Have An Account ?",
                 fontFamily = alegrya,

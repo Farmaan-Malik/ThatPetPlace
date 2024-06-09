@@ -22,6 +22,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,9 +36,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.petplace.thatpetplace.R
-import com.petplace.thatpetplace.auth.presentation.common.CircleLogo
-import com.petplace.thatpetplace.auth.presentation.common.CustomButton
-import com.petplace.thatpetplace.auth.presentation.common.CustomOutlinedInput
+import com.petplace.thatpetplace.auth.presentation.common.components.CircleLogo
+import com.petplace.thatpetplace.auth.presentation.common.components.CustomButton
+import com.petplace.thatpetplace.auth.presentation.common.components.CustomOutlinedInput
 import com.petplace.thatpetplace.common.navigation.Routes
 import com.petplace.thatpetplace.ui.theme.rozha
 
@@ -44,6 +46,10 @@ import com.petplace.thatpetplace.ui.theme.rozha
 fun SignUp(
     navHostController: NavHostController
 ) {
+    var username = remember {
+        mutableStateOf("")
+    }
+
     Scaffold(modifier = Modifier.fillMaxSize(), topBar = {
         Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
         IconButton(
@@ -92,7 +98,7 @@ fun SignUp(
             )
             CircleLogo()
             Spacer(modifier = Modifier.height(42.dp))
-            CustomOutlinedInput(label = "Username")
+            CustomOutlinedInput(label = "Username",username)
             Spacer(modifier = Modifier.height(20.dp))
             CustomButton(
                 label = "Continue",

@@ -8,24 +8,27 @@ import androidx.compose.runtime.remember
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.google.firebase.auth.FirebaseAuth
 import com.petplace.thatpetplace.auth.presentation.login.LoginScreen
 import com.petplace.thatpetplace.auth.presentation.signup.SignUp
 import com.petplace.thatpetplace.auth.presentation.signupDetails.SignUpDetails
+import com.petplace.thatpetplace.homeScreen.HomeScreen
 import com.petplace.thatpetplace.welcome.presentation.FirstScreen
 import com.petplace.thatpetplace.welcome.presentation.SecondScreen
 import com.petplace.thatpetplace.welcome.presentation.ThirdScreen
+import org.koin.androidx.compose.koinViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun Navigation() {
+fun Navigation(
+    viewModel: NaviagationViewModel = koinViewModel()
+) {
     val navController = rememberNavController()
-    val newUser = remember {
-        mutableStateOf( true)
-    }
+
 
 
     Scaffold { paddingValues ->
-        NavHost(navController = navController, startDestination = if (newUser.value) Routes.WelcomeRoutes.FIRST_SCREEN else Routes.AuthRoutes.LOGIN_SCREEN) {
+        NavHost(navController = navController, startDestination = if (viewModel.currentUser ==null ) Routes.WelcomeRoutes.FIRST_SCREEN else Routes.AuthRoutes.LOGIN_SCREEN) {
             composable(Routes.AuthRoutes.LOGIN_SCREEN) {
                 LoginScreen(navController)
             }
@@ -43,6 +46,9 @@ fun Navigation() {
             }
             composable(Routes.WelcomeRoutes.THIRD_SCREEN) {
                 ThirdScreen(navController)
+            }
+            composable(Routes.HomeScreenRoutes.HOME_SCREEN) {
+                HomeScreen()
             }
 
         }

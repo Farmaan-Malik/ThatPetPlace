@@ -17,6 +17,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -29,14 +31,25 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.petplace.thatpetplace.R
-import com.petplace.thatpetplace.auth.presentation.common.CustomButton
-import com.petplace.thatpetplace.auth.presentation.common.CustomOutlinedInput
-import com.petplace.thatpetplace.auth.presentation.common.CustomPasswordInput
+import com.petplace.thatpetplace.auth.presentation.common.components.CustomButton
+import com.petplace.thatpetplace.auth.presentation.common.components.CustomOutlinedInput
+import com.petplace.thatpetplace.auth.presentation.common.components.CustomPasswordInput
 import com.petplace.thatpetplace.ui.theme.alfa
 import com.petplace.thatpetplace.ui.theme.rozha
 
 @Composable
 fun SignUpDetails( navHostController: NavHostController) {
+
+    val fullname=  remember {
+        mutableStateOf("")
+    }
+    val email=  remember {
+        mutableStateOf("")
+    }
+    val password=  remember {
+        mutableStateOf("")
+    }
+
     Scaffold(modifier = Modifier.fillMaxSize(), topBar = {
         IconButton(onClick = { navHostController.popBackStack() }, modifier = Modifier.padding(top = 10.dp)) {
             Icon(
@@ -79,13 +92,13 @@ fun SignUpDetails( navHostController: NavHostController) {
 
                 )
                 Spacer(modifier = Modifier.height(24.dp))
-                CustomOutlinedInput(label = "Full Name")
+                CustomOutlinedInput(label = "Full Name", value = fullname)
                 Spacer(modifier = Modifier.height(15.dp))
-                CustomOutlinedInput(label = "Email")
+                CustomOutlinedInput(label = "Email", value = email)
                 Spacer(modifier = Modifier.height(15.dp))
-                CustomPasswordInput(label = "Password")
+                CustomPasswordInput(label = "Password", value = password)
                 Spacer(modifier = Modifier.height(15.dp))
-                CustomPasswordInput(label = "Confirm Password")
+                CustomPasswordInput(label = "Confirm Password",password)
                 Spacer(modifier = Modifier.height(15.dp))
                 CustomButton(label = "Submit", onClick = {/*TODO*/ })
                 Spacer(modifier = Modifier.height(20.dp))

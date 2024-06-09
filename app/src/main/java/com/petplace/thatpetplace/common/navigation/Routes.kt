@@ -11,6 +11,10 @@ object Routes {
         const val SECOND_SCREEN = "secondScreen"
         const val THIRD_SCREEN = "thirdScreen"
     }
+    object HomeScreenRoutes{
+        const val HOME_SCREEN = "homeScreen"
+
+    }
 
 
 
