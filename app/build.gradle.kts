@@ -45,7 +45,7 @@ android {
     }
     packaging {
         resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "META-INF/DEPENDENCIES"
         }
     }
 }
@@ -77,5 +77,13 @@ dependencies {
     implementation ("io.insert-koin:koin-android:3.5.3")
     implementation ("io.insert-koin:koin-androidx-compose:3.5.3")
     implementation ("io.insert-koin:koin-androidx-compose-navigation:3.5.3")
+
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services.auth)
+    implementation(libs.googleid)
+
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")
+    implementation ("com.google.api-client:google-api-client:2.2.0")
+    implementation ("androidx.compose.material:material:1.6.8")
 
 }

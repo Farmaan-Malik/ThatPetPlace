@@ -7,11 +7,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.core.app.NavUtils
+import androidx.navigation.compose.rememberNavController
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
-import com.petplace.thatpetplace.common.navigation.Navigation
+import com.petplace.thatpetplace.home.presentation.homeScreen.HomeScreen
 import com.petplace.thatpetplace.ui.theme.ThatPetPlaceTheme
 
 class MainActivity : ComponentActivity() {
@@ -22,7 +22,8 @@ class MainActivity : ComponentActivity() {
         auth = Firebase.auth
         setContent {
             ThatPetPlaceTheme {
-                Navigation()
+                val navController = rememberNavController()
+                HomeScreen(navHostController = navController)
             }
         }
     }
