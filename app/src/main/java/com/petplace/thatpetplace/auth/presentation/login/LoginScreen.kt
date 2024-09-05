@@ -18,13 +18,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.google.firebase.auth.FirebaseAuth
 import com.petplace.thatpetplace.auth.presentation.common.components.CircleLogo
 import com.petplace.thatpetplace.auth.presentation.common.components.CustomButton
 import com.petplace.thatpetplace.auth.presentation.common.components.CustomButtonLow
 import com.petplace.thatpetplace.auth.presentation.common.components.CustomOutlinedInput
 import com.petplace.thatpetplace.auth.presentation.common.components.CustomPasswordInput
-import com.petplace.thatpetplace.common.navigation.Routes
+import com.petplace.thatpetplace.common.Routes
 import com.petplace.thatpetplace.ui.theme.alegrya
 import com.petplace.thatpetplace.ui.theme.rozha
 import org.koin.androidx.compose.koinViewModel
@@ -75,7 +74,7 @@ fun LoginScreen(
             Spacer(modifier = Modifier.height(15.dp))
             CustomButton(label = "Login", onClick = {
                 viewModel.loginUser(email = email.value, password = password.value).invokeOnCompletion {
-                    if (viewModel.registerState.value.isSignInSuccessful){
+                    if (viewModel.loginState.value.isSignInSuccessful){
                         navHostController.navigate(Routes.HomeScreenRoutes.HOME_SCREEN)
                     }
                 }

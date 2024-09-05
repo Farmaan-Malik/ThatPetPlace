@@ -40,7 +40,7 @@ import com.petplace.thatpetplace.ui.theme.rozha
 @Composable
 fun SignUpDetails( navHostController: NavHostController) {
 
-    val fullname=  remember {
+    val fullName=  remember {
         mutableStateOf("")
     }
     val email=  remember {
@@ -92,7 +92,7 @@ fun SignUpDetails( navHostController: NavHostController) {
 
                 )
                 Spacer(modifier = Modifier.height(24.dp))
-                CustomOutlinedInput(label = "Full Name", value = fullname)
+                CustomOutlinedInput(label = "Full Name", value = fullName)
                 Spacer(modifier = Modifier.height(15.dp))
                 CustomOutlinedInput(label = "Email", value = email)
                 Spacer(modifier = Modifier.height(15.dp))

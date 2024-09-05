@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.petplace.thatpetplace.R
-import com.petplace.thatpetplace.common.navigation.Routes
+import com.petplace.thatpetplace.common.Routes
 import com.petplace.thatpetplace.ui.theme.encode
 import com.petplace.thatpetplace.ui.theme.encodeNormal
 import com.petplace.thatpetplace.welcome.common.PageIndicator
