@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.petplace.thatpetplace.auth.presentation.signup.SignUp
 import com.petplace.thatpetplace.common.Routes
 import com.petplace.thatpetplace.homeScreen.presentation.appointments.Appointments
 import com.petplace.thatpetplace.homeScreen.presentation.explore.Explore
@@ -28,7 +29,7 @@ fun Navigation(
                 Explore()
             }
             composable(Routes.HomeScreenRoutes.PROFILE_SCREEN) {
-                Profile(navController)
+               SignUp(navHostController = navController)
             }
 
 
