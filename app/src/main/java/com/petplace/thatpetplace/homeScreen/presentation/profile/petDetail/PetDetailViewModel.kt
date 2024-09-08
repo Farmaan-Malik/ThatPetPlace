@@ -36,6 +36,11 @@ class PetDetailViewModel() : ViewModel() {
 
     val neutered:State<Boolean> = _neutered
 
+    private val _vaccinated =
+        mutableStateOf(false)
+
+    val vaccinated:State<Boolean> = _vaccinated
+
 
     fun changeName(name:String){
         _petsName.value = name
@@ -54,6 +59,9 @@ class PetDetailViewModel() : ViewModel() {
     }
     fun isNeutered(status: Boolean){
         _neutered.value = status
+    }
+    fun isVaccinated(status: Boolean){
+        _vaccinated.value = status
     }
 
 }

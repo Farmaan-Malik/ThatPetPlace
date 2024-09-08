@@ -3,6 +3,7 @@ package com.petplace.thatpetplace.homeScreen.presentation.search
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -31,7 +32,7 @@ import com.petplace.thatpetplace.homeScreen.components.HomeScreenTile
 import com.petplace.thatpetplace.ui.theme.encode
 
 @Composable
-fun SearchScreen() {
+fun SearchScreen(paddingValues: PaddingValues) {
     Scaffold(topBar = {
 
             Row(

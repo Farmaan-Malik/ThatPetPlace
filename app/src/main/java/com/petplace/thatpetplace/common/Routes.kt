@@ -17,6 +17,7 @@ object Routes {
         const val APPOINTMENT_SCREEN= "appointmentScreen"
         const val EXPLORE_SCREEN= "exploreScreen"
         const val PROFILE_SCREEN= "profileScreen"
+        const val PET_PROFILE_SCREEN= "petProfileScreen"
 
     }
 
