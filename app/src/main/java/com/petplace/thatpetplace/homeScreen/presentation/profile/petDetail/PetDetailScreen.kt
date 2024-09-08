@@ -84,9 +84,17 @@ Scaffold(topBar = {
     ) {
         Row(
             modifier = Modifier
+
                 .fillMaxWidth()
                 .padding(top = 20.dp),
             horizontalArrangement = Arrangement.Center
+
+                .padding(top = paddingValues.calculateTopPadding())
+                
+             
+                .verticalScroll(rememberScrollState())
+                .background(Color.White)
+
         ) {
             AddProfile()
         }
