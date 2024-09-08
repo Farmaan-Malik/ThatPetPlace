@@ -89,4 +89,7 @@ dependencies {
     implementation ("androidx.compose.material:material:1.6.8")
     implementation ("androidx.datastore:datastore-preferences:1.1.1")
 
+    //Lottie
+    implementation("com.airbnb.android:lottie-compose:4.0.0")
+
 }
