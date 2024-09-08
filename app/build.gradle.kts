@@ -87,5 +87,6 @@ dependencies {
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")
     implementation ("com.google.api-client:google-api-client:2.2.0")
     implementation ("androidx.compose.material:material:1.6.8")
+    implementation ("androidx.datastore:datastore-preferences:1.1.1")
 
 }
