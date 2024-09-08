@@ -11,6 +11,10 @@ import com.petplace.thatpetplace.homeScreen.navigation.Navigation
 import com.petplace.thatpetplace.homeScreen.presentation.HomeScreenViewModel
 import org.koin.androidx.compose.koinViewModel
 
+
+
+
+
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun HomeScreen(
@@ -23,7 +27,7 @@ fun HomeScreen(
     Scaffold(
         bottomBar = { BottomNavBar(navController = navHostController) })
     { paddingValues ->
-        Navigation(navController = navHostController, paddingValues)
+        Navigation(navController = navHostController, paddingValues = paddingValues)
 
     }
 }
