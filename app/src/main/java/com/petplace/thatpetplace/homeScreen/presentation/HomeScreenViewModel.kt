@@ -4,10 +4,17 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.petplace.thatpetplace.auth.data.AuthRepositoryImpl
+import com.petplace.thatpetplace.common.dataStore.GlobalStateDS
+import kotlinx.coroutines.flow.map
 
-class HomeScreenViewModel (private val authRepository: AuthRepositoryImpl): ViewModel(){
+class HomeScreenViewModel (globalStateDS: GlobalStateDS): ViewModel(){
 
-    private val _userName = mutableStateOf("")
-    val userName : State<String> = _userName
+    val isWelcomeCompleted = globalStateDS.stateStatusFlow.map {
+        it.welcomeScreenCompleted
+    }
+
+    val isLoginCompleted = globalStateDS.stateStatusFlow.map {
+        it.isLoggedIn
+    }
 
 }

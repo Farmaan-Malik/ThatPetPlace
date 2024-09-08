@@ -35,7 +35,9 @@ import com.petplace.thatpetplace.ui.theme.encodeNormal
 import com.petplace.thatpetplace.welcome.common.PageIndicator
 
 @Composable
-fun ThirdScreen( navHostController: NavHostController) {
+fun ThirdScreen( navHostController: NavHostController,
+                 onComplete: ()->Unit
+                 ) {
     Scaffold(modifier = Modifier
         .fillMaxSize()
         .padding(top = 20.dp), topBar = {
@@ -92,7 +94,7 @@ fun ThirdScreen( navHostController: NavHostController) {
             )
             Spacer(modifier = Modifier.height(48.dp))
             Button(
-                onClick = { navHostController.navigate(Routes.AuthRoutes.LOGIN_SCREEN) },
+                onClick = { onComplete() },
                 shape = RoundedCornerShape(50),
                 colors = ButtonDefaults.buttonColors(Color(0xFFFDA8A5)),
                 modifier = Modifier.width(260.dp).height(46.dp)
