@@ -33,7 +33,7 @@ import kotlinx.coroutines.tasks.await
 import java.security.MessageDigest
 import java.util.UUID
 
-class SigUpViewModel ( private val firebaseAuth: FirebaseAuth):ViewModel(){
+class SignUpViewModel ( private val firebaseAuth: FirebaseAuth):ViewModel(){
      fun signInWithGoogle(context: Context) {
          viewModelScope.launch {
              googleSignIn(context,firebaseAuth).collectLatest { result ->

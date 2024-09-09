@@ -49,7 +49,7 @@ fun Navigation(
         if (isWelcomeCompleted && isLoggedIn) {
             NavHost(
                 navController = navController,
-                startDestination = Routes.HomeScreenRoutes.HOME_SCREEN
+                startDestination = Routes.HomeScreenRoutes.SEARCH_SCREEN
             ) {
 
                 composable(Routes.HomeScreenRoutes.SEARCH_SCREEN) {

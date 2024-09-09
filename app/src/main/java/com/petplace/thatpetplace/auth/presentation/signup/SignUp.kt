@@ -1,8 +1,5 @@
 package com.petplace.thatpetplace.auth.presentation.signup
 
-import android.annotation.SuppressLint
-import android.content.ContentValues.TAG
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -23,7 +20,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -34,32 +30,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.credentials.CredentialManager
-import androidx.credentials.CustomCredential
-import androidx.credentials.GetCredentialRequest
-import androidx.credentials.GetCredentialRequest.Builder
-import androidx.credentials.GetCredentialResponse
-import androidx.credentials.PasswordCredential
-import androidx.credentials.PublicKeyCredential
-import androidx.credentials.exceptions.GetCredentialException
 import androidx.navigation.NavHostController
-import com.google.android.libraries.identity.googleid.GetGoogleIdOption
-import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
-import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier
-import com.google.api.client.http.javanet.NetHttpTransport
-import com.google.api.client.json.gson.GsonFactory
 import com.petplace.thatpetplace.R
 import com.petplace.thatpetplace.auth.presentation.common.components.CircleLogo
 import com.petplace.thatpetplace.auth.presentation.common.components.CustomButton
-import com.petplace.thatpetplace.auth.presentation.login.LoginViewModel
 import com.petplace.thatpetplace.common.Routes
 import com.petplace.thatpetplace.ui.theme.rozha
-import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
-import java.security.MessageDigest
-import java.util.UUID
 
 //GoogleToken
 
@@ -69,7 +46,7 @@ import java.util.UUID
 @Composable
 fun SignUp(
     navHostController: NavHostController,
-    viewModel: SigUpViewModel = koinViewModel()
+    viewModel: SignUpViewModel = koinViewModel()
 ) {
 val context  = LocalContext.current
 
