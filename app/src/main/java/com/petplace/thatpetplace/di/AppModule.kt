@@ -13,7 +13,6 @@ import com.petplace.thatpetplace.common.utils.Constants
 import com.petplace.thatpetplace.homeScreen.navigation.NavigationViewModel
 import com.petplace.thatpetplace.homeScreen.presentation.HomeScreenViewModel
 import com.petplace.thatpetplace.homeScreen.presentation.profile.petDetail.PetDetailViewModel
-import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -28,23 +27,23 @@ val appModule = module{
         Retrofit
             .Builder()
             .baseUrl(Constants.BASE_URL)
-            .client(OkHttpClient())
+
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(AuthApi::class.java)
     }
     factory <AuthRepositoryImpl>{
-        AuthRepositoryImpl(firebaseAuth = get(), api = get())
+        AuthRepositoryImpl( api = get())
     }
     viewModel<NavigationViewModel>{
         NavigationViewModel(get())
     }
 
     viewModel<LoginViewModel>{
-        LoginViewModel(authRepository = get())
+        LoginViewModel(authRepository = get(), globalStateDS = get())
     }
     viewModel<SignUpDetailsViewModel>{
-        SignUpDetailsViewModel(authRepository = get())
+        SignUpDetailsViewModel(authRepository = get(), globalStateDS = get())
     }
     viewModel<HomeScreenViewModel>{
         HomeScreenViewModel(get())

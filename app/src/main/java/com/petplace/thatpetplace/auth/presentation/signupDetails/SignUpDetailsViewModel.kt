@@ -5,15 +5,20 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.petplace.thatpetplace.auth.data.AuthRepositoryImpl
 import com.petplace.thatpetplace.auth.data.RegistrationPayload
+import com.petplace.thatpetplace.common.dataStore.GlobalStateDS
 import com.petplace.thatpetplace.common.utils.Resource
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class SignUpDetailsViewModel(private val authRepository: AuthRepositoryImpl) : ViewModel() {
+class SignUpDetailsViewModel(
+    private val authRepository: AuthRepositoryImpl,
+    val globalStateDS: GlobalStateDS
+) : ViewModel() {
     private var _signupState = MutableStateFlow<RegistrationState>(value = RegistrationState())
     val signupState: StateFlow<RegistrationState> = _signupState.asStateFlow()
     private var _registration = MutableStateFlow<RegistrationPayload>(
@@ -26,6 +31,16 @@ class SignUpDetailsViewModel(private val authRepository: AuthRepositoryImpl) : V
         )
     )
     val registrationState: StateFlow<RegistrationPayload> = _registration.asStateFlow()
+    val isSignupCompleted = globalStateDS.stateStatusFlow.map {
+        it.isLoggedIn
+    }
+
+    fun updateIsSignupComplete(completed:Boolean){
+        viewModelScope.launch {
+            globalStateDS.updateLoginStatus(completed)
+        }
+
+    }
 
     fun registration(
         email: String,
@@ -51,7 +66,7 @@ class SignUpDetailsViewModel(private val authRepository: AuthRepositoryImpl) : V
 
                     is Resource.Success -> {
                         _signupState.update { it.copy(isSignInSuccessful = true) }
-
+                        updateIsSignupComplete(true)
                         Log.i("USEER", result.data.toString())
 
 

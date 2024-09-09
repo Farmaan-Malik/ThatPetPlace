@@ -73,11 +73,7 @@ fun LoginScreen(
             CustomPasswordInput(label = "Password", value = password)
             Spacer(modifier = Modifier.height(15.dp))
             CustomButton(label = "Login", onClick = {
-                viewModel.loginUser(email = email.value, password = password.value).invokeOnCompletion {
-                    if (viewModel.loginState.value.isSignInSuccessful){
-                        navHostController.navigate(Routes.HomeScreenRoutes.HOME_SCREEN)
-                    }
-                }
+                viewModel.loginUser(email = email.value, password = password.value)
 
             })
             Text(

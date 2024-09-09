@@ -1,20 +1,17 @@
 package com.petplace.thatpetplace.auth.data
 
-import com.google.firebase.auth.AuthResult
-import com.google.firebase.auth.FirebaseAuth
 import com.petplace.thatpetplace.auth.domain.AuthRepository
 import com.petplace.thatpetplace.common.utils.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.tasks.await
 
 
-class AuthRepositoryImpl(private val firebaseAuth: FirebaseAuth, private val api : AuthApi): AuthRepository {
-    override fun loginUser(email: String, password: String): Flow<Resource<AuthResult>> {
+class AuthRepositoryImpl( private val api : AuthApi): AuthRepository {
+    override fun loginUser(loginPayload: LoginPayload): Flow<Resource<LoginResponse>> {
         return flow {
             emit(value = Resource.Loading())
-            val result = firebaseAuth.signInWithEmailAndPassword(email, password).await()
+            val result = api.login(loginPayload)
             emit(value = Resource.Success(data = result))
         }.catch {
             emit(value = Resource.Error(it.message.toString()))
