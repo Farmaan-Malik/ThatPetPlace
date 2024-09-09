@@ -36,22 +36,36 @@ import com.petplace.thatpetplace.auth.presentation.common.components.CustomOutli
 import com.petplace.thatpetplace.auth.presentation.common.components.CustomPasswordInput
 import com.petplace.thatpetplace.ui.theme.alfa
 import com.petplace.thatpetplace.ui.theme.rozha
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun SignUpDetails( navHostController: NavHostController) {
+fun SignUpDetails(
+    navHostController: NavHostController,
+    viewModel: SignUpDetailsViewModel = koinViewModel()
+) {
 
-    val fullName=  remember {
+
+    val firstName = remember {
         mutableStateOf("")
     }
-    val email=  remember {
+    val lastName = remember {
         mutableStateOf("")
     }
-    val password=  remember {
+    val email = remember {
+        mutableStateOf("")
+    }
+    val phoneNumber = remember {
+        mutableStateOf("")
+    }
+    val password = remember {
         mutableStateOf("")
     }
 
     Scaffold(modifier = Modifier.fillMaxSize(), topBar = {
-        IconButton(onClick = { navHostController.popBackStack() }, modifier = Modifier.padding(top = 10.dp)) {
+        IconButton(
+            onClick = { navHostController.popBackStack() },
+            modifier = Modifier.padding(top = 10.dp)
+        ) {
             Icon(
                 imageVector = Icons.Default.KeyboardArrowLeft,
                 contentDescription = "Back",
@@ -90,17 +104,31 @@ fun SignUpDetails( navHostController: NavHostController) {
                     fontFamily = alfa,
                     color = Color.White,
 
-                )
+                    )
                 Spacer(modifier = Modifier.height(24.dp))
-                CustomOutlinedInput(label = "Full Name", value = fullName)
+                CustomOutlinedInput(label = "First Name", value = firstName)
+                Spacer(modifier = Modifier.height(15.dp))
+                CustomOutlinedInput(label = "Last Name", value = lastName)
                 Spacer(modifier = Modifier.height(15.dp))
                 CustomOutlinedInput(label = "Email", value = email)
                 Spacer(modifier = Modifier.height(15.dp))
+                CustomOutlinedInput(label = "Phone Number", value = phoneNumber)
+                Spacer(modifier = Modifier.height(15.dp))
                 CustomPasswordInput(label = "Password", value = password)
                 Spacer(modifier = Modifier.height(15.dp))
-                CustomPasswordInput(label = "Confirm Password",password)
+                CustomPasswordInput(label = "Confirm Password", password)
                 Spacer(modifier = Modifier.height(15.dp))
-                CustomButton(label = "Submit", onClick = {/*TODO*/ })
+                CustomButton(
+                    label = "Submit",
+                    onClick = {
+                        viewModel.registration(
+                            email = email.value,
+                            phone_number = phoneNumber.value,
+                            first_name = firstName.value,
+                            last_name = lastName.value,
+                            password = password.value
+                        )
+                    })
                 Spacer(modifier = Modifier.height(20.dp))
 
                 Box(

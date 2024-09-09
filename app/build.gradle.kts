@@ -92,4 +92,9 @@ dependencies {
     //Lottie
     implementation("com.airbnb.android:lottie-compose:4.0.0")
 
+    //Retrofit
+    implementation ("com.squareup.retrofit2:retrofit:2.11.0")
+    // gson converter
+    implementation ("com.squareup.retrofit2:converter-gson:2.11.0")
+
 }
