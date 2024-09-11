@@ -14,6 +14,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -125,119 +127,17 @@ val context  = LocalContext.current
                     .height(50.dp),
                 horizontalArrangement = Arrangement.Absolute.Center
             ) {
-                IconButton(onClick = { viewModel.signInWithGoogle(context) }) {
+                Button(onClick = { viewModel.signInWithGoogle(context) }, colors = ButtonDefaults.buttonColors(Color.White), modifier = Modifier.fillMaxWidth()) {
                     Icon(
                         painter = painterResource(id = R.drawable.google_logo),
                         contentDescription = "Google",
-                        Modifier.fillMaxSize(),
                         tint = Color.Unspecified
                     )
+                    Text(text = "Sign in with Google", color = Color.Black, modifier = Modifier.padding(start = 8.dp))
                 }
-                IconButton(onClick = { /*TODO*/ }) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.fb),
-                        contentDescription = "Google",
-                        Modifier.fillMaxSize(),
-                        tint = Color.Unspecified
-                    )
-                }
+
 
             }
         }
     }
 }
-
-//
-//fun handleSignIn(result: GetCredentialResponse) {
-//    // Handle the successfully returned credential.
-//    val credential = result.credential
-//
-//    when (credential) {
-//
-//        // Passkey credential
-//        is PublicKeyCredential -> {
-//            // Share responseJson such as a GetCredentialResponse on your server to
-//            // validate and authenticate
-//            val responseJson = credential.authenticationResponseJson
-//        }
-//
-//        // Password credential
-//        is PasswordCredential -> {
-//            // Send ID and password to your server to validate and authenticate.
-//            val username = credential.id
-//            val password = credential.password
-//        }
-//
-//        // GoogleIdToken credential
-//        is CustomCredential -> {
-//            if (credential.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
-//                try {
-//                    // Use googleIdTokenCredential and extract the ID to validate and
-//                    // authenticate on your server.
-//                    val googleIdTokenCredential = GoogleIdTokenCredential
-//                        .createFrom(credential.data)
-//                    // You can use the members of googleIdTokenCredential directly for UX
-//                    // purposes, but don't use them to store or control access to user
-//                    // data. For that you first need to validate the token:
-//                    // pass googleIdTokenCredential.getIdToken() to the backend server.
-////                    GoogleIdTokenVerifier verifier = ... // see validation instructions
-////                    GoogleIdToken idToken = verifier.verify(idTokenString);
-//                    // To get a stable account identifier (e.g. for storing user data),
-//                    // use the subject ID:
-////                    idToken.getPayload().getSubject()
-//                } catch (e: GoogleIdTokenParsingException) {
-//                    Log.e(TAG, "Received an invalid google id token response", e)
-//                }
-//            } else {
-//                // Catch any unrecognized custom credential type here.
-//                Log.e(TAG, "Unexpected type of credential")
-//            }
-//        }
-//
-//        else -> {
-//            // Catch any unrecognized credential type here.
-//            Log.e(TAG, "Unexpected type of credential")
-//        }
-//    }
-//}
-//
-//fun GoogleVerifier(){
-//
-//    val transport = NetHttpTransport()
-//    val jsonFactory = GsonFactory.getDefaultInstance()
-//    val CLIENT_ID = R.string.client_id.toString() // Replace with your actual client ID
-//
-//    val verifier = GoogleIdTokenVerifier.Builder(transport, jsonFactory)
-//        .setAudience(listOf(CLIENT_ID))
-//        .build()
-//
-//// (Receive idTokenString by HTTPS POST)
-//
-//    val idToken: GoogleIdToken? = verifier.verify(
-////        idTokenString
-//        "asd"
-//    )
-//
-//    if (idToken != null) {
-//        val payload = idToken.payload
-//
-//        // Print user identifier
-//        val userId = payload.subject
-//        println("User ID: $userId")
-//
-//        // Get profile information from payload
-//        val email = payload.email
-//        val emailVerified = payload.emailVerified
-//        val name = payload["name"] as? String
-//        val pictureUrl = payload["picture"] as? String
-//        val locale = payload["locale"] as? String
-//        val familyName = payload["family_name"] as? String
-//        val givenName = payload["given_name"] as? String
-//
-//        // Use or store profile information
-//        // ...
-//
-//    } else {
-//        println("Invalid ID token.")
-//    }
-//}

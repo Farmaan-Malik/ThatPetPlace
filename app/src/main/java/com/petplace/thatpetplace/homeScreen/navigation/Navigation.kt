@@ -27,6 +27,8 @@ import com.petplace.thatpetplace.common.Routes
 import com.petplace.thatpetplace.common.components.AnimationLoader
 import com.petplace.thatpetplace.homeScreen.presentation.appointments.Appointments
 import com.petplace.thatpetplace.homeScreen.presentation.explore.Explore
+import com.petplace.thatpetplace.homeScreen.presentation.profile.petDetail.PetDetailScreen
+import com.petplace.thatpetplace.homeScreen.presentation.profile.petDetail.PetDetailViewModel
 import com.petplace.thatpetplace.homeScreen.presentation.search.SearchScreen
 import com.petplace.thatpetplace.welcome.presentation.FirstScreen
 import com.petplace.thatpetplace.welcome.presentation.SecondScreen
@@ -63,7 +65,7 @@ fun Navigation(
                 }
                 composable(Routes.HomeScreenRoutes.PROFILE_SCREEN) {
 
-                    SignUp(navHostController = navController)
+                    PetDetailScreen(navController, viewModel = PetDetailViewModel(),paddingValues)
                 }
 
 

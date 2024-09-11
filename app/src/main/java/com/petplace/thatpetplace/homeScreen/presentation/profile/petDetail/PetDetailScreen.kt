@@ -1,6 +1,7 @@
 package com.petplace.thatpetplace.homeScreen.presentation.profile.petDetail
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -56,8 +57,8 @@ fun PetDetailScreen(
     val age by remember {
         viewModel.age
     }
-    val isNeutered by remember {
-        viewModel.neutered
+    val isNeuter = remember {
+        viewModel.neutered.value
     }
     val isVaccinated by remember {
         viewModel.vaccinated
@@ -65,7 +66,7 @@ fun PetDetailScreen(
 
 Scaffold(topBar = {
     TopBarProfile(
-    title ="ADP",
+    title ="Add Pet Profile",
     rightText ="Skip",
     navController =navController
 ) {
@@ -87,7 +88,7 @@ Scaffold(topBar = {
 
                 .fillMaxWidth()
                 .padding(top = paddingValues.calculateTopPadding())
-                .verticalScroll(rememberScrollState())
+//                .verticalScroll(rememberScrollState())
                 .background(Color.White),
             horizontalArrangement = Arrangement.Center
 
@@ -170,10 +171,12 @@ Scaffold(topBar = {
         Spacer(modifier = Modifier.height(20.dp))
         Column {
 
-            CustomSwitch(isSelected = isNeutered, text = "Neutered", onChange = {
+            CustomSwitch(isSelected = isNeuter, text = "Neutered", onChange = {
+                Log.e("pre-click", isNeuter.toString())
                 viewModel.isNeutered(
-                    !isNeutered
+                    !isNeuter
                 )
+                Log.e("post-clicked", isNeuter.toString())
             })
             CustomSwitch(
                 isSelected = isVaccinated,

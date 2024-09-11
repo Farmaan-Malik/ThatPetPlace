@@ -1,5 +1,6 @@
 package com.petplace.thatpetplace.homeScreen.presentation.profile.petDetail
 
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -9,7 +10,7 @@ class PetDetailViewModel() : ViewModel() {
     private val _petsName =
         mutableStateOf("")
 
-    val petsName: State<String> =  _petsName
+    val petsName: MutableState<String> =  _petsName
 
     private val _species =
         mutableStateOf("")
@@ -34,7 +35,7 @@ class PetDetailViewModel() : ViewModel() {
     private val _neutered =
         mutableStateOf(false)
 
-    val neutered:State<Boolean> = _neutered
+    val neutered:MutableState<Boolean> = _neutered
 
     private val _vaccinated =
         mutableStateOf(false)
@@ -43,6 +44,7 @@ class PetDetailViewModel() : ViewModel() {
 
 
     fun changeName(name:String){
+
         _petsName.value = name
     }
     fun changeBreed(breed:String){
