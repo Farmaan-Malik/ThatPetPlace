@@ -1,7 +1,6 @@
 package com.petplace.thatpetplace.auth.presentation.signup
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,8 +13,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -27,13 +24,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.petplace.thatpetplace.R
 import com.petplace.thatpetplace.auth.presentation.common.components.CircleLogo
 import com.petplace.thatpetplace.auth.presentation.common.components.CustomButton
 import com.petplace.thatpetplace.common.Routes
@@ -108,35 +102,35 @@ val context  = LocalContext.current
                     .width(360.dp), Alignment.Center
             ) {
                 Divider(color = Color(0x57302D2D), modifier = Modifier.width(370.dp))
-                Text(
-                    text = "or use",
-                    modifier = Modifier
-                        .width(60.dp)
-                        .background(Color.White),
-                    textAlign = TextAlign.Center,
-                    fontSize = 13.sp,
-                    color = Color(
-                        0x881F1E1E
-                    )
-                )
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(10.dp)
-                    .height(50.dp),
-                horizontalArrangement = Arrangement.Absolute.Center
-            ) {
-                Button(onClick = { viewModel.signInWithGoogle(context) }, colors = ButtonDefaults.buttonColors(Color.White), modifier = Modifier.fillMaxWidth()) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.google_logo),
-                        contentDescription = "Google",
-                        tint = Color.Unspecified
-                    )
-                    Text(text = "Sign in with Google", color = Color.Black, modifier = Modifier.padding(start = 8.dp))
-                }
-
-
+//                Text(
+//                    text = "or use",
+//                    modifier = Modifier
+//                        .width(60.dp)
+//                        .background(Color.White),
+//                    textAlign = TextAlign.Center,
+//                    fontSize = 13.sp,
+//                    color = Color(
+//                        0x881F1E1E
+//                    )
+//                )
+//            }
+//            Row(
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .padding(10.dp)
+//                    .height(50.dp),
+//                horizontalArrangement = Arrangement.Absolute.Center
+//            ) {
+//                Button(onClick = { viewModel.signInWithGoogle(context) }, colors = ButtonDefaults.buttonColors(Color.White), modifier = Modifier.fillMaxWidth()) {
+//                    Icon(
+//                        painter = painterResource(id = R.drawable.google_logo),
+//                        contentDescription = "Google",
+//                        tint = Color.Unspecified
+//                    )
+//                    Text(text = "Sign in with Google", color = Color.Black, modifier = Modifier.padding(start = 8.dp))
+//                }
+//
+//
             }
         }
     }

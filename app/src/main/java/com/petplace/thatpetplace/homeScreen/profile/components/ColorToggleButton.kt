@@ -1,4 +1,4 @@
-package com.petplace.thatpetplace.homeScreen.presentation.profile.components
+package com.petplace.thatpetplace.homeScreen.profile.components
 
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
@@ -12,12 +12,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.petplace.thatpetplace.R
 
 @Composable
-fun ColorToggleButton(onClick: ()-> Unit, label: String, selected:Boolean) {
+fun ColorToggleButton(onClick: ()-> Unit, label: String, selected:Boolean, isIcon:Boolean = false,icon:Int = 0, width: Dp = 150.dp,height: Dp = 50.dp) {
     Button(
         onClick = { onClick() }, modifier = Modifier
             .shadow(
@@ -26,14 +26,17 @@ fun ColorToggleButton(onClick: ()-> Unit, label: String, selected:Boolean) {
                 spotColor = Color.Black,
                 shape = RoundedCornerShape(30.dp)
             )
-            .height(50.dp)
-            .width(150.dp)
+            .height(height)
+            .width(width)
             ,
         shape = RoundedCornerShape(30.dp), colors = ButtonDefaults.buttonColors(if (selected) Color(0xFFFDA8A5) else Color.White)
     ) {
-        Icon(painter = painterResource(id =R.drawable.male )
-            , contentDescription ="", tint =  if (selected){Color.White} else
-        Color(0xFFFDA8A5))
+       if (isIcon){
+           Icon(painter = painterResource(id =icon )
+               , contentDescription ="", tint =  if (selected){Color.White} else
+                   Color(0xFFFDA8A5))
+       }
+
         Text(
             text = label,
             fontSize = 14.sp,

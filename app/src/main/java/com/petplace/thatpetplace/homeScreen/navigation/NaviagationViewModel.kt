@@ -1,6 +1,5 @@
 package com.petplace.thatpetplace.homeScreen.navigation
 
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.petplace.thatpetplace.common.dataStore.GlobalStateDS
@@ -8,10 +7,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class NavigationViewModel(val globalStateDS: GlobalStateDS):ViewModel() {
-    init {
-        delay()
-    }
-    val isLoading = mutableStateOf(true)
+
    val isWelcomeCompleted = globalStateDS.stateStatusFlow.map {
        it.welcomeScreenCompleted
    }
@@ -25,10 +21,6 @@ class NavigationViewModel(val globalStateDS: GlobalStateDS):ViewModel() {
         }
 
     }
-    fun delay(){
-        viewModelScope.launch { kotlinx.coroutines.delay(3000) }.invokeOnCompletion {
-            isLoading.value = false
-        }
-    }
+
 
 }

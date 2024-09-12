@@ -1,4 +1,4 @@
-package com.petplace.thatpetplace.homeScreen.presentation.profile.components
+package com.petplace.thatpetplace.homeScreen.profile.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row

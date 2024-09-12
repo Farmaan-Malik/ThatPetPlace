@@ -1,4 +1,4 @@
-package com.petplace.thatpetplace.homeScreen.presentation.profile.components
+package com.petplace.thatpetplace.homeScreen.profile.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.TopAppBar
@@ -20,9 +20,9 @@ import androidx.navigation.NavHostController
 @Composable
 fun TopBarProfile(
     title: String,
-    rightText: String,
+    rightText: String = "",
     navController: NavHostController,
-    actionOnclick: () -> Unit
+    actionOnclick: () -> Unit = {}
 ) {
 
     TopAppBar(
