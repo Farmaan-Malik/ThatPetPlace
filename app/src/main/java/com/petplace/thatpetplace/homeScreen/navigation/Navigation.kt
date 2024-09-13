@@ -46,7 +46,7 @@ fun Navigation(
                     SearchScreen()
                 }
                 composable(Routes.HomeScreenRoutes.APPOINTMENT_SCREEN) {
-                    Appointments(paddingValues)
+                    Appointments(paddingValues, navController)
                 }
                 composable(Routes.HomeScreenRoutes.EXPLORE_SCREEN) {
                     Explore(paddingValues)

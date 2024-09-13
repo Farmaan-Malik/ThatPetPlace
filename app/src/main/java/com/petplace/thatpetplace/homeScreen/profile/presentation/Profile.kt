@@ -160,7 +160,7 @@ fun Profile(navController: NavHostController, paddingValues: PaddingValues,viewM
                     .padding(bottom = 12.dp),
                 horizontalArrangement = Arrangement.Center
             ) {
-                CustomButton(label = "Next") {
+                CustomButton(label = "Get Started") {
                     /*TODO*/
                 }
             }
