@@ -23,11 +23,8 @@ fun PrimaryTextInput(
 
     TextField(value = value,
         onValueChange = {
-            if (it.length > 2){
-                onValueChangeEvent("Invalid")
-            }else
-           onValueChangeEvent(it)
-        },
+                        onValueChangeEvent(it)}
+        ,
         modifier = Modifier.fillMaxWidth(),
         textStyle = TextStyle(fontSize = 16.sp,),
         label = { Text(text = label) },

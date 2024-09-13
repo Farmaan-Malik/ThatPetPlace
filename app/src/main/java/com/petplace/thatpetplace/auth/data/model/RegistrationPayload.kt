@@ -1,4 +1,4 @@
-package com.petplace.thatpetplace.auth.data
+package com.petplace.thatpetplace.auth.data.model
 
 data class RegistrationPayload(
     val email: String,

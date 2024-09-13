@@ -1,5 +1,6 @@
 package com.petplace.thatpetplace.auth.presentation.login
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -9,12 +10,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -24,6 +27,7 @@ import com.petplace.thatpetplace.auth.presentation.common.components.CustomButto
 import com.petplace.thatpetplace.auth.presentation.common.components.CustomOutlinedInput
 import com.petplace.thatpetplace.auth.presentation.common.components.CustomPasswordInput
 import com.petplace.thatpetplace.common.Routes
+import com.petplace.thatpetplace.common.components.LoadingDialogBox
 import com.petplace.thatpetplace.ui.theme.alegrya
 import com.petplace.thatpetplace.ui.theme.rozha
 import org.koin.androidx.compose.koinViewModel
@@ -33,6 +37,13 @@ fun LoginScreen(
     navHostController: NavHostController,
     viewModel: LoginViewModel= koinViewModel()
 ) {
+
+    val isLoading by remember {
+        viewModel.isLoading
+    }
+    val isError by remember {
+        viewModel.isError
+    }
     var email = remember {
         mutableStateOf("")
     }
@@ -40,6 +51,7 @@ fun LoginScreen(
         mutableStateOf("")
     }
     Scaffold(modifier = Modifier.fillMaxSize()) { paddingValues ->
+
 
         Column(
             modifier = Modifier
@@ -56,7 +68,14 @@ fun LoginScreen(
                 .padding(horizontal = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         )
-        {
+        { if (isLoading){
+            LoadingDialogBox()
+        }else if (isError){
+            Toast.makeText(LocalContext.current, "Error while logging in, Please try again.", Toast.LENGTH_LONG)
+                .show()
+            viewModel.updateError()
+        }
+        else{
             Spacer(modifier = Modifier.height(42.dp))
             Text(
                 text = "That Pet Place",
@@ -90,5 +109,6 @@ fun LoginScreen(
                 navHostController.navigate(Routes.AuthRoutes.SIGNUP_SCREEN)
             }
         }
+    }
     }
 }

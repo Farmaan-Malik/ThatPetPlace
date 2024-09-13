@@ -7,6 +7,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
@@ -16,7 +17,9 @@ val Context.GlobalStateDS : DataStore<Preferences> by preferencesDataStore("glob
 
 data class GlobalState(
     val isLoggedIn:Boolean,
-    val welcomeScreenCompleted:Boolean
+    val welcomeScreenCompleted:Boolean,
+    val userID: String,
+    val firstName: String,
 )
 
 class GlobalStateDS (context: Context){
@@ -25,6 +28,8 @@ class GlobalStateDS (context: Context){
     private object PreferenceKeys{
         val IS_LOGIN_COMPLETED = booleanPreferencesKey("logged_in")
         val IS_WELCOME_COMPLETED = booleanPreferencesKey("welcome")
+        val USERID = stringPreferencesKey("userid")
+        val FIRST_NAME = stringPreferencesKey("firstname")
     }
     val stateStatusFlow = globalStateDS.data.catch{ exp->
         if(exp is IOException){
@@ -36,7 +41,9 @@ class GlobalStateDS (context: Context){
     }.map {
         val isLoggedIn = it[PreferenceKeys.IS_LOGIN_COMPLETED] ?:false
         val isWelcomeCompleted = it[PreferenceKeys.IS_WELCOME_COMPLETED]?:false
-        GlobalState(isLoggedIn,isWelcomeCompleted)
+        val userId= it[PreferenceKeys.USERID]?: ""
+        val firstName = it[PreferenceKeys.FIRST_NAME]?: ""
+        GlobalState(isLoggedIn,isWelcomeCompleted, userId, firstName)
     }
 
     suspend fun updateLoginStatus(isLoggedIn :Boolean){
@@ -49,5 +56,16 @@ class GlobalStateDS (context: Context){
             it[PreferenceKeys.IS_WELCOME_COMPLETED] = welcomeCompleted
         }
     }
+    suspend fun updateUserId(userID: String){
+        globalStateDS.edit {
+            it[PreferenceKeys.USERID] = userID
+        }
+    }
+    suspend fun updateFirstName(firstName: String){
+        globalStateDS.edit {
+            it[PreferenceKeys.FIRST_NAME] = firstName
+        }
+    }
+
 
 }

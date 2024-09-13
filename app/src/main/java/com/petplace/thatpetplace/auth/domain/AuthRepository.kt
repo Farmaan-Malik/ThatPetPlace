@@ -1,9 +1,9 @@
 package com.petplace.thatpetplace.auth.domain
 
-import com.petplace.thatpetplace.auth.data.ApiResponse
-import com.petplace.thatpetplace.auth.data.LoginPayload
-import com.petplace.thatpetplace.auth.data.LoginResponse
-import com.petplace.thatpetplace.auth.data.RegistrationPayload
+import com.petplace.thatpetplace.auth.data.model.ApiResponse
+import com.petplace.thatpetplace.auth.data.model.LoginPayload
+import com.petplace.thatpetplace.auth.data.model.LoginResponse
+import com.petplace.thatpetplace.auth.data.model.RegistrationPayload
 import com.petplace.thatpetplace.common.utils.Resource
 import kotlinx.coroutines.flow.Flow
 

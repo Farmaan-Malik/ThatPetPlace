@@ -2,21 +2,10 @@ package com.petplace.thatpetplace.homeScreen.navigation
 
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -24,10 +13,11 @@ import com.petplace.thatpetplace.auth.presentation.login.LoginScreen
 import com.petplace.thatpetplace.auth.presentation.signup.SignUp
 import com.petplace.thatpetplace.auth.presentation.signupDetails.SignUpDetails
 import com.petplace.thatpetplace.common.Routes
-import com.petplace.thatpetplace.common.components.AnimationLoader
-import com.petplace.thatpetplace.homeScreen.presentation.appointments.Appointments
-import com.petplace.thatpetplace.homeScreen.presentation.explore.Explore
-import com.petplace.thatpetplace.homeScreen.presentation.search.SearchScreen
+import com.petplace.thatpetplace.homeScreen.appointments.Appointments
+import com.petplace.thatpetplace.homeScreen.explore.Explore
+import com.petplace.thatpetplace.homeScreen.profile.presentation.Profile
+import com.petplace.thatpetplace.homeScreen.profile.presentation.petDetail.PetDetailScreen
+import com.petplace.thatpetplace.homeScreen.search.SearchScreen
 import com.petplace.thatpetplace.welcome.presentation.FirstScreen
 import com.petplace.thatpetplace.welcome.presentation.SecondScreen
 import com.petplace.thatpetplace.welcome.presentation.ThirdScreen
@@ -45,7 +35,7 @@ fun Navigation(
     val isWelcomeCompleted by viewModel.isWelcomeCompleted.collectAsState(initial = false)
     val isLoggedIn by viewModel.isLoginCompleted.collectAsState(initial = false)
 
-    if (!viewModel.isLoading.value) {
+
         if (isWelcomeCompleted && isLoggedIn) {
             NavHost(
                 navController = navController,
@@ -53,7 +43,7 @@ fun Navigation(
             ) {
 
                 composable(Routes.HomeScreenRoutes.SEARCH_SCREEN) {
-                    SearchScreen(paddingValues)
+                    SearchScreen()
                 }
                 composable(Routes.HomeScreenRoutes.APPOINTMENT_SCREEN) {
                     Appointments(paddingValues)
@@ -63,7 +53,11 @@ fun Navigation(
                 }
                 composable(Routes.HomeScreenRoutes.PROFILE_SCREEN) {
 
-                    SignUp(navHostController = navController)
+                    Profile(navController, paddingValues = paddingValues)
+                }
+                composable(Routes.HomeScreenRoutes.PET_PROFILE_SCREEN) {
+
+                    PetDetailScreen(navController, paddingValues = paddingValues)
                 }
 
 
@@ -108,25 +102,7 @@ fun Navigation(
         }
 
 
-    } else {
-        Column(
-            modifier = Modifier.fillMaxSize().background(
-                brush = Brush.verticalGradient(
-                    listOf(
-                        Color(0xFFFDA8A5),
-                        Color(0xFFFFCB9C),
-                    )
-                )
-            ),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            AnimationLoader(modifier = Modifier.width(240.dp).height(240.dp))
 
-
-        }
-
-    }
 
 }
 

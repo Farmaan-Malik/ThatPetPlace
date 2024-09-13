@@ -1,4 +1,4 @@
-package com.petplace.thatpetplace.homeScreen.presentation.explore
+package com.petplace.thatpetplace.homeScreen.explore
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
