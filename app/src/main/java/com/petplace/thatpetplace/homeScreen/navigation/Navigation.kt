@@ -13,6 +13,7 @@ import com.petplace.thatpetplace.auth.presentation.login.LoginScreen
 import com.petplace.thatpetplace.auth.presentation.signup.SignUp
 import com.petplace.thatpetplace.auth.presentation.signupDetails.SignUpDetails
 import com.petplace.thatpetplace.common.Routes
+import com.petplace.thatpetplace.homeScreen.Payment.PaymentSuccessful
 import com.petplace.thatpetplace.homeScreen.appointments.Appointments
 import com.petplace.thatpetplace.homeScreen.explore.Explore
 import com.petplace.thatpetplace.homeScreen.profile.presentation.Profile
@@ -58,6 +59,10 @@ fun Navigation(
                 composable(Routes.HomeScreenRoutes.PET_PROFILE_SCREEN) {
 
                     PetDetailScreen(navController, paddingValues = paddingValues)
+                }
+                composable(Routes.HomeScreenRoutes.PAYMENT_SUCCESS_SCREEN) {
+
+                    PaymentSuccessful(navController)
                 }
 
 
