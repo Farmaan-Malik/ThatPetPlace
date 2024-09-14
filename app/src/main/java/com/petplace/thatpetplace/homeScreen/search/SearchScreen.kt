@@ -28,17 +28,22 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.petplace.thatpetplace.R
+import com.petplace.thatpetplace.common.Routes
 import com.petplace.thatpetplace.homeScreen.components.HomeScreenTile
 import com.petplace.thatpetplace.ui.theme.encode
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun SearchScreen(viewModel: SearchScreenViewModel= koinViewModel()) {
+fun SearchScreen(navController: NavHostController,viewModel: SearchScreenViewModel= koinViewModel()) {
 
     val userName by
         viewModel.userName.collectAsState("")
 
+    fun navigate(){
+        navController.navigate(Routes.HomeScreenRoutes.EXPLORE_SCREEN)
+    }
     Scaffold(topBar = {
 
             Row(
@@ -110,25 +115,25 @@ fun SearchScreen(viewModel: SearchScreenViewModel= koinViewModel()) {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                HomeScreenTile(R.drawable.vet, "Veterinary", onClick = {/*Todo*/ })
-                HomeScreenTile(R.drawable.grooming, "Grooming", onClick = {/*Todo*/ })
-                HomeScreenTile(R.drawable.pet_boarding, "Pet Boarding", onClick = {/*Todo*/ })
+                HomeScreenTile(R.drawable.vet, "Veterinary", onClick = {navigate()})
+                HomeScreenTile(R.drawable.grooming, "Grooming", onClick = {navigate() })
+                HomeScreenTile(R.drawable.pet_boarding, "Pet Boarding", onClick = {navigate() })
             }
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                HomeScreenTile(R.drawable.adoption, "Adoption", onClick = {/*Todo*/ })
-                HomeScreenTile(R.drawable.dog_walking, "Dog Walking", onClick = {/*Todo*/ })
-                HomeScreenTile(R.drawable.training, "Training", onClick = {/*Todo*/ })
+                HomeScreenTile(R.drawable.adoption, "Adoption", onClick = {navigate() })
+                HomeScreenTile(R.drawable.dog_walking, "Dog Walking", onClick = {navigate() })
+                HomeScreenTile(R.drawable.training, "Training", onClick = {navigate() })
             }
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                HomeScreenTile(R.drawable.pet_taxi, "Pet Taxi", onClick = {/*Todo*/ })
-                HomeScreenTile(R.drawable.pet_date, "Pet Date", onClick = {/*Todo*/ })
-                HomeScreenTile(R.drawable.other, "Other", onClick = {/*Todo*/ })
+                HomeScreenTile(R.drawable.pet_taxi, "Pet Taxi", onClick = {navigate() })
+                HomeScreenTile(R.drawable.pet_date, "Pet Date", onClick = {navigate() })
+                HomeScreenTile(R.drawable.other, "Other", onClick = {navigate() })
             }
         }
     }

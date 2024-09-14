@@ -47,7 +47,7 @@ fun Navigation(
             ) {
 
                 composable(Routes.HomeScreenRoutes.SEARCH_SCREEN) {
-                    SearchScreen()
+                    SearchScreen(navController)
                 }
                 composable(Routes.HomeScreenRoutes.APPOINTMENT_SCREEN) {
                     Appointments(paddingValues, navController)
