@@ -75,8 +75,8 @@ fun CustomAlertDialog(showBottomSheet: Boolean, onDismiss: () -> Unit, onAdd: ()
                         )
 
                     }
-                    Spacer(modifier = Modifier.height(50.dp))
-                    Row(Modifier.padding(bottom = 16.dp).fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
+                    Spacer(modifier = Modifier.height(35.dp))
+                    Row(Modifier.padding(bottom = 30.dp).fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
                         ColorToggleButton(
                             onClick = { onAdd() },
                             label = "+ Add",

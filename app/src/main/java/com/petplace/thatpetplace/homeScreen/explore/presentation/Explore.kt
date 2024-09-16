@@ -1,4 +1,4 @@
-package com.petplace.thatpetplace.homeScreen.appointments
+package com.petplace.thatpetplace.homeScreen.explore.presentation
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
@@ -16,7 +16,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -30,34 +29,36 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.petplace.thatpetplace.R
-import com.petplace.thatpetplace.homeScreen.appointments.components.AppointmentCard
+import com.petplace.thatpetplace.common.Routes
 import com.petplace.thatpetplace.homeScreen.appointments.components.AppointmentToggle
+import com.petplace.thatpetplace.homeScreen.explore.components.ExploreStoresCard
 import com.petplace.thatpetplace.homeScreen.profile.components.TopBarProfile
 import org.koin.androidx.compose.koinViewModel
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+
 @Composable
-fun Appointments(
+fun Explore(
     paddingValues: PaddingValues,
     navController: NavHostController,
-    viewModel: AppointmentScreenViewModel = koinViewModel()
+    viewModel: ExploreScreenViewModel = koinViewModel()
 ) {
-    val appointmentType = remember {
-        mutableStateOf("Past")
+
+
+    val selectionType = remember {
+        mutableStateOf("Stores")
     }
-    val pastAppointment = remember {
-        viewModel.pastAppointment.value
+    val stores = remember {
+        viewModel.stores.value
     }
-    val upcomingAppointment = remember {
-        viewModel.upcomingAppointment.value
+    val clinics = remember {
+        viewModel.clinics.value
     }
 
 
-    Scaffold(backgroundColor = Color(0xFFF8F7FB), topBar = { TopBarProfile(
-        title = "Appointments",
-        navController = navController,
-        elevation = 0.dp
-    )}) { it ->
+    Scaffold(backgroundColor = Color(0xFFF8F7FB), topBar = {
+        TopBarProfile(title = "Explore", navController = navController, elevation = 0.dp)
+    }) { it ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -73,14 +74,7 @@ fun Appointments(
                     .clip(RoundedCornerShape(bottomStartPercent = 20, bottomEndPercent = 20))
                     .background(Color.White), verticalArrangement = Arrangement.SpaceEvenly
             ) {
-//                Text(
-//                    text = "Appointments",
-//                    fontSize = 20.sp,
-//                    fontWeight = FontWeight.Bold,
-//                    modifier = Modifier.fillMaxWidth(),
-//                    textAlign = TextAlign.Center,
-//
-//                    )
+
 
                 Row(
                     modifier = Modifier
@@ -91,18 +85,14 @@ fun Appointments(
                         .background(Color.White)
                 ) {
                     AppointmentToggle(
-                        title = "Upcoming",
-                        isSelected = appointmentType.value == "Upcoming",
-                        width = .5f
+                        title = "Stores", isSelected = selectionType.value == "Stores", width = .5f
                     ) {
-                        appointmentType.value = "Upcoming"
-                        /*TODO*/
+                        selectionType.value = "Stores"/*TODO*/
                     }
                     AppointmentToggle(
-                        title = "Past", isSelected = appointmentType.value == "Past", width = 1f
+                        title = "Nearest", isSelected = selectionType.value == "Clinics", width = 1f
                     ) {
-                        appointmentType.value = "Past"
-                        /*TODO*/
+                        selectionType.value = "Clinics"/*TODO*/
 
                     }
 
@@ -111,32 +101,30 @@ fun Appointments(
             }
 
 
-            if (appointmentType.value == "Past" && pastAppointment.isNotEmpty() || appointmentType.value =="Upcoming" && upcomingAppointment.isNotEmpty()) {
+            if (selectionType.value == "Clinics" && stores.isNotEmpty() || selectionType.value == "Stores" && clinics.isNotEmpty()) {
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxSize()
 //                    .border(2.dp, Color.Black)
                         .padding(
-                            top = 10.dp,
-                            start = 30.dp,
-                            end = 30.dp
+                            top = 10.dp, start = 8.dp, end = 8.dp
                         )
                 ) {
-                    if (appointmentType.value == "Past"){
-                        items(4){
-                            AppointmentCard(button = false)
+                    if (selectionType.value == "Clinics") {
+                        items(2) {
+                            ExploreStoresCard { navController.navigate(Routes.HomeScreenRoutes.EXPLORE_DETAIL_SCREEN) }
+
                         }
-                    }
-                    else{
-                        items(2){
-                          AppointmentCard()
+                    } else {
+                        items(8) {
+                            ExploreStoresCard { navController.navigate(Routes.HomeScreenRoutes.EXPLORE_DETAIL_SCREEN) }
                         }
                     }
 
 
                 }
 
-            } else if (appointmentType.value == "Past" && pastAppointment.isEmpty() || appointmentType.value == "Upcoming" && upcomingAppointment.isEmpty()) {
+            } else if (selectionType.value == "Clinics" && stores.isEmpty() || selectionType.value == "Stores" && clinics.isEmpty()) {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -150,7 +138,9 @@ fun Appointments(
                         tint = Color(0xFFBBC3CE),
                         modifier = Modifier.size(150.dp)
                     )
-                    Text(text = "No appointments yet", color = Color(0xFFBBC3CE), fontSize = 20.sp)
+                    androidx.compose.material.Text(
+                        text = "No appointments yet", color = Color(0xFFBBC3CE), fontSize = 20.sp
+                    )
 
                 }
             }

@@ -84,7 +84,7 @@ fun PetDetailScreen(
             rightText = "Skip",
             navController = navController
         ) {
-navController.navigate(Routes.HomeScreenRoutes.PROFILE_SCREEN)
+            navController.navigate(Routes.HomeScreenRoutes.PROFILE_SCREEN)
         }
     }) {
         it
@@ -166,7 +166,7 @@ navController.navigate(Routes.HomeScreenRoutes.PROFILE_SCREEN)
                         viewModel.changeGender("Male")
                     },
                     label = "Male",
-                    selected = gender.value == "Male",isIcon = true, icon = R.drawable.male
+                    selected = gender.value == "Male", isIcon = true, icon = R.drawable.male
                 )
                 ColorToggleButton(
                     onClick = {
@@ -174,7 +174,7 @@ navController.navigate(Routes.HomeScreenRoutes.PROFILE_SCREEN)
                         viewModel.changeGender("Female")
                     },
                     label = "Female",
-                    selected = gender.value == "Female",isIcon = true, icon = R.drawable.female
+                    selected = gender.value == "Female", isIcon = true, icon = R.drawable.female
                 )
             }
             Spacer(modifier = Modifier.height(24.dp))
@@ -223,9 +223,9 @@ navController.navigate(Routes.HomeScreenRoutes.PROFILE_SCREEN)
                         .padding(bottom = 12.dp),
                     horizontalArrangement = Arrangement.Center
                 ) {
-                    CustomButton(label = "Next") {
-                       viewModel.addPet()
-                        Log.e("userid" , viewModel.string.value)
+                    CustomButton(label = "Submit") {
+                        viewModel.addPet()
+                        Log.e("userid", viewModel.string.value)
                     }
                 }
 

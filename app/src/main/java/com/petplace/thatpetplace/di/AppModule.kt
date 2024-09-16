@@ -11,12 +11,15 @@ import com.petplace.thatpetplace.auth.presentation.signupDetails.SignUpDetailsVi
 import com.petplace.thatpetplace.common.dataStore.GlobalStateDS
 import com.petplace.thatpetplace.common.utils.Constants
 import com.petplace.thatpetplace.homeScreen.appointments.AppointmentScreenViewModel
+import com.petplace.thatpetplace.homeScreen.explore.presentation.ExploreDetails.ExploreDetailScreenViewModel
+import com.petplace.thatpetplace.homeScreen.explore.presentation.ExploreScreenViewModel
 import com.petplace.thatpetplace.homeScreen.navigation.NavigationViewModel
 import com.petplace.thatpetplace.homeScreen.presentation.HomeScreenViewModel
 import com.petplace.thatpetplace.homeScreen.profile.data.remote.ProfileApi
 import com.petplace.thatpetplace.homeScreen.profile.data.remote.ProfileRepositoryImpl
-import com.petplace.thatpetplace.homeScreen.profile.presentation.ProfileScreenViewModel
+import com.petplace.thatpetplace.homeScreen.profile.presentation.ProfileViewViewModel
 import com.petplace.thatpetplace.homeScreen.profile.presentation.petDetail.PetDetailViewModel
+import com.petplace.thatpetplace.homeScreen.profile.presentation.profileDetail.ProfileScreenViewModel
 import com.petplace.thatpetplace.homeScreen.search.SearchScreenViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -66,6 +69,15 @@ val appModule = module{
     }
     viewModel<AppointmentScreenViewModel> {
         AppointmentScreenViewModel()
+    }
+    viewModel<ProfileViewViewModel> {
+        ProfileViewViewModel()
+    }
+    viewModel<ExploreScreenViewModel> {
+        ExploreScreenViewModel()
+    }
+    viewModel<ExploreDetailScreenViewModel> {
+        ExploreDetailScreenViewModel()
     }
     viewModel<PetDetailViewModel>{
         PetDetailViewModel(profileRepository = get(), globalStateDS = get())

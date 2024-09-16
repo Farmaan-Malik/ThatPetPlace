@@ -1,4 +1,4 @@
-package com.petplace.thatpetplace.homeScreen.profile.presentation
+package com.petplace.thatpetplace.homeScreen.profile.presentation.profileDetail
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -21,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -150,7 +151,7 @@ fun Profile(navController: NavHostController, paddingValues: PaddingValues,viewM
                 onValueChangeEvent = {
                     phoneNumber.value = it
                     viewModel.changePhoneNumber(phoneNumber.value)
-                })
+                }, keyboardType = KeyboardType.Number)
 
         }
         Box(Modifier.fillMaxHeight().padding(bottom = paddingValues.calculateBottomPadding()), contentAlignment = Alignment.BottomCenter) {

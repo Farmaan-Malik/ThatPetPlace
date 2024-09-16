@@ -35,7 +35,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.petplace.thatpetplace.R
-import com.petplace.thatpetplace.homeScreen.profile.presentation.ProfileScreenViewModel
+import com.petplace.thatpetplace.homeScreen.profile.presentation.profileDetail.ProfileScreenViewModel
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
