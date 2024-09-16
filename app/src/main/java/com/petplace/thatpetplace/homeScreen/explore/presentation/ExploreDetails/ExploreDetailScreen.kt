@@ -132,18 +132,19 @@ fun ExploreDetailScreen(
                     .clip(
                         RoundedCornerShape(topEndPercent = 30, topStartPercent = 30)
                     )
-                    .background(Color.White)
-
-
-                , horizontalArrangement = Arrangement.SpaceAround, verticalAlignment = Alignment.CenterVertically
+                    .background(Color.White),
+                horizontalArrangement = Arrangement.SpaceAround,
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Row(modifier=Modifier.fillMaxWidth(.5f), verticalAlignment = Alignment.CenterVertically){
+                Row(
+                    modifier = Modifier.fillMaxWidth(.5f),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     Text(text = "$20", fontSize = 20.sp, fontWeight = FontWeight.Bold)
                     Text(text = "/first visit", fontSize = 16.sp)
                 }
-ColorToggleButton(onClick = { /*TODO*/ }, label = "Book", selected = true)
+                ColorToggleButton(onClick = { /*TODO*/ }, label = "Book", selected = true)
             }
-
 
 
         }
