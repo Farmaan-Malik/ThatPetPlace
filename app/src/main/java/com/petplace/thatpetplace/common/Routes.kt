@@ -22,6 +22,7 @@ object Routes {
 
         const val PROFILE_VIEW_SCREEN= "profileView"
         const val EXPLORE_DETAIL_SCREEN= "exploreDetailScreen"
+        const val STORE_SCREEN= "storeScreen"
 
 
         const val PAYMENT_SUCCESS_SCREEN= "paymentSuccessScreen"

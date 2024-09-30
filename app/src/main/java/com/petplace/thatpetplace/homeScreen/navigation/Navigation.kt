@@ -17,6 +17,7 @@ import com.petplace.thatpetplace.homeScreen.Payment.PaymentSuccessful
 import com.petplace.thatpetplace.homeScreen.appointments.Appointments
 import com.petplace.thatpetplace.homeScreen.explore.presentation.Explore
 import com.petplace.thatpetplace.homeScreen.explore.presentation.ExploreDetails.ExploreDetailScreen
+import com.petplace.thatpetplace.homeScreen.explore.presentation.Store.StoreScreen
 import com.petplace.thatpetplace.homeScreen.profile.presentation.ProfileView
 import com.petplace.thatpetplace.homeScreen.profile.presentation.petDetail.PetDetailScreen
 import com.petplace.thatpetplace.homeScreen.profile.presentation.profileDetail.Profile
@@ -70,6 +71,10 @@ fun Navigation(
                 composable(Routes.HomeScreenRoutes.EXPLORE_DETAIL_SCREEN) {
 
                     ExploreDetailScreen(paddingValues = paddingValues,navController, isProfile = isProfile)
+                }
+                composable(Routes.HomeScreenRoutes.STORE_SCREEN) {
+
+                    StoreScreen(paddingValues = paddingValues,navController)
                 }
                 composable(Routes.HomeScreenRoutes.PAYMENT_SUCCESS_SCREEN) {
 
