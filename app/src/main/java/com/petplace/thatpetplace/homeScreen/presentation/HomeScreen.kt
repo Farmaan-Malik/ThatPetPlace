@@ -13,6 +13,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -35,37 +36,47 @@ fun HomeScreen(
     val name = remember {
         mutableStateOf("Maria")
     }
-
+var isProfile by remember {
+    mutableStateOf(false
+    )
+}
     val welcomeCompleted by viewModel.isWelcomeCompleted.collectAsState(initial = false)
     val isLoggedIn by viewModel.isLoginCompleted.collectAsState(initial = false)
 
     Scaffold(modifier = Modifier.fillMaxSize(),
         bottomBar = {
             if (welcomeCompleted && isLoggedIn && !viewModel.isLoading.value) {
-                BottomNavBar(navController = navHostController)
+                if (!isProfile) {
+                    BottomNavBar(navController = navHostController)
+                }
             }
+
         }
 
     )
     { paddingValues ->
 
         if (!viewModel.isLoading.value) {
-            Navigation(navController = navHostController, paddingValues = paddingValues)
+            Navigation(navController = navHostController, paddingValues = paddingValues, isProfile = {isProfile = !isProfile})
         }
         else {
         Column(
-            modifier = Modifier.fillMaxSize().background(
-                brush = Brush.verticalGradient(
-                    listOf(
-                        Color(0xFFFDA8A5),
-                        Color(0xFFFFCB9C),
+            modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    brush = Brush.verticalGradient(
+                        listOf(
+                            Color(0xFFFDA8A5),
+                            Color(0xFFFFCB9C),
+                        )
                     )
-                )
-            ),
+                ),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            AnimationLoader(modifier = Modifier.width(240.dp).height(240.dp))
+            AnimationLoader(modifier = Modifier
+                .width(240.dp)
+                .height(240.dp))
 
 
         }

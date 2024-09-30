@@ -1,4 +1,4 @@
-package com.petplace.thatpetplace.homeScreen.profile.presentation
+package com.petplace.thatpetplace.homeScreen.profile.presentation.profileDetail
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel

@@ -14,6 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 
@@ -22,10 +24,12 @@ fun TopBarProfile(
     title: String,
     rightText: String = "",
     navController: NavHostController,
+    elevation: Dp = 8.dp,
     actionOnclick: () -> Unit = {}
 ) {
 
     TopAppBar(
+        elevation = elevation,
         title = {
             Text(
                 text = title,

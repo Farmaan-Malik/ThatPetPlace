@@ -19,6 +19,7 @@ class SignUpDetailsViewModel(
     private val authRepository: AuthRepositoryImpl,
     val globalStateDS: GlobalStateDS
 ) : ViewModel() {
+
     private var _signupState = MutableStateFlow<RegistrationState>(value = RegistrationState())
     val signupState: StateFlow<RegistrationState> = _signupState.asStateFlow()
     private var _registration = MutableStateFlow<RegistrationPayload>(
