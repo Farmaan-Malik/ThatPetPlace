@@ -36,7 +36,11 @@ import com.petplace.thatpetplace.homeScreen.profile.components.TopBarProfile
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun Profile(navController: NavHostController, paddingValues: PaddingValues,viewModel: ProfileScreenViewModel = koinViewModel()) {
+fun Profile(
+    navController: NavHostController,
+    paddingValues: PaddingValues,
+    viewModel: ProfileScreenViewModel = koinViewModel()
+) {
     val showDialog = remember {
         mutableStateOf(true)
     }
@@ -59,7 +63,6 @@ fun Profile(navController: NavHostController, paddingValues: PaddingValues,viewM
     Scaffold(topBar = {
         TopBarProfile(
             title = "Your Profile",
-
             navController = navController
         )
     }) {
@@ -92,7 +95,6 @@ fun Profile(navController: NavHostController, paddingValues: PaddingValues,viewM
             Spacer(modifier = Modifier.height(32.dp))
             PrimaryTextInput(label = "First name",
                 value = firstName.value,
-                enabled = true,
                 verified = true,
                 onValueChangeEvent = {
                     firstName.value = it
@@ -100,7 +102,6 @@ fun Profile(navController: NavHostController, paddingValues: PaddingValues,viewM
                 })
             PrimaryTextInput(label = "Last name",
                 value = lastName.value,
-                enabled = true,
                 verified = true,
                 onValueChangeEvent = {
                     lastName.value = it
@@ -126,7 +127,7 @@ fun Profile(navController: NavHostController, paddingValues: PaddingValues,viewM
                         viewModel.changeGender("Male")
                     },
                     label = "Male",
-                    selected = gender.value == "Male",isIcon = true, icon = R.drawable.male
+                    selected = gender.value == "Male", isIcon = true, icon = R.drawable.male
                 )
                 ColorToggleButton(
                     onClick = {
@@ -134,13 +135,12 @@ fun Profile(navController: NavHostController, paddingValues: PaddingValues,viewM
                         viewModel.changeGender("Female")
                     },
                     label = "Female",
-                    selected = gender.value == "Female",isIcon = true, icon = R.drawable.female
+                    selected = gender.value == "Female", isIcon = true, icon = R.drawable.female
                 )
             }
             Spacer(modifier = Modifier.height(30.dp))
             PrimaryTextInput(label = " Email",
                 value = email.value,
-                enabled = true,
                 verified = false,
                 onValueChangeEvent = {
                     email.value = it
@@ -151,17 +151,24 @@ fun Profile(navController: NavHostController, paddingValues: PaddingValues,viewM
                 onValueChangeEvent = {
                     phoneNumber.value = it
                     viewModel.changePhoneNumber(phoneNumber.value)
-                }, keyboardType = KeyboardType.Number)
+                }, keyboardType = KeyboardType.Number
+            )
 
         }
-        Box(Modifier.fillMaxHeight().padding(bottom = paddingValues.calculateBottomPadding()), contentAlignment = Alignment.BottomCenter) {
+        Box(
+            Modifier
+                .fillMaxHeight()
+                .padding(bottom = paddingValues.calculateBottomPadding()),
+            contentAlignment = Alignment.BottomCenter
+        ) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 12.dp),
                 horizontalArrangement = Arrangement.Center
             ) {
-                CustomButton(label = "Get Started") {
+                CustomButton(label = "Save") {
+                    navController.navigate(Routes.HomeScreenRoutes.PROFILE_VIEW_SCREEN)
                     /*TODO*/
                 }
             }

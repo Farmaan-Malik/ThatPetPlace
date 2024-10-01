@@ -2,6 +2,7 @@ package com.petplace.thatpetplace.homeScreen.explore.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
@@ -17,28 +18,28 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 
 @Composable
-fun StoreCards(backgroundImage: Int) {
+fun StoreCards(backgroundImage: Int,onClick: ()-> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth(0.6f)
             .padding(start = 8.dp, end = 8.dp, top = 12.dp, bottom = 8.dp)
-            .background(Color.White, shape = RoundedCornerShape(topStartPercent = 20, topEndPercent = 20))
+            .background(Color.White, shape = RoundedCornerShape(topStartPercent = 20, bottomEndPercent = 20))
             .clip(
                 RoundedCornerShape(
-                    topStartPercent = 20, topEndPercent = 20
+                    topStartPercent = 20, bottomEndPercent = 20
                 )
-            ),
+            ).clickable { onClick() },
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
             painter = rememberAsyncImagePainter(model = backgroundImage),
-
             contentDescription = "",
             contentScale = ContentScale.Fit,
             modifier = Modifier
@@ -56,16 +57,16 @@ fun StoreCards(backgroundImage: Int) {
         )
         Text(
             text = "Product good. Product help Hulk. Hulk Happy if you buy.",
-            fontSize = 14.sp,
+            fontSize = 12.sp,
             color = Color.LightGray,
-            modifier = Modifier.padding(bottom = 16.dp, start =  8.dp, end = 8.dp)
+            modifier = Modifier.padding(bottom = 16.dp, start =  8.dp, end = 8.dp, top = 8.dp)
         )
         Text(
-            text = "Price: " + "12Rs",
+            text = "Price: " + "Rs 420",
             fontWeight = FontWeight.Medium,
-            fontSize = 16.sp,
+            fontSize = 12.sp,
             color = Color.Black,
-            modifier = Modifier.padding(horizontal = 8.dp)
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 8.dp), textAlign = TextAlign.Start
         )
     }
 }

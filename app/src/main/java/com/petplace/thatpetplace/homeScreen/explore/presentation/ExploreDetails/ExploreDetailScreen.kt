@@ -45,10 +45,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.petplace.thatpetplace.R
-import com.petplace.thatpetplace.common.Routes
 import com.petplace.thatpetplace.homeScreen.explore.components.ExploreClinicsCard
 import com.petplace.thatpetplace.homeScreen.explore.components.ExploreDetailCard
 import com.petplace.thatpetplace.homeScreen.explore.components.TopBarExplore
+import com.petplace.thatpetplace.homeScreen.explore.presentation.Store.StoreScreen
 import com.petplace.thatpetplace.homeScreen.profile.components.ColorToggleButton
 import org.koin.androidx.compose.koinViewModel
 
@@ -60,6 +60,9 @@ fun ExploreDetailScreen(
     viewModel: ExploreDetailScreenViewModel = koinViewModel(),
     isProfile: () -> Unit
 ) {
+    val currentPage = remember {
+        mutableStateOf("Clinic")
+    }
     val Fab = remember {
         mutableStateOf(true)
     }
@@ -69,96 +72,100 @@ fun ExploreDetailScreen(
     DisposableEffect(Unit) {
         onDispose { isProfile() }
     }
-    Scaffold(topBar = {
-        TopBarExplore(navController = navController)
-    }
-    ) {
-        it
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(bottom = paddingValues.calculateBottomPadding())
+    if (currentPage.value == "Clinic") {
+        Scaffold(topBar = {
+            TopBarExplore(navController = navController)
+        }
         ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(400.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                Image(painter = painterResource(id = R.drawable.pet_profile),
-                    contentDescription = "Profile photo",
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier.drawWithCache {
-                        val gradient = Brush.verticalGradient(
-                            colors = listOf(
-                                Color(0xFF7993D7), Color.White, Color.Transparent, Color.Transparent
-                            ), startY = size.height / 5, endY = size.height
-                        )
-                        onDrawWithContent {
-                            drawContent()
-                            drawRect(gradient, blendMode = BlendMode.Multiply)
-                        }
-                    })
-            }
+            it
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(horizontal = 25.dp)
+                    .verticalScroll(rememberScrollState())
+                    .padding(bottom = paddingValues.calculateBottomPadding())
             ) {
-                ExploreDetailCard(offsetX = 0.dp, offsetY = (-70).dp)
-                Text(
-                    text = "\"" + "Where your pet's needs come first." + "\"",
-                    fontSize = 20.sp,
-                    color = Color(0xFFBBC3CE),
-                    fontStyle = FontStyle.Italic,
-                    modifier = Modifier
-                        .offset(x = 0.dp, y = (-30).dp)
-                )
-                Text(
-                    text = "About us:",
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(bottom = 8.dp)
-                )
                 Box(
                     modifier = Modifier
-                        .shadow(8.dp, RoundedCornerShape(20.dp))
-                        .background(
-                            Color.White,
-                            shape = RoundedCornerShape(20.dp)
-                        )
+                        .fillMaxWidth()
+                        .height(400.dp),
+                    contentAlignment = Alignment.Center
                 ) {
+                    Image(painter = painterResource(id = R.drawable.pet_profile),
+                        contentDescription = "Profile photo",
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier.drawWithCache {
+                            val gradient = Brush.verticalGradient(
+                                colors = listOf(
+                                    Color(0xFF7993D7),
+                                    Color.White,
+                                    Color.Transparent,
+                                    Color.Transparent
+                                ), startY = size.height / 5, endY = size.height
+                            )
+                            onDrawWithContent {
+                                drawContent()
+                                drawRect(gradient, blendMode = BlendMode.Multiply)
+                            }
+                        })
+                }
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 25.dp)
+                ) {
+                    ExploreDetailCard(offsetX = 0.dp, offsetY = (-70).dp)
                     Text(
-                        text = "Welcome to Little Paws, your one-stop destination for everything your beloved pets need! At Little Paws, we’re passionate about animals and committed to providing top-quality products, expert advice, and personalized care to pet owners like you. With years of experience in the pet industry, we understand that pets are more than just animals—they're family. That’s why we offer a wide range of premium pet foods, toys, accessories, and grooming supplies, carefully selected to meet the unique needs of every pet, whether they’re furry, feathered, or scaly. Visit us today and let us help you give your pets the love and care they deserve!",
-                        modifier = Modifier.padding(
-                            top = 16.dp,
-                            bottom = 8.dp,
-                            start = 8.dp,
-                            end = 8.dp
-                        ),
-                        fontSize = 14.sp
+                        text = "\"" + "Where your pet's needs come first." + "\"",
+                        fontSize = 20.sp,
+                        color = Color(0xFFBBC3CE),
+                        fontStyle = FontStyle.Italic,
+                        modifier = Modifier
+                            .offset(x = 0.dp, y = (-30).dp)
                     )
+                    Text(
+                        text = "About us:",
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(bottom = 8.dp)
+                    )
+                    Box(
+                        modifier = Modifier
+                            .shadow(8.dp, RoundedCornerShape(20.dp))
+                            .background(
+                                Color.White,
+                                shape = RoundedCornerShape(20.dp)
+                            )
+                    ) {
+                        Text(
+                            text = "Welcome to Little Paws, your one-stop destination for everything your beloved pets need! At Little Paws, we’re passionate about animals and committed to providing top-quality products, expert advice, and personalized care to pet owners like you. With years of experience in the pet industry, we understand that pets are more than just animals—they're family. That’s why we offer a wide range of premium pet foods, toys, accessories, and grooming supplies, carefully selected to meet the unique needs of every pet, whether they’re furry, feathered, or scaly. Visit us today and let us help you give your pets the love and care they deserve!",
+                            modifier = Modifier.padding(
+                                top = 16.dp,
+                                bottom = 8.dp,
+                                start = 8.dp,
+                                end = 8.dp
+                            ),
+                            fontSize = 14.sp
+                        )
+                    }
+
+
+                    Text(
+                        text = "Available doctors: ",
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 18.sp,
+                        modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
+                    )
+
                 }
+                LazyRow(
+                    modifier = Modifier
+                        .fillMaxWidth()
 
-
-                Text(
-                    text = "Available doctors: ",
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 18.sp,
-                    modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
-                )
-
-            }
-            LazyRow(
-                modifier = Modifier
-                    .fillMaxWidth()
-
-            ) {
-                items(5) {
-                    ExploreClinicsCard(onClick = { Fab.value = !Fab.value})
+                ) {
+                    items(5) {
+                        ExploreClinicsCard(onClick = { Fab.value = !Fab.value })
+                    }
                 }
-            }
 
                 Row(
                     modifier = Modifier
@@ -177,27 +184,43 @@ fun ExploreDetailScreen(
                         modifier = Modifier.fillMaxWidth(.5f),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        if (Fab.value){
+                        if (Fab.value) {
                             Icon(
                                 imageVector = Icons.Outlined.ShoppingCart,
                                 contentDescription = "Shop"
                             )
                             Spacer(modifier = Modifier.width(20.dp))
-                            Text(text = "Shop with us!", fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
-                        }
-                        else {
+                            Text(
+                                text = "Shop with us!",
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.SemiBold
+                            )
+                        } else {
                             Text(text = "$20", fontSize = 20.sp, fontWeight = FontWeight.Bold)
-                            Text(text = "/first visit", fontSize = 16.sp)
+                            Text(text = "/first visit", fontSize = 18.sp, fontStyle = FontStyle.Italic)
                         }
                     }
-                    ColorToggleButton(onClick = { if (Fab.value) navController.navigate(Routes.HomeScreenRoutes.STORE_SCREEN) }, label = if (Fab.value) "View Store" else "Book", selected = true)
+                    ColorToggleButton(
+                        onClick = {
+                            if (Fab.value) {
+                                currentPage.value = "Store"
+                            } else {/*TODO*/
+                            }
+                        },
+                        label = if (Fab.value) "View Store" else "Book",
+                        selected = true
+                    )
                 }
 
 
+            }
+
 
         }
-
-
-    }
+    } else
+        StoreScreen(
+            paddingValues = paddingValues,
+            navController = navController,
+            navigate = { currentPage.value = "Clinic" })
 
 }

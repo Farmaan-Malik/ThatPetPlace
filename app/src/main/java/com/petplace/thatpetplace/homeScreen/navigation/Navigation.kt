@@ -74,7 +74,7 @@ fun Navigation(
                 }
                 composable(Routes.HomeScreenRoutes.STORE_SCREEN) {
 
-                    StoreScreen(paddingValues = paddingValues,navController)
+                    StoreScreen(paddingValues = paddingValues,navController,)
                 }
                 composable(Routes.HomeScreenRoutes.PAYMENT_SUCCESS_SCREEN) {
 

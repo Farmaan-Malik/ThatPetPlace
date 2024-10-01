@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -30,7 +29,9 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -42,18 +43,21 @@ fun AppointmentCard(button: Boolean = true) {
         shape = RoundedCornerShape(8),
         colors = CardDefaults.cardColors(containerColor = Color.White),
         modifier = Modifier
-            .height(350.dp)
-            .padding(top = 30.dp, bottom = 8.dp)
+            .height(380.dp)
+            .padding(top = 2.dp, bottom = 8.dp)
             .fillMaxWidth()
             .shadow(8.dp, RoundedCornerShape(8))
     ) {
         Column(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxHeight()
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .fillMaxHeight(.4f)
+                    .fillMaxHeight(.3f)
                     .padding(horizontal = 8.dp, vertical = 8.dp),
                 horizontalArrangement = Arrangement.SpaceAround,
                 verticalAlignment = Alignment.CenterVertically
@@ -70,7 +74,7 @@ fun AppointmentCard(button: Boolean = true) {
                 )
                 Column(
                     modifier = Modifier
-                        .fillMaxSize()
+                        .fillMaxHeight(1f)
                         .padding(top = 8.dp)
                 ) {
                     Text(
@@ -134,16 +138,16 @@ fun AppointmentCard(button: Boolean = true) {
             Column(
                 modifier = Modifier
                     .padding(horizontal = 16.dp, vertical = 8.dp)
-                    .fillMaxHeight(.65f)
+                    .fillMaxHeight(.50f)
                     .fillMaxWidth()
-                    .background(Color(0xFFF8F7FB), RoundedCornerShape(20))
+                    .background(Color(0xFFF8F7FB), RoundedCornerShape(20)),
+
             ) {
                 Row(
                     modifier = Modifier
                         .padding(8.dp)
                         .fillMaxWidth()
                         .fillMaxHeight(.5f)
-//    .border(2.dp, Color.Black)
                 ) {
                     Box(
                         modifier = Modifier
@@ -153,7 +157,7 @@ fun AppointmentCard(button: Boolean = true) {
                     ) {
                         Icon(
                             painter = painterResource(id = R.drawable.work),
-                            contentDescription = "Fees",
+                            contentDescription = "Clinic Details",
                             modifier = Modifier.size(25.dp)
                         )
                     }
@@ -182,7 +186,7 @@ fun AppointmentCard(button: Boolean = true) {
                     modifier = Modifier
                         .padding(horizontal = 8.dp)
                         .fillMaxWidth()
-                        .fillMaxHeight(.5f)
+                        .fillMaxHeight()
                 ) {
                     Box(
                         modifier = Modifier
@@ -192,28 +196,41 @@ fun AppointmentCard(button: Boolean = true) {
                     ) {
                         Icon(
                             painter = painterResource(id = R.drawable.clock_outlined),
-                            contentDescription = "Fees",
+                            contentDescription = "Date and Time",
                             modifier = Modifier.size(25.dp)
                         )
                     }
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .fillMaxHeight()
+                            .fillMaxHeight(),
+                        verticalArrangement = Arrangement.Center
                     ) {
                         Text(
                             text = "Wed 9 Sep — 10:30 am",
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
+                            modifier = Modifier.padding(bottom = 16.dp)
                         )
                     }
 
                 }
             }
+            Row(modifier = Modifier
+                .padding(bottom = 8.dp)
+                .fillMaxWidth(.8f)
+                .fillMaxHeight(.3f),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically) {
+                Text(text = "Appointment for:  ", fontWeight = FontWeight.Bold, fontSize = 16.sp)
+                Text(text = "Coco",fontSize = 16.sp)
+
+            }
             if (button) {
                 Row(
                     modifier = Modifier
-                        .fillMaxSize()
+                        .fillMaxWidth()
+                        .fillMaxHeight(.5f)
                         .padding(horizontal = 16.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
@@ -224,7 +241,8 @@ fun AppointmentCard(button: Boolean = true) {
                         /*TODO*/
                     }
                 }
-            }
+            }else
+                Text(text = "Completed", fontSize = 18.sp, fontStyle = FontStyle.Italic, fontWeight = FontWeight.SemiBold, color = Color.LightGray, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())
         }
     }
 }

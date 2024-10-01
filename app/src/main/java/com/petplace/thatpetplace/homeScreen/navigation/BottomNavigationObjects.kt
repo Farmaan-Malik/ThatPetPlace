@@ -25,7 +25,7 @@ sealed class BottomNavigationObjects (
         icon = R.drawable.explore_outlined
     )
     object profileScreen: BottomNavigationObjects(
-        route = Routes.HomeScreenRoutes.PROFILE_SCREEN,
+        route = Routes.HomeScreenRoutes.PROFILE_VIEW_SCREEN,
         title = "Profile",
         icon = R.drawable.person_outlined
     )

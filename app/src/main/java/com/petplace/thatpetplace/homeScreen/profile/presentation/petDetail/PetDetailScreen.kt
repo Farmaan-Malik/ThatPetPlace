@@ -32,7 +32,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.petplace.thatpetplace.R
 import com.petplace.thatpetplace.auth.presentation.common.components.CustomButton
-import com.petplace.thatpetplace.common.Routes
 import com.petplace.thatpetplace.common.components.PrimaryDropdown
 import com.petplace.thatpetplace.common.components.PrimaryTextInput
 import com.petplace.thatpetplace.homeScreen.profile.components.AddProfile
@@ -84,7 +83,7 @@ fun PetDetailScreen(
             rightText = "Skip",
             navController = navController
         ) {
-            navController.navigate(Routes.HomeScreenRoutes.PROFILE_SCREEN)
+            navController.popBackStack()
         }
     }) {
         it
