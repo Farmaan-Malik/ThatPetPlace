@@ -57,7 +57,7 @@ fun Appointments(
         title = "Appointments",
         navController = navController,
         elevation = 0.dp
-    )}) { it ->
+    )}) {
         Column(
             modifier = Modifier
                 .fillMaxSize()

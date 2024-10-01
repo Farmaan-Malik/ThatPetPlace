@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun PrimaryTextInput(
-    label: String, value: String, verified: Boolean= false, keyboardType: KeyboardType = KeyboardType.Text, enabled: Boolean= false, onValueChangeEvent: (String)-> Unit,
+    label: String,readOnly: Boolean=false, value: String, verified: Boolean= false, keyboardType: KeyboardType = KeyboardType.Text, enabled: Boolean= false, onValueChangeEvent: (String)-> Unit,
 ) {
 
     TextField(value = value,
@@ -28,6 +28,7 @@ fun PrimaryTextInput(
         modifier = Modifier.fillMaxWidth(),
         textStyle = TextStyle(fontSize = 16.sp,),
         label = { Text(text = label) },
+        readOnly = readOnly,
         singleLine = true,
         colors = TextFieldDefaults.textFieldColors(
             backgroundColor = Color.White,

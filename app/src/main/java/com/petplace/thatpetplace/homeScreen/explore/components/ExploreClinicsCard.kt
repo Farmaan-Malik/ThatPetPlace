@@ -2,6 +2,7 @@ package com.petplace.thatpetplace.homeScreen.explore.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -37,7 +38,7 @@ import androidx.compose.ui.unit.sp
 import com.petplace.thatpetplace.R
 
 @Composable
-fun ExploreClinicsCard(button: Boolean = true, onClick:()->Unit={}) {
+fun ExploreClinicsCard(onClick:()->Unit={}) {
     Card(
         shape = RoundedCornerShape(8),
         colors = CardDefaults.cardColors(containerColor = Color.White),
@@ -46,6 +47,7 @@ fun ExploreClinicsCard(button: Boolean = true, onClick:()->Unit={}) {
             .padding(top = 2.dp, bottom = 8.dp, start = 8.dp, end = 8.dp)
             .width(250.dp)
             .shadow(8.dp, RoundedCornerShape(8))
+            .clickable { onClick() }
     ) {
         Column(
             modifier = Modifier.fillMaxSize()

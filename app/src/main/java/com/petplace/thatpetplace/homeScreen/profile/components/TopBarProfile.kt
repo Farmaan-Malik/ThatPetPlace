@@ -22,10 +22,12 @@ import androidx.navigation.NavHostController
 @Composable
 fun TopBarProfile(
     title: String,
+    enabled: Boolean=true,
     rightText: String = "",
     navController: NavHostController,
     elevation: Dp = 8.dp,
-    actionOnclick: () -> Unit = {}
+    actionOnclick: () -> Unit = {},
+    onClick: ()->Unit={navController.popBackStack()}
 ) {
 
     TopAppBar(
@@ -40,12 +42,14 @@ fun TopBarProfile(
             )
         },
         navigationIcon = {
-            IconButton(onClick = { navController.popBackStack() }) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = rightText,
-                    tint = Color(0xFFFDA8A5)
-                )
+            if (enabled) {
+                IconButton(onClick = { onClick() }) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = "Back",
+                        tint = Color(0xFFFDA8A5)
+                    )
+                }
             }
         },
         backgroundColor = Color.White,
