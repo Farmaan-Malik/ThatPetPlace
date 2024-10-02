@@ -98,7 +98,7 @@ fun DisplayProfile(viewModel: ProfileViewViewModel, navController: NavHostContro
                 contentScale = ContentScale.Crop
             )
             Text(
-                text = "Mehvish Mukhtar",
+                text = "Maria Martinez",
                 fontSize = 25.sp,
                 fontWeight = FontWeight.SemiBold,
             )
