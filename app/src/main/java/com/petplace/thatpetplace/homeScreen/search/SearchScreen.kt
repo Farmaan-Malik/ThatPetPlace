@@ -12,7 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -53,10 +53,10 @@ fun SearchScreen(navController: NavHostController,viewModel: SearchScreenViewMod
                     .height(80.dp)
                     .padding(8.dp)
             ) {
-                IconButton(onClick = { /*TODO*/ }, modifier = Modifier.fillMaxHeight()) {
+                IconButton(onClick = { navController.navigate(Routes.HomeScreenRoutes.CART_SCREEN) }, modifier = Modifier.fillMaxHeight()) {
                     Icon(
-                        imageVector = Icons.Outlined.Search,
-                        contentDescription = "Search",
+                        imageVector = Icons.Outlined.ShoppingCart,
+                        contentDescription = "Cart",
                         tint = Color(0xFFFDA8A5)
                     )
                 }
