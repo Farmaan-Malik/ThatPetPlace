@@ -47,10 +47,10 @@ fun DisplayPet(viewModel: ProfileViewViewModel, navController: NavHostController
     Card(
         modifier = Modifier
             .padding(8.dp)
-            .fillMaxHeight(.35f)
+            .fillMaxHeight(.2f)
             .fillMaxWidth()
             .shadow(2.dp, RoundedCornerShape(15)),
-        shape = RoundedCornerShape(bottomEndPercent = 15, bottomStartPercent = 15),
+        shape = RoundedCornerShape(15),
         colors = CardDefaults.cardColors(containerColor = Color.White)
 
     ) {
@@ -89,9 +89,8 @@ fun DisplayPet(viewModel: ProfileViewViewModel, navController: NavHostController
                 } else selectedImage,
                 contentDescription = "Profile photo",
                 modifier = Modifier
-                    .height(150.dp)
-                    .width(150.dp)
-                    .padding(8.dp)
+                    .height(100.dp)
+                    .width(100.dp)
                     .clip(
                         CircleShape
                     )

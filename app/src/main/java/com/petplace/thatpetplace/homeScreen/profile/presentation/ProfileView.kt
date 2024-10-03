@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
@@ -99,7 +100,7 @@ fun ProfileView(
                     Divider(modifier = Modifier.padding(top = 8.dp))
                 }
             }
-            LazyColumn {
+            LazyColumn(modifier = Modifier.clip(RoundedCornerShape(topEndPercent = 15, topStartPercent = 15))){
                 items(pets) { pet ->
                     DisplayPet(viewModel = viewModel, navController = navController, petName = pet)
 
