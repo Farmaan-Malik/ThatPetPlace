@@ -1,6 +1,7 @@
 package com.petplace.thatpetplace.homeScreen.profile.presentation
 
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,16 +22,20 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.petplace.thatpetplace.R
 import com.petplace.thatpetplace.common.Routes
+import com.petplace.thatpetplace.common.components.LoadingDialogBox
 import com.petplace.thatpetplace.homeScreen.profile.components.DisplayPet
 import com.petplace.thatpetplace.homeScreen.profile.components.DisplayProfile
 import com.petplace.thatpetplace.homeScreen.profile.components.TopBarProfile
@@ -43,7 +48,15 @@ fun ProfileView(
     paddingValues: PaddingValues,
     viewModel: ProfileViewViewModel = koinViewModel()
 ) {
-    val pets = listOf("Coco", "Chip", "Melon", "Cherry")
+    val isLoading by remember {
+        viewModel.isLoading
+    }
+    val isError by remember {
+        viewModel.isError
+    }
+    val pets = remember {
+        viewModel.listOfPets
+    }
     Scaffold(backgroundColor = Color(0xFFF8F7FB), topBar = {
         TopBarProfile(
             rightText = "Add New Pet",
@@ -54,60 +67,83 @@ fun ProfileView(
             elevation = 0.dp
         )
     }) { it ->
-        Column(
-            modifier = Modifier
-                .fillMaxHeight()
-                .fillMaxWidth()
-                .padding(
-                    top = paddingValues.calculateTopPadding(),
-                    bottom = paddingValues.calculateBottomPadding()
-                )
-        ) {
-            DisplayProfile(viewModel = viewModel, navController)
-            Spacer(modifier = Modifier.height(32.dp))
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 8.dp)
-                    .height(55.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Box(
-                    modifier = Modifier
-                        .size(36.dp)
-                        .clip(CircleShape)
-                        .background(
-                            Color(0x80FDA8A5)
-                        ), Alignment.Center
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.other),
-                        contentDescription = "",
-                        tint = Color(0xFFFDA8A5),
-                        modifier = Modifier.size(22.dp)
-                    )
-                }
+
+        if (isLoading) {
+            LoadingDialogBox()
+        } else {
+            if (isError) {
+                Toast.makeText(LocalContext.current, "An error occurred", Toast.LENGTH_LONG)
+                    .show()
+                viewModel.updateError()
+            } else {
                 Column(
                     modifier = Modifier
-                        .fillMaxWidth(1f)
-                        .padding(horizontal = 5.dp)
+                        .fillMaxHeight()
+                        .fillMaxWidth()
+                        .padding(
+                            top = paddingValues.calculateTopPadding(),
+                            bottom = paddingValues.calculateBottomPadding()
+                        )
                 ) {
-                    Text(
-                        text = "My pets", fontSize = 18.sp, modifier = Modifier
-                            .fillMaxWidth(.7f)
-                            .padding(start = 8.dp)
-                    )
-                    Divider(modifier = Modifier.padding(top = 8.dp))
+                    DisplayProfile(viewModel = viewModel, navController)
+                    Spacer(modifier = Modifier.height(32.dp))
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 8.dp)
+                            .height(55.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(36.dp)
+                                .clip(CircleShape)
+                                .background(
+                                    Color(0x80FDA8A5)
+                                ), Alignment.Center
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.other),
+                                contentDescription = "",
+                                tint = Color(0xFFFDA8A5),
+                                modifier = Modifier.size(22.dp)
+                            )
+                        }
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth(1f)
+                                .padding(horizontal = 5.dp)
+                        ) {
+                            Text(
+                                text = "My pets", fontSize = 18.sp, modifier = Modifier
+                                    .fillMaxWidth(.7f)
+                                    .padding(start = 8.dp)
+                            )
+                            Divider(modifier = Modifier.padding(top = 8.dp))
+                        }
+                    }
+                    LazyColumn(
+                        modifier = Modifier.clip(
+                            RoundedCornerShape(
+                                topEndPercent = 15,
+                                topStartPercent = 15
+                            )
+                        )
+                    ) {
+                        items(pets.value) { pet ->
+                            DisplayPet(
+                                viewModel = viewModel,
+                                navController = navController,
+                                petName = pet.name,
+                                breed = pet.breed,
+                                gender = pet.gender
+                            )
+
+
+                        }
+                    }
                 }
             }
-            LazyColumn(modifier = Modifier.clip(RoundedCornerShape(topEndPercent = 15, topStartPercent = 15))){
-                items(pets) { pet ->
-                    DisplayPet(viewModel = viewModel, navController = navController, petName = pet,)
-
-
-                }
-            }
-
         }
     }
 }

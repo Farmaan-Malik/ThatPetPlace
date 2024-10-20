@@ -1,6 +1,7 @@
 package com.petplace.thatpetplace.homeScreen.profile.components
 
 import android.net.Uri
+import android.util.Log
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -30,10 +31,11 @@ import com.petplace.thatpetplace.common.Routes
 import com.petplace.thatpetplace.homeScreen.profile.presentation.ProfileViewViewModel
 
 @Composable
-fun DisplayPet(viewModel: ProfileViewViewModel, navController: NavHostController, petName: String) {
+fun DisplayPet(viewModel: ProfileViewViewModel, navController: NavHostController, petName: String, breed: String, gender:String) {
     var selectedImage by remember {
         mutableStateOf<Uri?>(null)
     }
+    Log.e("details", petName)
     ListItem(modifier = Modifier.padding(vertical = 2.dp),
         headlineContent = { Text(text = petName) },
         leadingContent = {
@@ -52,8 +54,8 @@ fun DisplayPet(viewModel: ProfileViewViewModel, navController: NavHostController
                 contentScale = ContentScale.Crop
             )
         },
-        overlineContent = { Text(text = "Doggo") },
-        supportingContent = { Text(text = "oalsolaso") },
+        overlineContent = { Text(text = breed) },
+        supportingContent = { Text(text = gender) },
         trailingContent = {
             IconButton(
                     onClick = { navController.navigate(Routes.HomeScreenRoutes.PET_PROFILE_SCREEN) },
