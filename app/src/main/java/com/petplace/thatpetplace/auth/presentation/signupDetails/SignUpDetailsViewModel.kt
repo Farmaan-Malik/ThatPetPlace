@@ -1,6 +1,8 @@
 package com.petplace.thatpetplace.auth.presentation.signupDetails
 
 import android.util.Log
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.petplace.thatpetplace.auth.data.model.RegistrationPayload
@@ -12,16 +14,16 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class SignUpDetailsViewModel(
     private val authRepository: AuthRepositoryImpl,
     val globalStateDS: GlobalStateDS
 ) : ViewModel() {
-
-    private var _signupState = MutableStateFlow<RegistrationState>(value = RegistrationState())
-    val signupState: StateFlow<RegistrationState> = _signupState.asStateFlow()
+    private val _isLoading = mutableStateOf(false)
+    val isLoading: State<Boolean> = _isLoading
+    private val _isError = mutableStateOf(false)
+    val isError: State<Boolean> = _isError
     private var _registration = MutableStateFlow<RegistrationPayload>(
         value = RegistrationPayload(
             email = "",
@@ -68,21 +70,22 @@ class SignUpDetailsViewModel(
             authRepository.registration(_registration.value).collectLatest { result ->
                 when (result) {
                     is Resource.Loading -> {
-                        _signupState.update { it.copy(isLoading = true) }
+                      _isLoading.value = true
                     }
 
                     is Resource.Success -> {
-                        _signupState.update { it.copy(isSignInSuccessful = true) }
-                        updateIsSignupComplete(true)
+
                         updateFirstName(first_name)
+                        updateIsSignupComplete(true)
                         Log.i("USEER", result.data.toString())
+                        _isLoading.value = false
 
 
                     }
 
                     is Resource.Error -> {
-                        _signupState.update { it.copy(signInError = result.message) }
-
+                        _isLoading.value= false
+                        _isError.value = true
                         Log.i("SSSSSSS", result.message.toString())
 
                     }

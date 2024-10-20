@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.petplace.thatpetplace.R
 import com.petplace.thatpetplace.auth.presentation.common.components.CustomButton
+import com.petplace.thatpetplace.common.components.LoadingDialogBox
 import com.petplace.thatpetplace.common.components.PrimaryDropdown
 import com.petplace.thatpetplace.common.components.PrimaryTextInput
 import com.petplace.thatpetplace.homeScreen.profile.components.AddProfile
@@ -47,6 +48,15 @@ fun PetDetailScreen(
     viewModel: PetDetailViewModel = koinViewModel(),
     paddingValues: PaddingValues
 ) {
+    val isLoading by remember {
+        viewModel.isLoading
+    }
+    val isSuccess by remember {
+        viewModel.isSuccess
+    }
+    val isError by remember {
+        viewModel.isError
+    }
     val context = LocalContext.current
     val petsName = remember {
         mutableStateOf("")
@@ -64,7 +74,7 @@ fun PetDetailScreen(
         mutableStateOf("")
     }
     val age = remember {
-        mutableStateOf(0)
+        mutableStateOf("")
     }
     val isNeuter = remember {
         mutableStateOf(
@@ -80,160 +90,180 @@ fun PetDetailScreen(
     Scaffold(topBar = {
         TopBarProfile(
             title = "Add Pet Profile",
-            rightText = "Skip",
+//            rightText = "Skip",
             navController = navController
-        ) {
-            navController.popBackStack()
-        }
+        )
     }) {
-        it
-        Column(
-            modifier = Modifier
-                .verticalScroll(rememberScrollState())
-                .padding(
-                    top = paddingValues.calculateTopPadding() + it.calculateTopPadding(),
-                    bottom = paddingValues.calculateBottomPadding()
-                )
-                .padding(horizontal = 20.dp)
-                .background(Color.White)
-        ) {
-            Row(
+        if (isLoading) {
+            LoadingDialogBox()
+        } else {
+//            if (isError) {
+//                Toast.makeText(LocalContext.current, "An error occurred", Toast.LENGTH_LONG)
+//                    .show()
+//            } else {
+//                if (!isSuccess.value){
+            Column(
                 modifier = Modifier
-
-                    .fillMaxWidth()
-                    .padding(top = paddingValues.calculateTopPadding() + 8.dp)
-                    .background(Color.White),
-                horizontalArrangement = Arrangement.Center
-
-            ) {
-                AddProfile(viewModel = viewModel)
-            }
-            Spacer(modifier = Modifier.height(32.dp))
-
-            Text(
-                text = "General \nInformation",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                lineHeight = 25.sp
-            )
-
-            PrimaryTextInput(label = "Pet's name",
-                value = petsName.value,
-                onValueChangeEvent = {
-                    Log.e("Pre-change", petsName.value)
-                    petsName.value = it
-                    Log.e("Post-change", petsName.value)
-                    viewModel.changeName(petsName.value)
-                })
-            PrimaryDropdown(
-                selectedValue = species.value,
-                options = listOf("asd", "sad"),
-                label = "Species of your pet",
-                onValueChangedEvent = {
-                    species.value = it
-                    viewModel.changeSpecies(it)
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp)
-            )
-            PrimaryTextInput(label = "Breed of your pet",
-                value = breed.value,
-                onValueChangeEvent = {
-                    Log.e("Pre-change", petsName.value)
-                    breed.value = it
-                    Log.e("Post-change", petsName.value)
-                    viewModel.changeBreed(breed.value)
-                })
-            Text(
-                text = "Gender",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 24.dp),
-                fontSize = 13.sp,
-                color = Color(0xFFBBC3CE)
-            )
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 13.dp),
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
-                ColorToggleButton(
-                    onClick = {
-                        gender.value = "Male"
-                        viewModel.changeGender("Male")
-                    },
-                    label = "Male",
-                    selected = gender.value == "Male", isIcon = true, icon = R.drawable.male
-                )
-                ColorToggleButton(
-                    onClick = {
-                        gender.value = "Female"
-                        viewModel.changeGender("Female")
-                    },
-                    label = "Female",
-                    selected = gender.value == "Female", isIcon = true, icon = R.drawable.female
-                )
-            }
-            Spacer(modifier = Modifier.height(24.dp))
-
-            PrimaryTextInput(
-                label = "Age", value = age.value.toString(), onValueChangeEvent = {
-                    if (it.length > 2) {
-                        Toast.makeText(context, "Age should be less than 99", Toast.LENGTH_LONG)
-                            .show()
-                        age.value = 0
-                        viewModel.changeAge(0)
-                    } else
-                        age.value = it.toInt()
-                    viewModel.changeAge(it.toInt())
-                }, keyboardType = KeyboardType.Number
-            )
-            Spacer(modifier = Modifier.height(32.dp))
-
-            Text(
-                text = "Additional Information",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-            )
-            Spacer(modifier = Modifier.height(20.dp))
-            Column {
-
-                CustomSwitch(isSelected = isNeuter.value, text = "Neutered", onChange = {
-                    Log.e("pre-click", isNeuter.value.toString())
-                    isNeuter.value = !isNeuter.value
-                    viewModel.isNeutered(
-                        isNeuter.value
+                    .verticalScroll(rememberScrollState())
+                    .padding(
+                        top = paddingValues.calculateTopPadding() + it.calculateTopPadding(),
+                        bottom = paddingValues.calculateBottomPadding()
                     )
-                    Log.e("post-clicked", isNeuter.value.toString())
-                })
-                CustomSwitch(
-                    isSelected = isVaccinated.value,
-                    text = "Vaccinated",
-                    onChange = {
-                        isVaccinated.value = !isVaccinated.value
-                        viewModel.isVaccinated(!isVaccinated.value)
-                    })
+                    .padding(horizontal = 20.dp)
+                    .background(Color.White)
+            ) {
+                if (isSuccess) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = paddingValues.calculateTopPadding() + 8.dp)
+                            .background(Color.White), horizontalArrangement = Arrangement.Center
 
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 12.dp),
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    CustomButton(label = "Submit") {
-                        viewModel.addPet()
-                        Log.e("userid", viewModel.string.value)
+                    ) {
+                        AddProfile(viewModel = viewModel)
                     }
                 }
 
+                Spacer(modifier = Modifier.height(32.dp))
+
+                Text(
+                    text = "General \nInformation",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    lineHeight = 25.sp
+                )
+
+                PrimaryTextInput(
+                    readOnly = isSuccess,
+                    label = "Pet's name",
+                    value = petsName.value,
+                    onValueChangeEvent = {
+                        Log.e("Pre-change", petsName.value)
+                        petsName.value = it
+                        Log.e("Post-change", petsName.value)
+                        viewModel.changeName(petsName.value)
+                    })
+                PrimaryDropdown(
+                    selectedValue = species.value,
+                    options = listOf("asd", "sad"),
+                    label = "Species of your pet",
+                    onValueChangedEvent = {
+                        if (!isSuccess) {
+                            species.value = it
+                            viewModel.changeSpecies(it)
+                        }
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp)
+                )
+                PrimaryTextInput(
+                    readOnly = isSuccess,
+                    label = "Breed of your pet",
+                    value = breed.value,
+                    onValueChangeEvent = {
+                        Log.e("Pre-change", petsName.value)
+                        breed.value = it
+                        Log.e("Post-change", petsName.value)
+                        viewModel.changeBreed(breed.value)
+                    })
+                Text(
+                    text = "Gender",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 24.dp),
+                    fontSize = 13.sp,
+                    color = Color(0xFFBBC3CE)
+                )
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 13.dp),
+                    horizontalArrangement = Arrangement.SpaceAround
+                ) {
+                    ColorToggleButton(
+                        onClick = {
+                            if (!isSuccess) {
+                                gender.value = "Male"
+                                viewModel.changeGender("Male")
+                            }
+                        },
+                        label = "Male",
+                        selected = gender.value == "Male",
+                        isIcon = true,
+                        icon = R.drawable.male
+                    )
+                    ColorToggleButton(
+                        onClick = {
+                            if (!isSuccess) {
+                                gender.value = "Female"
+                                viewModel.changeGender("Female")
+                            }
+                        },
+                        label = "Female",
+                        selected = gender.value == "Female",
+                        isIcon = true,
+                        icon = R.drawable.female
+                    )
+                }
+                Spacer(modifier = Modifier.height(24.dp))
+
+                PrimaryTextInput(
+                    readOnly = isSuccess,
+                    label = "Age", value = age.value.toString(), onValueChangeEvent = {
+                        if (it.length > 3) {
+                            Toast.makeText(
+                                context, "Age should be less than 99", Toast.LENGTH_LONG
+                            ).show()
+                            age.value = ""
+                            viewModel.changeAge("")
+                        } else age.value = it
+                        viewModel.changeAge(it)
+                    }, keyboardType = KeyboardType.Number
+                )
+                Spacer(modifier = Modifier.height(32.dp))
+
+                Text(
+                    text = "Additional Information",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                )
+                Spacer(modifier = Modifier.height(20.dp))
+                Column {
+
+                    CustomSwitch(isSelected = isNeuter.value, text = "Neutered", onChange = {
+                        if (!isSuccess) {
+                            Log.e("pre-click", isNeuter.value.toString())
+                            isNeuter.value = !isNeuter.value
+                            viewModel.isNeutered(
+                                isNeuter.value
+                            )
+                            Log.e("post-clicked", isNeuter.value.toString())
+                        }
+                    })
+                    CustomSwitch(isSelected = isVaccinated.value, text = "Vaccinated", onChange = {
+                        if (!isSuccess) {
+                            isVaccinated.value = !isVaccinated.value
+                            viewModel.isVaccinated(!isVaccinated.value)
+                        }
+                    })
+
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 12.dp),
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        CustomButton(label = if (isSuccess)"Submit" else "Next") {
+                            if (!isSuccess) {
+                            viewModel.addPet()
+                            Log.e("userid", viewModel.string.value)
+                        }else viewModel.uploadPhoto()}
+                    }
+                }
 
             }
 
-
         }
     }
-
-
 }

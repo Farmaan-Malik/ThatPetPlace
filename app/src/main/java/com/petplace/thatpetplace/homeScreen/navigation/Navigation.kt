@@ -10,7 +10,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.petplace.thatpetplace.auth.presentation.login.LoginScreen
-import com.petplace.thatpetplace.auth.presentation.signup.SignUp
 import com.petplace.thatpetplace.auth.presentation.signupDetails.SignUpDetails
 import com.petplace.thatpetplace.common.Routes
 import com.petplace.thatpetplace.homeScreen.Payment.PaymentSuccessful
@@ -19,7 +18,6 @@ import com.petplace.thatpetplace.homeScreen.explore.presentation.CartScreen.Cart
 import com.petplace.thatpetplace.homeScreen.explore.presentation.Explore
 import com.petplace.thatpetplace.homeScreen.explore.presentation.ExploreDetails.ExploreDetailScreen
 import com.petplace.thatpetplace.homeScreen.explore.presentation.Store.StoreScreen
-import com.petplace.thatpetplace.homeScreen.search.location.LocationUtils
 import com.petplace.thatpetplace.homeScreen.profile.presentation.ProfileView
 import com.petplace.thatpetplace.homeScreen.profile.presentation.petDetail.PetDetailScreen
 import com.petplace.thatpetplace.homeScreen.profile.presentation.profileDetail.Profile
@@ -62,8 +60,8 @@ fun Navigation(
 
                     Profile(navController, paddingValues = paddingValues)
                 }
-                composable(Routes.HomeScreenRoutes.PET_PROFILE_SCREEN) {
-
+                composable(Routes.HomeScreenRoutes.PET_PROFILE_SCREEN) {backStackEntry->
+                    val status: String = backStackEntry.arguments?.getString( "status" ) ?:""
                     PetDetailScreen(navController, paddingValues = paddingValues)
                 }
                 composable(Routes.HomeScreenRoutes.PROFILE_VIEW_SCREEN) {
@@ -96,9 +94,6 @@ fun Navigation(
 
                 composable(Routes.AuthRoutes.LOGIN_SCREEN) {
                     LoginScreen(navHostController = navController)
-                }
-                composable(Routes.AuthRoutes.SIGNUP_SCREEN) {
-                    SignUp(navHostController = navController)
                 }
                 composable(Routes.AuthRoutes.SIGNUP_DETAILS_SCREEN) {
                     SignUpDetails(navHostController = navController)

@@ -1,6 +1,7 @@
 package com.petplace.thatpetplace.homeScreen.profile.presentation.petDetail
 
 import android.util.Log
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,25 +14,46 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 
-class PetDetailViewModel(private val profileRepository: ProfileRepositoryImpl,private val globalStateDS: GlobalStateDS) : ViewModel() {
+class PetDetailViewModel(
+    private val profileRepository: ProfileRepositoryImpl,
+    private val globalStateDS: GlobalStateDS
+) : ViewModel() {
 
     val userId = globalStateDS.stateStatusFlow.map {
         it.userID
     }
+    private lateinit var petId: String
+    private fun getUserId() {
+        viewModelScope.launch {
+            userId.collectLatest {
+                string.value = it
+            }
+        }
 
+    }
 
-init {
-    getUserId()
-}
-    private var _imagePart: MultipartBody.Part? = null
+    init {
+        getUserId()
+    }
+
+    private val _isSuccess = mutableStateOf(false)
+    val isSuccess: State<Boolean> = _isSuccess
+    private val _isLoading = mutableStateOf(false)
+    val isLoading: State<Boolean> = _isLoading
+    private val _isError = mutableStateOf(false)
+    val isError: State<Boolean> = _isError
+
+    private lateinit var _imagePart: MultipartBody.Part
+
     //function to save image state
     fun saveImage(part: MultipartBody.Part) {
         _imagePart = part
     }
+
     //function reset image state
-    fun removeImage() {
-        _imagePart = null
-    }
+//    fun removeImage() {
+//        _imagePart = null
+//    }
 
     private val _petsName =
         mutableStateOf("")
@@ -50,7 +72,7 @@ init {
 
 
     private val _age =
-        mutableStateOf(0)
+        mutableStateOf("")
 
 
     private val _neutered =
@@ -78,7 +100,7 @@ init {
         _gender.value = gender
     }
 
-    fun changeAge(age: Int) {
+    fun changeAge(age: String) {
         _age.value = age
     }
 
@@ -91,42 +113,38 @@ init {
     }
 
     val string = mutableStateOf("")
-    private fun getUserId(){
-        viewModelScope.launch {
-            userId.collectLatest {
-                string.value = it
-            }
-        }
 
-    }
 
-    fun addPet() {
+    fun addPet() =
         viewModelScope.launch {
             profileRepository.addPet(
                 addPetPayload = AddPetPayload(
-                    age = _age.value,
+                    age = _age.value.toInt(),
                     breed = _breed.value,
-                    dob = "12",
                     gender = _gender.value,
                     neutered = _neutered.value,
                     species = _species.value,
                     vaccinated = _vaccinated.value,
                     name = _petsName.value,
-                    user_id =string.value
+                    user_id = string.value
                 )
-            ).collectLatest {result->
+            ).collectLatest { result ->
                 when (result) {
                     is Resource.Loading -> {
-
+                        _isLoading.value = true
                     }
 
                     is Resource.Success -> {
                         Log.e("Success", result.data.toString())
+                        petId = result.data!!.id
+                        _isSuccess.value = true
+                        _isLoading.value = false
                     }
 
                     is Resource.Error -> {
-
-
+                        _isLoading.value = false
+                        _isError.value = true
+                        _isSuccess.value = false
                         Log.i("Error", result.message.toString())
 
                     }
@@ -134,6 +152,33 @@ init {
             }
         }
 
-    }
+    fun uploadPhoto() =
+        viewModelScope.launch {
+            Log.e("petId", petId)
+            profileRepository.uploadPetProfile(
+                petID = petId,
+                photo = _imagePart
+            ).collectLatest { result ->
+                when (result) {
+                    is Resource.Loading -> {
+                        _isLoading.value = true
+                    }
+
+                    is Resource.Success -> {
+                        Log.e("Success", result.data.toString())
+
+                        _isLoading.value = false
+                    }
+
+                    is Resource.Error -> {
+                        _isLoading.value = false
+                        _isError.value = true
+                        Log.i("Error", result.message.toString())
+
+                    }
+                }
+            }
+        }
+
 
 }

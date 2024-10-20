@@ -1,12 +1,10 @@
 package com.petplace.thatpetplace.di
 
 
-
 import com.google.firebase.auth.FirebaseAuth
 import com.petplace.thatpetplace.auth.data.remote.AuthApi
 import com.petplace.thatpetplace.auth.data.remote.AuthRepositoryImpl
 import com.petplace.thatpetplace.auth.presentation.login.LoginViewModel
-import com.petplace.thatpetplace.auth.presentation.signup.SignUpViewModel
 import com.petplace.thatpetplace.auth.presentation.signupDetails.SignUpDetailsViewModel
 import com.petplace.thatpetplace.common.dataStore.GlobalStateDS
 import com.petplace.thatpetplace.common.utils.Constants
@@ -21,42 +19,50 @@ import com.petplace.thatpetplace.homeScreen.profile.presentation.ProfileViewView
 import com.petplace.thatpetplace.homeScreen.profile.presentation.petDetail.PetDetailViewModel
 import com.petplace.thatpetplace.homeScreen.profile.presentation.profileDetail.ProfileScreenViewModel
 import com.petplace.thatpetplace.homeScreen.search.SearchScreenViewModel
+import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
-val appModule = module{
+
+val appModule = module {
     single {
         FirebaseAuth.getInstance()
     }
-    factory{
+    factory {
+        val client: OkHttpClient = OkHttpClient.Builder()
+            .connectTimeout(100, TimeUnit.SECONDS)
+            .writeTimeout(100, TimeUnit.SECONDS)
+            .readTimeout(100, TimeUnit.SECONDS)
+            .build()
         Retrofit
             .Builder()
+            .client(client)
             .baseUrl(Constants.BASE_URL)
-
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(AuthApi::class.java)
     }
-    factory <AuthRepositoryImpl>{
-        AuthRepositoryImpl( api = get())
+    factory<AuthRepositoryImpl> {
+        AuthRepositoryImpl(api = get())
     }
-    viewModel<NavigationViewModel>{
+    viewModel<NavigationViewModel> {
         NavigationViewModel(get())
     }
 
-    viewModel<LoginViewModel>{
+    viewModel<LoginViewModel> {
         LoginViewModel(authRepository = get(), globalStateDS = get())
     }
-    viewModel<SignUpDetailsViewModel>{
+    viewModel<SignUpDetailsViewModel> {
         SignUpDetailsViewModel(authRepository = get(), globalStateDS = get())
     }
-    viewModel<HomeScreenViewModel>{
+    viewModel<HomeScreenViewModel> {
         HomeScreenViewModel(get())
     }
-    factory{
+    factory {
         Retrofit
             .Builder()
             .baseUrl(Constants.BASE_URL)
@@ -64,14 +70,11 @@ val appModule = module{
             .build()
             .create(ProfileApi::class.java)
     }
-    factory <ProfileRepositoryImpl>{
-        ProfileRepositoryImpl( profileApi = get())
+    factory<ProfileRepositoryImpl> {
+        ProfileRepositoryImpl(profileApi = get())
     }
     viewModel<AppointmentScreenViewModel> {
         AppointmentScreenViewModel()
-    }
-    viewModel<ProfileViewViewModel> {
-        ProfileViewViewModel()
     }
     viewModel<ExploreScreenViewModel> {
         ExploreScreenViewModel()
@@ -79,11 +82,11 @@ val appModule = module{
     viewModel<ExploreDetailScreenViewModel> {
         ExploreDetailScreenViewModel()
     }
-    viewModel<PetDetailViewModel>{
+    viewModel<PetDetailViewModel> {
         PetDetailViewModel(profileRepository = get(), globalStateDS = get())
     }
-    viewModel<SignUpViewModel> {
-        SignUpViewModel(get())
+    viewModel<ProfileViewViewModel> {
+        ProfileViewViewModel(profileRepository = get(), globalStateDS = get())
     }
     viewModel<SearchScreenViewModel> {
         SearchScreenViewModel(get())
@@ -94,6 +97,6 @@ val appModule = module{
 
 
     single {
-       GlobalStateDS(androidApplication().applicationContext)
+        GlobalStateDS(androidApplication().applicationContext)
     }
 }

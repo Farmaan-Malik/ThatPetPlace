@@ -3,7 +3,6 @@ package com.petplace.thatpetplace.common
 object Routes {
     object AuthRoutes {
         const val LOGIN_SCREEN = "loginScreen"
-        const val SIGNUP_SCREEN = "signupScreen"
         const val SIGNUP_DETAILS_SCREEN = "signupDetailsScreen"
     }
 

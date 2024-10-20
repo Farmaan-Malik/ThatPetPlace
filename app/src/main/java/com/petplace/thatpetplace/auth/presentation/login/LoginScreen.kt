@@ -106,7 +106,7 @@ fun LoginScreen(
 
 
             CustomButtonLow(label = "Sign up"){
-                navHostController.navigate(Routes.AuthRoutes.SIGNUP_SCREEN)
+                navHostController.navigate(Routes.AuthRoutes.SIGNUP_DETAILS_SCREEN)
             }
         }
     }
