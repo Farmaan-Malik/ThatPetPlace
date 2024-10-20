@@ -9,6 +9,8 @@ import com.petplace.thatpetplace.auth.presentation.signupDetails.SignUpDetailsVi
 import com.petplace.thatpetplace.common.dataStore.GlobalStateDS
 import com.petplace.thatpetplace.common.utils.Constants
 import com.petplace.thatpetplace.homeScreen.appointments.AppointmentScreenViewModel
+import com.petplace.thatpetplace.homeScreen.appointments.data.remote.AppointmentApi
+import com.petplace.thatpetplace.homeScreen.appointments.data.remote.AppointmentRepositoryImpl
 import com.petplace.thatpetplace.homeScreen.explore.presentation.ExploreDetails.ExploreDetailScreenViewModel
 import com.petplace.thatpetplace.homeScreen.explore.presentation.ExploreScreenViewModel
 import com.petplace.thatpetplace.homeScreen.navigation.NavigationViewModel
@@ -70,11 +72,28 @@ val appModule = module {
             .build()
             .create(ProfileApi::class.java)
     }
+    factory {
+        val client: OkHttpClient = OkHttpClient.Builder()
+            .connectTimeout(100, TimeUnit.SECONDS)
+            .writeTimeout(100, TimeUnit.SECONDS)
+            .readTimeout(100, TimeUnit.SECONDS)
+            .build()
+        Retrofit
+            .Builder()
+            .client(client)
+            .baseUrl(Constants.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(AppointmentApi::class.java)
+    }
     factory<ProfileRepositoryImpl> {
         ProfileRepositoryImpl(profileApi = get())
     }
+    factory<AppointmentRepositoryImpl> {
+        AppointmentRepositoryImpl(api = get())
+    }
     viewModel<AppointmentScreenViewModel> {
-        AppointmentScreenViewModel()
+        AppointmentScreenViewModel(repository = get(), globalStateDS = get())
     }
     viewModel<ExploreScreenViewModel> {
         ExploreScreenViewModel()
