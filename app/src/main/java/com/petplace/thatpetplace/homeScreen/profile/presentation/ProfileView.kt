@@ -43,7 +43,7 @@ fun ProfileView(
     paddingValues: PaddingValues,
     viewModel: ProfileViewViewModel = koinViewModel()
 ) {
-    val pets = listOf("Coco", "Chip", "Melon")
+    val pets = listOf("Coco", "Chip", "Melon", "Cherry")
     Scaffold(backgroundColor = Color(0xFFF8F7FB), topBar = {
         TopBarProfile(
             rightText = "Add New Pet",
@@ -102,7 +102,7 @@ fun ProfileView(
             }
             LazyColumn(modifier = Modifier.clip(RoundedCornerShape(topEndPercent = 15, topStartPercent = 15))){
                 items(pets) { pet ->
-                    DisplayPet(viewModel = viewModel, navController = navController, petName = pet)
+                    DisplayPet(viewModel = viewModel, navController = navController, petName = pet,)
 
 
                 }

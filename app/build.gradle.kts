@@ -84,6 +84,12 @@ dependencies {
     implementation(libs.androidx.credentials.play.services.auth)
     implementation(libs.googleid)
 
+
+    implementation(libs.play.services.maps)
+    implementation ("com.google.android.gms:play-services-location:21.3.0")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.6")
+
+
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")
     implementation ("com.google.api-client:google-api-client:2.2.0")
     implementation ("androidx.compose.material:material:1.6.8")

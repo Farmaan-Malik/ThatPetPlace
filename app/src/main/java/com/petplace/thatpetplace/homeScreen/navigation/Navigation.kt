@@ -19,6 +19,7 @@ import com.petplace.thatpetplace.homeScreen.explore.presentation.CartScreen.Cart
 import com.petplace.thatpetplace.homeScreen.explore.presentation.Explore
 import com.petplace.thatpetplace.homeScreen.explore.presentation.ExploreDetails.ExploreDetailScreen
 import com.petplace.thatpetplace.homeScreen.explore.presentation.Store.StoreScreen
+import com.petplace.thatpetplace.homeScreen.search.location.LocationUtils
 import com.petplace.thatpetplace.homeScreen.profile.presentation.ProfileView
 import com.petplace.thatpetplace.homeScreen.profile.presentation.petDetail.PetDetailScreen
 import com.petplace.thatpetplace.homeScreen.profile.presentation.profileDetail.Profile
