@@ -232,11 +232,11 @@ fun AppointmentCard(button: Boolean = true) {
                         .fillMaxWidth()
                         .fillMaxHeight(.5f)
                         .padding(horizontal = 16.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween
+                    horizontalArrangement = Arrangement.End
                 ) {
-                    AppointmentToggle(title = "Pay", isSelected = true, width = .5f) {
-                        /*TODO*/
-                    }
+//                    AppointmentToggle(title = "Pay", isSelected = true, width = .5f) {
+//                        /*TODO*/
+//                    }
                     AppointmentToggle(title = "Cancel", isSelected = false) {
                         /*TODO*/
                     }
