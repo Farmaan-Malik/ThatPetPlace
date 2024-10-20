@@ -11,6 +11,8 @@ import com.petplace.thatpetplace.common.utils.Constants
 import com.petplace.thatpetplace.homeScreen.appointments.AppointmentScreenViewModel
 import com.petplace.thatpetplace.homeScreen.explore.presentation.ExploreDetails.ExploreDetailScreenViewModel
 import com.petplace.thatpetplace.homeScreen.explore.presentation.ExploreScreenViewModel
+import com.petplace.thatpetplace.homeScreen.explore.presentation.Store.data.remote.ExploreApi
+import com.petplace.thatpetplace.homeScreen.explore.presentation.Store.data.remote.ExploreRepositoryImpl
 import com.petplace.thatpetplace.homeScreen.navigation.NavigationViewModel
 import com.petplace.thatpetplace.homeScreen.presentation.HomeScreenViewModel
 import com.petplace.thatpetplace.homeScreen.profile.data.remote.ProfileApi
@@ -63,21 +65,44 @@ val appModule = module {
         HomeScreenViewModel(get())
     }
     factory {
+        val client: OkHttpClient = OkHttpClient.Builder()
+            .connectTimeout(100, TimeUnit.SECONDS)
+            .writeTimeout(100, TimeUnit.SECONDS)
+            .readTimeout(100, TimeUnit.SECONDS)
+            .build()
         Retrofit
             .Builder()
+            .client(client)
             .baseUrl(Constants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(ProfileApi::class.java)
     }
+    factory {
+        val client: OkHttpClient = OkHttpClient.Builder()
+            .connectTimeout(100, TimeUnit.SECONDS)
+            .writeTimeout(100, TimeUnit.SECONDS)
+            .readTimeout(100, TimeUnit.SECONDS)
+            .build()
+        Retrofit
+            .Builder()
+            .client(client)
+            .baseUrl(Constants.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(ExploreApi::class.java)
+    }
     factory<ProfileRepositoryImpl> {
         ProfileRepositoryImpl(profileApi = get())
+    }
+    factory<ExploreRepositoryImpl> {
+        ExploreRepositoryImpl(api = get())
     }
     viewModel<AppointmentScreenViewModel> {
         AppointmentScreenViewModel()
     }
     viewModel<ExploreScreenViewModel> {
-        ExploreScreenViewModel()
+        ExploreScreenViewModel(globalStateDS = get(), repository = get())
     }
     viewModel<ExploreDetailScreenViewModel> {
         ExploreDetailScreenViewModel()
@@ -94,7 +119,6 @@ val appModule = module {
     viewModel<ProfileScreenViewModel> {
         ProfileScreenViewModel()
     }
-
 
     single {
         GlobalStateDS(androidApplication().applicationContext)

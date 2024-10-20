@@ -38,7 +38,7 @@ import androidx.compose.ui.unit.sp
 import com.petplace.thatpetplace.R
 
 @Composable
-fun ExploreStoresCard(onClick:()->Unit) {
+fun ExploreStoresCard(name:String,tagline:String,distance: Double,onClick:()->Unit) {
     Card(
         shape = RoundedCornerShape(8),
         colors = CardDefaults.cardColors(containerColor = Color.White),
@@ -76,7 +76,7 @@ fun ExploreStoresCard(onClick:()->Unit) {
                         .padding(top = 16.dp, start = 16.dp)
                 ) {
                     Text(
-                        text = "Little Paws Clinic",
+                        text = name,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         fontWeight = FontWeight.Bold,
@@ -105,7 +105,7 @@ fun ExploreStoresCard(onClick:()->Unit) {
                                 modifier = Modifier.size(20.dp)
                             )
                         }
-                        Text(text = "1.5km")
+                        Text(text = distance.toString())
                     }
 
                 }
@@ -113,7 +113,7 @@ fun ExploreStoresCard(onClick:()->Unit) {
             }
 
             Text(
-                text ="\"" + "Where your pet's needs come first." + "\"",
+                text ="\"" + tagline + "\"",
                 color = Color(0xFFBBC3CE),
                 fontSize = 14.sp,
                 maxLines = 2,
