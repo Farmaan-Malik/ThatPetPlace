@@ -8,4 +8,5 @@ import kotlinx.coroutines.flow.Flow
 interface ExploreRepository {
 
     fun getNearShops(locationData: LocationData): Flow<Resource<NearShopsResponse>>
+    fun getAllShops(): Flow<Resource<NearShopsResponse>>
 }

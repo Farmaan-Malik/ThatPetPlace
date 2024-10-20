@@ -102,7 +102,7 @@ val appModule = module {
         AppointmentScreenViewModel()
     }
     viewModel<ExploreScreenViewModel> {
-        ExploreScreenViewModel(globalStateDS = get(), repository = get())
+        ExploreScreenViewModel(repository = get())
     }
     viewModel<ExploreDetailScreenViewModel> {
         ExploreDetailScreenViewModel()

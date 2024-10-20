@@ -18,4 +18,14 @@ class ExploreRepositoryImpl(private val api:ExploreApi):ExploreRepository {
             emit(value = Resource.Error(it.message.toString()))
         }
     }
+
+    override fun getAllShops(): Flow<Resource<NearShopsResponse>> {
+        return flow {
+            emit(value = Resource.Loading())
+            val result = api.getAllShops()
+            emit(value = Resource.Success(data = result))
+        }.catch {
+            emit(value = Resource.Error(it.message.toString()))
+        }
+    }
 }

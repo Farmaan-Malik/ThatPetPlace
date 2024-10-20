@@ -18,39 +18,7 @@ import kotlinx.coroutines.launch
 
 class ExploreScreenViewModel(
     private val repository: ExploreRepositoryImpl,
-    private val globalStateDS: GlobalStateDS
 ) : ViewModel() {
-
-    // Initialize FusedLocationProviderClient
-//    val fusedLocationClient = LocationServices.getFusedLocationProviderClient(MainActivity().baseContext)
-
-
-    // Get the last known location
-//    getLastLocation()
-
-
-//    @SuppressLint("MissingPermission")
-//    private fun getLastLocation() {
-//        fusedLocationClient.lastLocation
-//            .addOnSuccessListener { location ->
-//                if (location != null) {
-//                    val latitude = location.latitude
-//                    val longitude = location.longitude
-//
-//                    // Log or use the latitude and longitude values
-//                    Log.d("Location", "Latitude: $latitude, Longitude: $longitude")
-//                } else {
-//                    Log.d("Location", "Location not available")
-//                }
-//            }
-//            .addOnFailureListener { e ->
-//                Log.e("Location", "Failed to get location: ${e.message}")
-//            }
-//    }
-
-//init {
-//    getLastLocation()
-//}
 
     private val _isSuccess = mutableStateOf(false)
     val isSuccess: State<Boolean> = _isSuccess
@@ -62,34 +30,19 @@ class ExploreScreenViewModel(
     val clinics = mutableStateOf(listOf<String>("hsg"))
     private val _nearbyShops = MutableStateFlow<Resource<NearShopsResponse>>(Resource.Loading())
     val nearbyShops: StateFlow<Resource<NearShopsResponse>> = _nearbyShops
-
-    val latitude = globalStateDS.stateStatusFlow.map {
-        it.latitude
-    }
-    val longitude = globalStateDS.stateStatusFlow.map {
-        it.longitude
-    }
-    var newLat: Double = 0.0
-    var newLong: Double = 0.0
+    private val _allStores = MutableStateFlow<Resource<NearShopsResponse>>(Resource.Loading())
+    val allStores: StateFlow<Resource<NearShopsResponse>> = _allStores
 
 
-    fun getLocationData() {
-        viewModelScope.launch {
-            latitude.collectLatest {
-                newLat = it
-            }
-            longitude.collectLatest {
-                newLong = it
-            }
-        }
 
-    }
 
-    fun getNearbyShops() {
-        Log.e("Location", newLat.toString() +" "+ newLong.toString())
+
+
+    fun getNearbyShops(lat:Double,long:Double) {
+        Log.e("Loddddddcation", lat.toString() +" "+ long.toString())
         viewModelScope.launch {
             repository.getNearShops(
-                LocationData(newLat, newLong)
+                LocationData( long,lat)
             ).collectLatest { result ->
                 when (result) {
                     is Resource.Loading -> {
@@ -98,6 +51,32 @@ class ExploreScreenViewModel(
 
                     is Resource.Success -> {
                         Log.e("Success", result.data.toString())
+                        _nearbyShops.value = result
+                        _isLoading.value = false
+                    }
+
+                    is Resource.Error -> {
+                        _isLoading.value = false
+                        _isError.value = true
+                        Log.i("Error", result.message.toString())
+
+                    }
+                }
+            }
+        }
+
+    }
+    fun getAllShops() {
+
+        viewModelScope.launch {
+            repository.getAllShops().collectLatest { result ->
+                when (result) {
+                    is Resource.Loading -> {
+                        _isLoading.value = true
+                    }
+
+                    is Resource.Success -> {
+                        Log.e("Success ALl ", result.data.toString())
                         _nearbyShops.value = result
                         _isLoading.value = false
                     }
