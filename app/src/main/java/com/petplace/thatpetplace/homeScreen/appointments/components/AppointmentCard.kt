@@ -1,5 +1,7 @@
 package com.petplace.thatpetplace.homeScreen.appointments.components
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -15,8 +17,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.LocationOn
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -36,9 +36,15 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.petplace.thatpetplace.R
+import com.petplace.thatpetplace.homeScreen.appointments.data.model.GetAllAppointmentResponseItem
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun AppointmentCard(button: Boolean = true) {
+fun AppointmentCard(appointment: GetAllAppointmentResponseItem,button: Boolean = true) {
+    val instant = ZonedDateTime.parse(appointment.AppointmentDate, DateTimeFormatter.ISO_DATE_TIME)
+
     Card(
         shape = RoundedCornerShape(8),
         colors = CardDefaults.cardColors(containerColor = Color.White),
@@ -78,14 +84,14 @@ fun AppointmentCard(button: Boolean = true) {
                         .padding(top = 8.dp)
                 ) {
                     Text(
-                        text = "Alekseenko Vasily",
+                        text = appointment.DoctorName,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         fontWeight = FontWeight.Bold,
                         fontSize = 18.sp
                     )
                     Text(
-                        text = "Veterinary Dentist",
+                        text = appointment.DoctorQualification,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         fontWeight = FontWeight.SemiBold,
@@ -98,23 +104,6 @@ fun AppointmentCard(button: Boolean = true) {
                         horizontalArrangement = Arrangement.Start,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-
-                        Row {
-                            Box(
-                                modifier = Modifier
-                                    .clip(CircleShape)
-                                    .size(25.dp)
-                                    .background(Color(0xFFF0F0F8)),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Outlined.LocationOn,
-                                    contentDescription = "Distance",
-                                    modifier = Modifier.size(20.dp)
-                                )
-                            }
-                            Text(text = "1.5km")
-                        }
                         Spacer(modifier = Modifier.width(40.dp))
                         Row {
                             Box(
@@ -130,7 +119,7 @@ fun AppointmentCard(button: Boolean = true) {
                                     modifier = Modifier.size(15.dp)
                                 )
                             }
-                            Text(text = "$20")
+                            Text(text =appointment.Price.toString())
                         }
                     }
                 }
@@ -165,17 +154,16 @@ fun AppointmentCard(button: Boolean = true) {
                         modifier = Modifier
                             .fillMaxWidth()
                             .fillMaxHeight()
-//                            .border(2.dp, Color.Red)
                     ) {
                         Text(
-                            text = "Veterinary clinic \"Alden-Vet\"",
+                            text = appointment.ClinicName,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
                             fontWeight = FontWeight.SemiBold,
                             fontSize = 16.sp
                         )
                         Text(
-                            text = "141 N Union Ave, Los Angeles, CA",
+                            text = appointment.ClinicAddress,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
                         )
@@ -207,7 +195,7 @@ fun AppointmentCard(button: Boolean = true) {
                         verticalArrangement = Arrangement.Center
                     ) {
                         Text(
-                            text = "Wed 9 Sep — 10:30 am",
+                            text = instant.toString(),
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
                             modifier = Modifier.padding(bottom = 16.dp)
@@ -223,7 +211,7 @@ fun AppointmentCard(button: Boolean = true) {
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically) {
                 Text(text = "Appointment for:  ", fontWeight = FontWeight.Bold, fontSize = 16.sp)
-                Text(text = "Coco",fontSize = 16.sp)
+                Text(text = appointment.PetName,fontSize = 16.sp)
 
             }
             if (button) {
