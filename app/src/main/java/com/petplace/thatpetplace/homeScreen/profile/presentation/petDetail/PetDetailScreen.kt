@@ -122,146 +122,144 @@ fun PetDetailScreen(
                     ) {
                         AddProfile(viewModel = viewModel)
                     }
-                }
+                    CustomButton(label = "Submit") {
+                        viewModel.uploadPhoto()
+                    }
+                } else {
 
-                Spacer(modifier = Modifier.height(32.dp))
+                    Spacer(modifier = Modifier.height(32.dp))
 
-                Text(
-                    text = "General \nInformation",
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    lineHeight = 25.sp
-                )
+                    Text(
+                        text = "General \nInformation",
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                        lineHeight = 25.sp
+                    )
 
-                PrimaryTextInput(
-                    readOnly = isSuccess,
-                    label = "Pet's name",
-                    value = petsName.value,
-                    onValueChangeEvent = {
-                        Log.e("Pre-change", petsName.value)
-                        petsName.value = it
-                        Log.e("Post-change", petsName.value)
-                        viewModel.changeName(petsName.value)
-                    })
-                PrimaryDropdown(
-                    selectedValue = species.value,
-                    options = listOf("asd", "sad"),
-                    label = "Species of your pet",
-                    onValueChangedEvent = {
-                        if (!isSuccess) {
+                    PrimaryTextInput(
+                        label = "Pet's name",
+                        value = petsName.value,
+                        onValueChangeEvent = {
+                            Log.e("Pre-change", petsName.value)
+                            petsName.value = it
+                            Log.e("Post-change", petsName.value)
+                            viewModel.changeName(petsName.value)
+                        })
+                    PrimaryDropdown(
+                        selectedValue = species.value,
+                        options = listOf("asd", "sad"),
+                        label = "Species of your pet",
+                        onValueChangedEvent = {
                             species.value = it
                             viewModel.changeSpecies(it)
-                        }
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 8.dp)
-                )
-                PrimaryTextInput(
-                    readOnly = isSuccess,
-                    label = "Breed of your pet",
-                    value = breed.value,
-                    onValueChangeEvent = {
-                        Log.e("Pre-change", petsName.value)
-                        breed.value = it
-                        Log.e("Post-change", petsName.value)
-                        viewModel.changeBreed(breed.value)
-                    })
-                Text(
-                    text = "Gender",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 24.dp),
-                    fontSize = 13.sp,
-                    color = Color(0xFFBBC3CE)
-                )
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 13.dp),
-                    horizontalArrangement = Arrangement.SpaceAround
-                ) {
-                    ColorToggleButton(
-                        onClick = {
-                            if (!isSuccess) {
+
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 8.dp)
+                    )
+                    PrimaryTextInput(
+                        label = "Breed of your pet",
+                        value = breed.value,
+                        onValueChangeEvent = {
+                            Log.e("Pre-change", petsName.value)
+                            breed.value = it
+                            Log.e("Post-change", petsName.value)
+                            viewModel.changeBreed(breed.value)
+                        })
+                    Text(
+                        text = "Gender",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 24.dp),
+                        fontSize = 13.sp,
+                        color = Color(0xFFBBC3CE)
+                    )
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 13.dp),
+                        horizontalArrangement = Arrangement.SpaceAround
+                    ) {
+                        ColorToggleButton(
+                            onClick = {
                                 gender.value = "Male"
                                 viewModel.changeGender("Male")
-                            }
-                        },
-                        label = "Male",
-                        selected = gender.value == "Male",
-                        isIcon = true,
-                        icon = R.drawable.male
-                    )
-                    ColorToggleButton(
-                        onClick = {
-                            if (!isSuccess) {
+
+                            },
+                            label = "Male",
+                            selected = gender.value == "Male",
+                            isIcon = true,
+                            icon = R.drawable.male
+                        )
+                        ColorToggleButton(
+                            onClick = {
                                 gender.value = "Female"
                                 viewModel.changeGender("Female")
-                            }
-                        },
-                        label = "Female",
-                        selected = gender.value == "Female",
-                        isIcon = true,
-                        icon = R.drawable.female
+
+                            },
+                            label = "Female",
+                            selected = gender.value == "Female",
+                            isIcon = true,
+                            icon = R.drawable.female
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(24.dp))
+
+                    PrimaryTextInput(
+                        label = "Age", value = age.value.toString(), onValueChangeEvent = {
+                            if (it.length > 3) {
+                                Toast.makeText(
+                                    context, "Age should be less than 99", Toast.LENGTH_LONG
+                                ).show()
+                                age.value = ""
+                                viewModel.changeAge("")
+                            } else age.value = it
+                            viewModel.changeAge(it)
+                        }, keyboardType = KeyboardType.Number
                     )
-                }
-                Spacer(modifier = Modifier.height(24.dp))
+                    Spacer(modifier = Modifier.height(32.dp))
 
-                PrimaryTextInput(
-                    readOnly = isSuccess,
-                    label = "Age", value = age.value.toString(), onValueChangeEvent = {
-                        if (it.length > 3) {
-                            Toast.makeText(
-                                context, "Age should be less than 99", Toast.LENGTH_LONG
-                            ).show()
-                            age.value = ""
-                            viewModel.changeAge("")
-                        } else age.value = it
-                        viewModel.changeAge(it)
-                    }, keyboardType = KeyboardType.Number
-                )
-                Spacer(modifier = Modifier.height(32.dp))
+                    Text(
+                        text = "Additional Information",
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                    )
+                    Spacer(modifier = Modifier.height(20.dp))
+                    Column {
 
-                Text(
-                    text = "Additional Information",
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                )
-                Spacer(modifier = Modifier.height(20.dp))
-                Column {
-
-                    CustomSwitch(isSelected = isNeuter.value, text = "Neutered", onChange = {
-                        if (!isSuccess) {
+                        CustomSwitch(isSelected = isNeuter.value, text = "Neutered", onChange = {
                             Log.e("pre-click", isNeuter.value.toString())
                             isNeuter.value = !isNeuter.value
                             viewModel.isNeutered(
                                 isNeuter.value
                             )
                             Log.e("post-clicked", isNeuter.value.toString())
-                        }
-                    })
-                    CustomSwitch(isSelected = isVaccinated.value, text = "Vaccinated", onChange = {
-                        if (!isSuccess) {
-                            isVaccinated.value = !isVaccinated.value
-                            viewModel.isVaccinated(!isVaccinated.value)
-                        }
-                    })
 
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 12.dp),
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-                        CustomButton(label = if (isSuccess)"Submit" else "Next") {
-                            if (!isSuccess) {
-                            viewModel.addPet()
-                            Log.e("userid", viewModel.string.value)
-                        }else viewModel.uploadPhoto()}
+                        })
+                        CustomSwitch(
+                            isSelected = isVaccinated.value,
+                            text = "Vaccinated",
+                            onChange = {
+                                isVaccinated.value = !isVaccinated.value
+                                viewModel.isVaccinated(!isVaccinated.value)
+
+                            })
+
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 12.dp),
+                            horizontalArrangement = Arrangement.Center
+                        ) {
+                            CustomButton(label = "Next") {
+                                viewModel.addPet()
+                                Log.e("userid", viewModel.string.value)
+                            }
+                        }
                     }
-                }
 
+                }
             }
 
         }

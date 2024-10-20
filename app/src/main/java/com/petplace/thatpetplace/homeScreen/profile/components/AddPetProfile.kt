@@ -40,6 +40,8 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import java.io.FileOutputStream
+import java.util.Locale
+import kotlin.random.Random
 
 @Composable
 fun AddProfile(viewModel : PetDetailViewModel) {
@@ -54,7 +56,7 @@ fun AddProfile(viewModel : PetDetailViewModel) {
         onResult = { uri ->
             selectedImage = uri
             val fileDir = context.filesDir
-            val file = File(fileDir, "image.png")
+            val file = File(fileDir, generateRandomName())
             //make the file
             if (uri!=null) {
                 val inputStream = context.contentResolver.openInputStream(uri)
@@ -62,9 +64,10 @@ fun AddProfile(viewModel : PetDetailViewModel) {
                 inputStream!!.copyTo(outputStream)
 
                 val requestBody = file.asRequestBody("image/*".toMediaTypeOrNull())
-                val image = MultipartBody.Part.createFormData("files[]", file.name, requestBody)
-                viewModel.saveImage(image)
+                val image = MultipartBody.Part.createFormData("photo", file.name, requestBody)
                 inputStream.close()
+                viewModel.saveImage(image)
+
             }
         }
     )
@@ -132,4 +135,28 @@ fun AddProfile(viewModel : PetDetailViewModel) {
 
     }
 
+}
+
+fun generateRandomName(): String {
+    val vowels = listOf('a', 'e', 'i', 'o', 'u')
+    val consonants = listOf(
+        'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm',
+        'n', 'p', 'r', 's', 't', 'v', 'w', 'x', 'y', 'z'
+    )
+
+    val nameLength = Random.nextInt(3, 6) // Name length between 3 and 5 characters
+    val name = StringBuilder()
+
+    for (i in 0 until nameLength) {
+        if (i % 2 == 0) {
+            // Add consonant for even index
+            name.append(consonants.random())
+        } else {
+            // Add vowel for odd index
+            name.append(vowels.random())
+        }
+    }
+
+    // Capitalize the first letter
+    return name.toString()
 }
