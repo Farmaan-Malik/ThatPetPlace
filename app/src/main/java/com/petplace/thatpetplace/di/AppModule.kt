@@ -11,8 +11,13 @@ import com.petplace.thatpetplace.common.utils.Constants
 import com.petplace.thatpetplace.homeScreen.appointments.AppointmentScreenViewModel
 import com.petplace.thatpetplace.homeScreen.appointments.data.remote.AppointmentApi
 import com.petplace.thatpetplace.homeScreen.appointments.data.remote.AppointmentRepositoryImpl
+import com.petplace.thatpetplace.homeScreen.explore.presentation.BookAppointment.BookAppointmentViewModel
 import com.petplace.thatpetplace.homeScreen.explore.presentation.ExploreDetails.ExploreDetailScreenViewModel
+import com.petplace.thatpetplace.homeScreen.explore.presentation.ExploreDetails.data.remote.ExploreDetailApi
+import com.petplace.thatpetplace.homeScreen.explore.presentation.ExploreDetails.data.remote.ExploreDetailRepositoryImpl
 import com.petplace.thatpetplace.homeScreen.explore.presentation.ExploreScreenViewModel
+import com.petplace.thatpetplace.homeScreen.explore.presentation.Store.data.remote.ExploreApi
+import com.petplace.thatpetplace.homeScreen.explore.presentation.Store.data.remote.ExploreRepositoryImpl
 import com.petplace.thatpetplace.homeScreen.navigation.NavigationViewModel
 import com.petplace.thatpetplace.homeScreen.presentation.HomeScreenViewModel
 import com.petplace.thatpetplace.homeScreen.profile.data.remote.ProfileApi
@@ -86,8 +91,42 @@ val appModule = module {
             .build()
             .create(AppointmentApi::class.java)
     }
+    factory {
+        val client: OkHttpClient = OkHttpClient.Builder()
+            .connectTimeout(100, TimeUnit.SECONDS)
+            .writeTimeout(100, TimeUnit.SECONDS)
+            .readTimeout(100, TimeUnit.SECONDS)
+            .build()
+        Retrofit
+            .Builder()
+            .client(client)
+            .baseUrl(Constants.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(ExploreApi::class.java)
+    }
+    factory {
+        val client: OkHttpClient = OkHttpClient.Builder()
+            .connectTimeout(100, TimeUnit.SECONDS)
+            .writeTimeout(100, TimeUnit.SECONDS)
+            .readTimeout(100, TimeUnit.SECONDS)
+            .build()
+        Retrofit
+            .Builder()
+            .client(client)
+            .baseUrl(Constants.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(ExploreDetailApi::class.java)
+    }
     factory<ProfileRepositoryImpl> {
         ProfileRepositoryImpl(profileApi = get())
+    }
+    factory<ExploreDetailRepositoryImpl> {
+        ExploreDetailRepositoryImpl(api = get())
+    }
+    factory<ExploreRepositoryImpl> {
+        ExploreRepositoryImpl(api = get())
     }
     factory<AppointmentRepositoryImpl> {
         AppointmentRepositoryImpl(api = get())
@@ -96,10 +135,13 @@ val appModule = module {
         AppointmentScreenViewModel(repository = get(), globalStateDS = get())
     }
     viewModel<ExploreScreenViewModel> {
-        ExploreScreenViewModel()
+        ExploreScreenViewModel(repository = get())
     }
     viewModel<ExploreDetailScreenViewModel> {
-        ExploreDetailScreenViewModel()
+        ExploreDetailScreenViewModel(repository = get(), globalStateDS = get())
+    }
+    viewModel<BookAppointmentViewModel> {
+        BookAppointmentViewModel(repository = get(), globalStateDS = get())
     }
     viewModel<PetDetailViewModel> {
         PetDetailViewModel(profileRepository = get(), globalStateDS = get())

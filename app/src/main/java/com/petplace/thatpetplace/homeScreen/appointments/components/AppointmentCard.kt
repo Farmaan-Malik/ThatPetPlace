@@ -37,14 +37,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.petplace.thatpetplace.R
 import com.petplace.thatpetplace.homeScreen.appointments.data.model.GetAllAppointmentResponseItem
-import java.time.ZonedDateTime
-import java.time.format.DateTimeFormatter
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun AppointmentCard(appointment: GetAllAppointmentResponseItem,button: Boolean = true) {
-    val instant = ZonedDateTime.parse(appointment.AppointmentDate, DateTimeFormatter.ISO_DATE_TIME)
-
     Card(
         shape = RoundedCornerShape(8),
         colors = CardDefaults.cardColors(containerColor = Color.White),
@@ -195,7 +191,7 @@ fun AppointmentCard(appointment: GetAllAppointmentResponseItem,button: Boolean =
                         verticalArrangement = Arrangement.Center
                     ) {
                         Text(
-                            text = instant.toString(),
+                            text = appointment.AppointmentDate,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
                             modifier = Modifier.padding(bottom = 16.dp)

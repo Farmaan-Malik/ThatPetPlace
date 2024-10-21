@@ -1,7 +1,7 @@
 package com.petplace.thatpetplace.homeScreen.explore.presentation
 
-import android.annotation.SuppressLint
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -56,6 +56,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun Explore(
     paddingValues: PaddingValues,
+    filter: String,
     navController: NavHostController,
     viewModel: ExploreScreenViewModel = koinViewModel()
 ) {
@@ -68,20 +69,14 @@ fun Explore(
     val isSuccess by remember {
         viewModel.isSuccess
     }
-    val selectionType = remember {
-        mutableStateOf("Stores")
-    }
     val stores = remember {
         viewModel.stores.value
     }
     val nearest = viewModel.nearbyShops.collectAsState()
 
-    val allShops = remember {
-        viewModel.allStores.value
-    }
-    LaunchedEffect(Unit) {
-        viewModel.getAllShops()
-    }
+    val allShops = viewModel.allStores.collectAsState()
+
+
     val context = LocalContext.current
     var latitude by remember { mutableStateOf(0.0) }
     var longitude by remember { mutableStateOf(0.0) }
@@ -94,7 +89,7 @@ fun Explore(
             permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true
         ) {
             getLocation(fusedLocationClient) { lat, lon ->
-                Log.e("Longitude2",lon.toString())
+                Log.e("Longitude2", lon.toString())
                 latitude = lat
                 longitude = lon
             }
@@ -102,6 +97,7 @@ fun Explore(
             Log.d("Location", "Location permission denied")
         }
     }
+
     fun getNearestStores() {
         if (ActivityCompat.checkSelfPermission(
                 context,
@@ -121,9 +117,18 @@ fun Explore(
         } else {
             // If permissions are granted, get the location
             getLocation(fusedLocationClient) { lat, lon ->
-                Log.e("LAA",lat.toString() +"   "+ lon.toString())
-                viewModel.getNearbyShops(lat,lon)
+                Log.e("LAA", lat.toString() + "   " + lon.toString())
+                viewModel.getNearbyShops(lat, lon)
             }
+        }
+    }
+    LaunchedEffect(Unit) {
+        Log.e("filter",filter)
+        if (filter == "n") {
+            Log.e("asas","plplpl",)
+            getNearestStores()
+        } else {
+            viewModel.getFilteredShops(filter)
         }
     }
 
@@ -161,30 +166,22 @@ fun Explore(
                             .background(Color.White)
                     ) {
                         AppointmentToggle(
-                            title = "Stores",
-                            isSelected = selectionType.value == "Stores",
-                            width = .5f
-                        ) {
-                            selectionType.value = "Stores"/*TODO*/
-                            viewModel.getAllShops()
-                        }
-                        AppointmentToggle(
-                            title = "Nearest",
-                            isSelected = selectionType.value == "Nearest",
+                            title = if (filter == "n")"Nearest" else "Refresh",
+                            isSelected = true,
                             width = 1f
                         ) {
-                            selectionType.value = "Nearest"
-                            getNearestStores()
-
+                            if (filter == "n") {
+                                getNearestStores()
+                            } else {
+                                viewModel.getFilteredShops(filter)
+                            }
 
                         }
 
                     }
 
                 }
-
-
-                if (selectionType.value == "Nearest" && nearest.value.data.isNullOrEmpty()|| selectionType.value == "Stores" && allShops.data.isNullOrEmpty()) {
+                if (nearest.value.data.isNullOrEmpty()) {
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
@@ -202,44 +199,33 @@ fun Explore(
                             text = "No Shops here", color = Color(0xFFBBC3CE), fontSize = 20.sp
                         )
                     }
-                } else LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(
-                            top = 10.dp, start = 8.dp, end = 8.dp
-                        )
-                ) {
-                    if (selectionType.value == "Nearest") {
-                        Log.e("SSSSSS","nearest seleceted")
-                        if(!nearest.value.data.isNullOrEmpty()) {
+                } else {
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(
+                                top = 10.dp, start = 8.dp, end = 8.dp
+                            )
+                    ) {
+
+                        Log.e("SSSSSS", "nearest seleceted")
+                        if (!nearest.value.data.isNullOrEmpty()) {
                             items(nearest.value.data!!) { shop ->
 
                                 ExploreStoresCard(
                                     name = shop.name,
                                     tagline = shop.tagline,
-                                    distance = shop.Distance
-                                ) { navController.navigate(Routes.HomeScreenRoutes.EXPLORE_DETAIL_SCREEN) }
+                                    distance = shop.distance
+                                ) { navController.navigate(Routes.HomeScreenRoutes.EXPLORE_DETAIL_SCREEN + "/${shop.id}") }
                             }
                         }
-
-                    } else {
-
-                        items(allShops.data ?: listOf()) { shop ->
-                            Log.e("SSSSSS",shop.toString())
-                            ExploreStoresCard(
-                                name = shop.name,
-                                tagline = shop.tagline,
-                                distance = shop.Distance
-                            ) { navController.navigate(Routes.HomeScreenRoutes.EXPLORE_DETAIL_SCREEN) }
-                        }
                     }
-
                 }
             }
-
         }
     }
 }
+
 fun getLocation(
     fusedLocationClient: FusedLocationProviderClient,
     onLocationRetrieved: (Double, Double) -> Unit
@@ -248,7 +234,7 @@ fun getLocation(
         fusedLocationClient.lastLocation
             .addOnSuccessListener { location ->
                 if (location != null) {
-                    Log.e("Longitude",location.longitude.toString())
+                    Log.e("Longitude", location.longitude.toString())
                     onLocationRetrieved(location.latitude, location.longitude)
                 } else {
                     Log.d("Location", "Location is null")

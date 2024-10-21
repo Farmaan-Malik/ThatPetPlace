@@ -21,7 +21,6 @@ interface ProfileApi {
 
 
     @GET("pet/getAllPets")
-
     suspend fun getPetList (
         @Query("userID") userID:String
     ) : PetListResponse

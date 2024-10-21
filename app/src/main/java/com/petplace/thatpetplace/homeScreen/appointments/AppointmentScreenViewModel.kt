@@ -60,7 +60,6 @@ class AppointmentScreenViewModel(
                             _isLoading.value = false
                             _isError.value = true
                             Log.i("SSSSSSS", result.message.toString())
-
                         }
                     }
                 }

@@ -36,12 +36,15 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.petplace.thatpetplace.R
+import com.petplace.thatpetplace.homeScreen.explore.presentation.Store.data.model.Doctor
 
 @Composable
-fun ExploreClinicsCard(onClick:()->Unit={}) {
+fun ExploreClinicsCard(doctor : Doctor,clinicName: String,distance:String,selected:Boolean=false, onClick:()->Unit={}) {
     Card(
         shape = RoundedCornerShape(8),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
+        colors = CardDefaults.cardColors(containerColor =if (selected)Color(0x95D1CCE8)
+        else
+            Color.White),
         modifier = Modifier
             .height(120.dp)
             .padding(top = 2.dp, bottom = 8.dp, start = 8.dp, end = 8.dp)
@@ -76,24 +79,23 @@ fun ExploreClinicsCard(onClick:()->Unit={}) {
                         .padding(top = 8.dp, start = 8.dp)
                 ) {
                     Text(
-                        text = "Alekseenko Vasily",
+                        text = doctor.name,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         fontWeight = FontWeight.Bold,
                         fontSize = 16.sp
                     )
                     Text(
-                        text = "Little Paws Clinic",
+                        text = clinicName,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 14.sp
                     )
                     Text(
-                        text = "Veterinary Dentist",
+                        text = doctor.qualification,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
-//                        fontWeight = FontWeight.SemiBold,
                         fontSize = 12.sp
                     )
                     Row(
@@ -118,7 +120,7 @@ fun ExploreClinicsCard(onClick:()->Unit={}) {
                                     modifier = Modifier.size(10.dp)
                                 )
                             }
-                            Text(text = "1.5km")
+                            Text(text = distance)
                         }
                         Spacer(modifier = Modifier.width(10.dp))
                         Row {
@@ -135,14 +137,14 @@ fun ExploreClinicsCard(onClick:()->Unit={}) {
                                     modifier = Modifier.size(5.dp)
                                 )
                             }
-                            Text(text = "$20")
+                            Text(text = doctor.fees.toString())
                         }
                     }
                 }
             }
             Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)) {
                 Text(
-                    text = "7",
+                    text = doctor.years_of_experience.toString(),
                     color = Color(0xFFBBC3CE),
                     fontWeight = FontWeight.Bold,
                     fontSize = 16.sp

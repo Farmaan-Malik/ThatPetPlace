@@ -20,7 +20,7 @@ sealed class BottomNavigationObjects (
         icon = R.drawable.clock_outlined
     )
     object exploreScreen: BottomNavigationObjects(
-        route = Routes.HomeScreenRoutes.EXPLORE_SCREEN,
+        route = Routes.HomeScreenRoutes.EXPLORE_SCREEN + "/n",
         title = "Explore",
         icon = R.drawable.explore_outlined
     )

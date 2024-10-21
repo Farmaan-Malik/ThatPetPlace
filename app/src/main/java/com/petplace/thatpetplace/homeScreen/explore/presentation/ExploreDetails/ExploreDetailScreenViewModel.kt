@@ -1,7 +1,55 @@
 package com.petplace.thatpetplace.homeScreen.explore.presentation.ExploreDetails
 
+import android.util.Log
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.petplace.thatpetplace.common.dataStore.GlobalStateDS
+import com.petplace.thatpetplace.common.utils.Resource
+import com.petplace.thatpetplace.homeScreen.explore.presentation.ExploreDetails.data.remote.ExploreDetailRepositoryImpl
+import com.petplace.thatpetplace.homeScreen.explore.presentation.Store.data.model.ShopResponseItem
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
-class ExploreDetailScreenViewModel: ViewModel() {
+class ExploreDetailScreenViewModel(
+    private val repository: ExploreDetailRepositoryImpl,
+    val globalStateDS: GlobalStateDS
+): ViewModel() {
 
+    private val _isSuccess = mutableStateOf(false)
+    val isSuccess: State<Boolean> = _isSuccess
+    private val _isLoading = mutableStateOf(false)
+    val isLoading: State<Boolean> = _isLoading
+    private val _isError = mutableStateOf(false)
+    val isError: State<Boolean> = _isError
+    private val _shopDetails = MutableStateFlow<Resource<ShopResponseItem>>(Resource.Loading())
+    val shopDetails: StateFlow<Resource<ShopResponseItem>> = _shopDetails
+
+    fun getShopDetails(id: String) {
+
+        viewModelScope.launch {
+            repository.getShopDetails(id).collectLatest { result ->
+                when (result) {
+                    is Resource.Loading -> {
+                        _isLoading.value = true
+                    }
+
+                    is Resource.Success -> {
+                        Log.e("Success ALl ", result.data.toString())
+                        _shopDetails.value = result
+                        _isLoading.value = false
+                    }
+
+                    is Resource.Error -> {
+                        _isLoading.value = false
+                        _isError.value = true
+                        Log.i("Error", result.message.toString())
+                    }
+                }
+            }
+        }
+    }
 }

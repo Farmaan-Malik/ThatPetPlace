@@ -107,8 +107,8 @@ fun SearchScreen(
         locationUtils.reverseGeocodeLocation(location)
     }
 
-    fun navigate() {
-        navController.navigate(Routes.HomeScreenRoutes.EXPLORE_SCREEN)
+    fun navigate(string:String) {
+        navController.navigate(Routes.HomeScreenRoutes.EXPLORE_SCREEN + "/${string}")
     }
     Scaffold(topBar = {
         TopBarSearch(
@@ -170,28 +170,28 @@ fun SearchScreen(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    HomeScreenTile(R.drawable.vet, "Veterinary", onClick = { navigate() })
-                    HomeScreenTile(R.drawable.grooming, "Grooming", onClick = { navigate() })
+                    HomeScreenTile(R.drawable.vet, "Veterinary", onClick = { navigate("veterinary") })
+                    HomeScreenTile(R.drawable.grooming, "Grooming", onClick = { navigate("grooming") })
                     HomeScreenTile(
                         R.drawable.pet_boarding,
                         "Pet Boarding",
-                        onClick = { navigate() })
+                        onClick = { navigate("pet Boarding") })
                 }
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    HomeScreenTile(R.drawable.adoption, "Adoption", onClick = { navigate() })
-                    HomeScreenTile(R.drawable.dog_walking, "Dog Walking", onClick = { navigate() })
-                    HomeScreenTile(R.drawable.training, "Training", onClick = { navigate() })
+                    HomeScreenTile(R.drawable.adoption, "Adoption", onClick = { navigate("adoption") })
+                    HomeScreenTile(R.drawable.dog_walking, "Dog Walking", onClick = { navigate("dog Walking") })
+                    HomeScreenTile(R.drawable.training, "Training", onClick = { navigate("training") })
                 }
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    HomeScreenTile(R.drawable.pet_taxi, "Pet Taxi", onClick = { navigate() })
-                    HomeScreenTile(R.drawable.pet_date, "Pet Date", onClick = { navigate() })
-                    HomeScreenTile(R.drawable.other, "Other", onClick = { navigate() })
+                    HomeScreenTile(R.drawable.pet_taxi, "Pet Taxi", onClick = { navigate("pet Taxi") })
+                    HomeScreenTile(R.drawable.pet_date, "Pet Date", onClick = { navigate("pet Date") })
+                    HomeScreenTile(R.drawable.other, "Other", onClick = { navigate("other") })
                 }
             }
         }

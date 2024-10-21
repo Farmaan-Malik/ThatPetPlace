@@ -5,15 +5,13 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.petplace.thatpetplace.common.dataStore.GlobalStateDS
 import com.petplace.thatpetplace.common.utils.Resource
-import com.petplace.thatpetplace.homeScreen.explore.presentation.Store.data.model.NearShopsResponse
+import com.petplace.thatpetplace.homeScreen.explore.presentation.Store.data.model.ShopResponse
 import com.petplace.thatpetplace.homeScreen.explore.presentation.Store.data.remote.ExploreRepositoryImpl
 import com.petplace.thatpetplace.homeScreen.search.location.LocationData
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class ExploreScreenViewModel(
@@ -28,21 +26,17 @@ class ExploreScreenViewModel(
     val isError: State<Boolean> = _isError
     val stores = mutableStateOf(listOf<String>("asd"))
     val clinics = mutableStateOf(listOf<String>("hsg"))
-    private val _nearbyShops = MutableStateFlow<Resource<NearShopsResponse>>(Resource.Loading())
-    val nearbyShops: StateFlow<Resource<NearShopsResponse>> = _nearbyShops
-    private val _allStores = MutableStateFlow<Resource<NearShopsResponse>>(Resource.Loading())
-    val allStores: StateFlow<Resource<NearShopsResponse>> = _allStores
+    private val _nearbyShops = MutableStateFlow<Resource<ShopResponse>>(Resource.Loading())
+    val nearbyShops: StateFlow<Resource<ShopResponse>> = _nearbyShops
+    private val _allStores = MutableStateFlow<Resource<ShopResponse>>(Resource.Loading())
+    val allStores: StateFlow<Resource<ShopResponse>> = _allStores
 
 
-
-
-
-
-    fun getNearbyShops(lat:Double,long:Double) {
-        Log.e("Loddddddcation", lat.toString() +" "+ long.toString())
+    fun getNearbyShops(lat: Double, long: Double) {
+        Log.e("Loddddddcation", lat.toString() + " " + long.toString())
         viewModelScope.launch {
             repository.getNearShops(
-                LocationData( long,lat)
+                LocationData(long, lat)
             ).collectLatest { result ->
                 when (result) {
                     is Resource.Loading -> {
@@ -66,10 +60,11 @@ class ExploreScreenViewModel(
         }
 
     }
-    fun getAllShops() {
+
+    fun getFilteredShops(filter: String) {
 
         viewModelScope.launch {
-            repository.getAllShops().collectLatest { result ->
+            repository.getFilteredShops(filter).collectLatest { result ->
                 when (result) {
                     is Resource.Loading -> {
                         _isLoading.value = true
@@ -90,7 +85,5 @@ class ExploreScreenViewModel(
                 }
             }
         }
-
     }
-
 }

@@ -38,7 +38,7 @@ import androidx.compose.ui.unit.sp
 import com.petplace.thatpetplace.R
 
 @Composable
-fun ExploreStoresCard(name:String,tagline:String,distance: Double,onClick:()->Unit) {
+fun ExploreStoresCard(name:String,tagline:String,distance: Float,onClick:()->Unit) {
     Card(
         shape = RoundedCornerShape(8),
         colors = CardDefaults.cardColors(containerColor = Color.White),

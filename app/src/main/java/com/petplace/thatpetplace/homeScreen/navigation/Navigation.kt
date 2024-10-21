@@ -2,13 +2,17 @@ package com.petplace.thatpetplace.homeScreen.navigation
 
 
 import android.annotation.SuppressLint
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.petplace.thatpetplace.auth.presentation.login.LoginScreen
 import com.petplace.thatpetplace.auth.presentation.signupDetails.SignUpDetails
 import com.petplace.thatpetplace.common.Routes
@@ -27,6 +31,7 @@ import com.petplace.thatpetplace.welcome.presentation.SecondScreen
 import com.petplace.thatpetplace.welcome.presentation.ThirdScreen
 import org.koin.androidx.compose.koinViewModel
 
+@RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("SuspiciousIndentation")
 @Composable
 fun Navigation(
@@ -53,8 +58,10 @@ fun Navigation(
                 composable(Routes.HomeScreenRoutes.APPOINTMENT_SCREEN) {
                     Appointments(paddingValues, navController)
                 }
-                composable(Routes.HomeScreenRoutes.EXPLORE_SCREEN) {
-                    Explore(paddingValues, navController)
+                composable(Routes.HomeScreenRoutes.EXPLORE_SCREEN +"/{passedString}?", arguments = listOf(navArgument("passedString") { type = NavType.StringType })
+                ) { backStackEntry ->
+                    val passedString = backStackEntry.arguments?.getString("passedString")?:""
+                    Explore(paddingValues, filter = passedString,navController)
                 }
                 composable(Routes.HomeScreenRoutes.PROFILE_SCREEN) {
 
@@ -68,9 +75,9 @@ fun Navigation(
 
                     ProfileView(navController, paddingValues = paddingValues)
                 }
-                composable(Routes.HomeScreenRoutes.EXPLORE_DETAIL_SCREEN) {
-
-                    ExploreDetailScreen(paddingValues = paddingValues,navController, isProfile = isProfile)
+                composable(Routes.HomeScreenRoutes.EXPLORE_DETAIL_SCREEN + "/{id}") {backStackEntry->
+                    val id: String = backStackEntry.arguments?.getString( "id" ) ?:""
+                    ExploreDetailScreen(paddingValues = paddingValues,navController, isProfile = isProfile, id = id)
                 }
                 composable(Routes.HomeScreenRoutes.STORE_SCREEN) {
 

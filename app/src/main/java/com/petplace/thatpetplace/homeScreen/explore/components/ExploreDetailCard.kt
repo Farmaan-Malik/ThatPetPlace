@@ -32,9 +32,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.petplace.thatpetplace.homeScreen.explore.presentation.Store.data.model.ShopResponseItem
 
 @Composable
-fun ExploreDetailCard(offsetX: Dp, offsetY:Dp) {
+fun ExploreDetailCard(details:ShopResponseItem,offsetX: Dp, offsetY:Dp) {
     Card(
         shape = RoundedCornerShape(10),
         colors = CardDefaults.cardColors(containerColor = Color.White),
@@ -56,7 +57,7 @@ fun ExploreDetailCard(offsetX: Dp, offsetY:Dp) {
                     .padding(16.dp)
             ) {
                 Text(
-                    text = "Little Paws Clinic",
+                    text = details.name,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     fontWeight = FontWeight.Bold,
@@ -89,7 +90,7 @@ imageVector = Icons.Outlined.Phone,
                                 modifier = Modifier.size(15.dp)
                             )
                         }
-                        Text(text =" " + "+91 96222222")
+                        Text(text =" +91" + details.phone_number)
                     }
                 }
 
@@ -112,14 +113,14 @@ imageVector = Icons.Outlined.Phone,
                         ), contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "4.9",
+                        text =details.ratings.toString(),
                         fontSize = 35.sp,
                         color = Color.White,
                         fontWeight = FontWeight.Bold
                     )
 
                 }
-                Text(text = "127 reviews", fontSize = 12.sp)
+                Text(text = details.rating_count.toString(), fontSize = 12.sp)
             }
 
         }
