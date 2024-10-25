@@ -93,7 +93,7 @@ Each appointment is displayed in a **Card View** format, which includes key deta
 
 - **Upcoming Appointments**:
   - Displayed with a **Cancel** button in place of a status, allowing users to cancel the appointment if needed.
-  - Tapping **Cancel** removes the appointment from upcoming appointments and updates it under the **Cancelled** section.
+  - Tapping **Cancel** removes the cancel button from the card and replaces it with **Cancelled** as its status.
   - Each card includes:
     - **Pet's Name**
     - **Doctor's Name**
