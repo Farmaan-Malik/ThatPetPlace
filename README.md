@@ -1,18 +1,18 @@
 # Welcome Screens
 
 Our app features an engaging onboarding experience for first-time users, introducing them to the core benefits and functionality of the app. Upon the initial installation and launch, users are greeted by three welcome screens, each designed to showcase key aspects and guide them smoothly into the app experience.
-
-![ProfileImage](/images/Welcome1.png)
-![ProfileImage](/images/Welcome2.png)
-![ProfileImage](/images/Welcome3.png)
-
+<p align-"center">
+<img src="/images/Welcome1.png" alt="Description" width="300"/>
+<img src="/images/Welcome2.png" alt="Description" width="300"/>
+<img src="/images/Welcome3.png" alt="Description" width="300"/>
+</p>
 # Login and Registration Screens
 
 Both screens are built with Jetpack Compose, ensuring a smooth and responsive UI, with form validation managed using **Kotlin**. User authentication is securely handled by backend, ensuring that all user data is encrypted and privacy-protected.
-
-![ProfileImage](/images/LoginScreen.png)
-![ProfileImage](/images/SignupScreen.png)
-
+<p align-"center">
+<img src="/images/LoginScreen.png" alt="Description" width="300"/>
+<img src="/images/SignupScreen.png" alt="Description" width="300"/>
+</p>
 # Home Screen
 The **Home Screen** serves as the main entry point for users after logging in, providing easy navigation to key app sections and personalized information at a glance.
 
@@ -36,8 +36,8 @@ Upon successful login, users are directed to the Home Screen, which is designed 
 ### Additional Features
 - **Responsive UI**: The Home Screen and navigation components are designed with Jetpack Compose to ensure a responsive, smooth experience across devices.
 - **Location-Based Personalization**: The user’s location is dynamically updated on the top left, enabling localized content and tailored suggestions based on the user's region.
-  
-![ProfileImage](/images/HomeScreen.png)
+
+  <img src="/images/HomeScreen.png" alt="Description" width="300"/>
 
 # Profile Screens
 
@@ -66,11 +66,11 @@ The Profile Screen is designed for easy viewing and management of user and pet i
 ### Additional Features
 - **User-Friendly Interface**: The Profile Screen layout is optimized for ease of use, with clear, accessible icons for each action.
 - **Real-Time Updates**: Changes made to both user and pet information are updated in real-time, providing an up-to-date view of the profile.
-
-![ProfileImage](/images/ProfileView.png)
-![ProfileImage](/images/EditProfile.png)
-![ProfileImage](/images/PetInfo.png)
-
+<p align-"center">
+<img src="/images/ProfileView.png" alt="Description" width="300"/>
+<img src="/images/EditProfile.png" alt="Description" width="300"/>
+<img src="/images/PetInfo.png" alt="Description" width="300"/>
+</p>
 # Appointment Screen
 
 The **Appointment Screen** allows users to view and manage their pet-related appointments. Appointments are organized into three categories: **Past**, **Upcoming**, and **Cancelled**, each with a clear and consistent layout to enhance user experience.
@@ -110,7 +110,7 @@ Each appointment is displayed in a **Card View** format, which includes key deta
 - **Easy Navigation**: Users can navigate between **Past**, **Upcoming**, and **Cancelled** sections to view the appointment status in real-time.
 - **Real-Time Updates**: Canceling an appointment updates the status immediately, moving it from **Upcoming** to **Cancelled**.
 
-![ProfileImage](/images/AppointmentScreen.png)
+<img src="/images/AppointmentScreen.png" alt="Description" width="300"/>
 
 # Explore Screens
 The **Explore Screen** helps users discover veterinary clinics nearby or based on specific filters, offering flexibility in browsing. This screen adapts based on the navigation path, providing localized suggestions and personalized results.
@@ -142,7 +142,7 @@ The Explore Screen displays clinics in a **Card View** format, each card contain
 - **Dynamic Content**: The clinics displayed are updated in real-time, either showing local clinics based on location or filtered results based on the selected criteria.
 - **User-Friendly Design**: The card-based layout and clear information make it easy for users to compare clinics and select one that meets their needs.
 
-![ProfileImage](/images/ExploreScreen.png)
+<img src="/images/ExploreScreen.png" alt="Description" width="300"/>
 
 # Explore Detail Screen
 
@@ -181,10 +181,10 @@ Upon selecting a clinic, users are directed to the Explore Detail Screen, which 
 
 - **Detailed Descriptions**: Each section is designed to provide clarity, ensuring that users can review the clinic’s services and doctor details effectively.
 - **Responsive Navigation**: Selecting a doctor and booking an appointment are streamlined to minimize the number of steps required.
-
-![ProfileImage](/images/ExploreDetailScreen.png)
-![ProfileImage](/images/BookAppointment.png)
-
+<p align-"center">
+<img src="/images/ExploreDetailScreen.png" alt="Description" width="300"/>
+<img src="/images/BookAppointment.png" alt="Description" width="300"/>
+</p>
 # Design inspired by: 
 https://www.figma.com/design/ItS117lPUSDW26OImNdYcE/Pet-Care-UI?node-id=0-1&node-type=canvas&t=DNoIYT5huYITfYqJ-0
 
