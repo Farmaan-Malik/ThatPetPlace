@@ -184,3 +184,9 @@ Upon selecting a clinic, users are directed to the Explore Detail Screen, which 
 
 ![ProfileImage](/images/ExploreDetailScreen.png)
 ![ProfileImage](/images/BookAppointment.png)
+
+# Design inspired by: 
+https://www.figma.com/design/ItS117lPUSDW26OImNdYcE/Pet-Care-UI?node-id=0-1&node-type=canvas&t=DNoIYT5huYITfYqJ-0
+
+# Backend: 
+https://github.com/lunatictiol/that-pet-place-backend-go
