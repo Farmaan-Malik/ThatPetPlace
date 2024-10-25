@@ -1,7 +1,7 @@
 package com.petplace.thatpetplace.homeScreen.explore.presentation.Store.data.model
 
 data class Doctor(
-    val available_days: Any,
+    val available_days: List<String>,
     val fees: Int,
     val name: String,
     val profile: String,

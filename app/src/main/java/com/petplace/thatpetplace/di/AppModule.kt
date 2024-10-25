@@ -70,8 +70,14 @@ val appModule = module {
         HomeScreenViewModel(get())
     }
     factory {
+        val client: OkHttpClient = OkHttpClient.Builder()
+            .connectTimeout(100, TimeUnit.SECONDS)
+            .writeTimeout(100, TimeUnit.SECONDS)
+            .readTimeout(100, TimeUnit.SECONDS)
+            .build()
         Retrofit
             .Builder()
+            .client(client)
             .baseUrl(Constants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -79,9 +85,9 @@ val appModule = module {
     }
     factory {
         val client: OkHttpClient = OkHttpClient.Builder()
-            .connectTimeout(100, TimeUnit.SECONDS)
-            .writeTimeout(100, TimeUnit.SECONDS)
-            .readTimeout(100, TimeUnit.SECONDS)
+            .connectTimeout(1000, TimeUnit.SECONDS)
+            .writeTimeout(1000, TimeUnit.SECONDS)
+            .readTimeout(1000, TimeUnit.SECONDS)
             .build()
         Retrofit
             .Builder()

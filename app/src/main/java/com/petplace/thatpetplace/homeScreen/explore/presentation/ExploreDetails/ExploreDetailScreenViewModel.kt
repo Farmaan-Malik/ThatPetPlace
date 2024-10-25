@@ -29,7 +29,7 @@ class ExploreDetailScreenViewModel(
     val shopDetails: StateFlow<Resource<ShopResponseItem>> = _shopDetails
 
     fun getShopDetails(id: String) {
-
+Log.e("ID", id)
         viewModelScope.launch {
             repository.getShopDetails(id).collectLatest { result ->
                 when (result) {

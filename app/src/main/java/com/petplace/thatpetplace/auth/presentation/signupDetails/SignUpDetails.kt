@@ -47,14 +47,14 @@ fun SignUpDetails(
     navHostController: NavHostController,
     viewModel: SignUpDetailsViewModel = koinViewModel()
 ) {
+    val localContext = LocalContext.current
+
     val isLoading by remember {
         viewModel.isLoading
     }
     val isError by remember {
         viewModel.isError
     }
-    val localContext = LocalContext.current
-
     val firstName = remember {
         mutableStateOf("")
     }
@@ -141,18 +141,29 @@ fun SignUpDetails(
                         CustomButton(
                             label = "Submit",
                             onClick = {
-                                if (password.value != confirmPassword.value){
-                                    Toast.makeText(localContext, "Passwords don't match.Try again", Toast.LENGTH_LONG)
+                                if (password.value != confirmPassword.value) {
+                                    Toast.makeText(
+                                        localContext,
+                                        "Passwords don't match.Try again",
+                                        Toast.LENGTH_LONG
+                                    )
                                         .show()
-                                }else{
-                                viewModel.registration(
-                                    email = email.value,
-                                    phone_number = phoneNumber.value,
-                                    first_name = firstName.value,
-                                    last_name = lastName.value,
-                                    password = password.value
-                                )
-                            }})
+                                } else if (email.value.isEmpty() || phoneNumber.value.isEmpty() || firstName.value.isEmpty() || lastName.value.isEmpty() || password.value.isEmpty()) {
+                                    Toast.makeText(
+                                        localContext,
+                                        "Some fields appear to be empty!",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                } else {
+                                    viewModel.registration(
+                                        email = email.value,
+                                        phone_number = phoneNumber.value,
+                                        first_name = firstName.value,
+                                        last_name = lastName.value,
+                                        password = password.value
+                                    )
+                                }
+                            })
                         Spacer(modifier = Modifier.height(20.dp))
 
                         Box(

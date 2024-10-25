@@ -53,9 +53,7 @@ var isProfile by remember {
                     BottomNavBar(navController = navHostController)
                 }
             }
-
         }
-
     )
     { paddingValues ->
 

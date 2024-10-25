@@ -1,5 +1,6 @@
 package com.petplace.thatpetplace.homeScreen.profile.presentation.profileDetail
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -21,6 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -41,6 +43,7 @@ fun Profile(
     paddingValues: PaddingValues,
     viewModel: ProfileScreenViewModel = koinViewModel()
 ) {
+    val localContext = LocalContext.current
     val showDialog = remember {
         mutableStateOf(true)
     }
@@ -146,7 +149,8 @@ fun Profile(
                     email.value = it
                     viewModel.changeEmail(email.value)
                 })
-            PrimaryTextInput(label = "Phone Number (+91)",
+            PrimaryTextInput(
+                label = "Phone Number (+91)",
                 value = phoneNumber.value,
                 onValueChangeEvent = {
                     phoneNumber.value = it
@@ -168,8 +172,16 @@ fun Profile(
                 horizontalArrangement = Arrangement.Center
             ) {
                 CustomButton(label = "Save") {
-                    navController.navigate(Routes.HomeScreenRoutes.PROFILE_VIEW_SCREEN)
-                    /*TODO*/
+                    if (phoneNumber.value.isEmpty() || gender.value.isEmpty() || firstName.value.isEmpty() || lastName.value.isEmpty() || email.value.isEmpty()) {
+                        Toast.makeText(
+                            localContext,
+                            "Some fields appear to be empty.",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    } else {
+                        navController.navigate(Routes.HomeScreenRoutes.PROFILE_VIEW_SCREEN)
+                        /*TODO*/
+                    }
                 }
             }
         }

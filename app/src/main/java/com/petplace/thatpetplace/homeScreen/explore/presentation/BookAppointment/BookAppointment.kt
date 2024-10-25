@@ -1,8 +1,8 @@
 package com.petplace.thatpetplace.homeScreen.explore.presentation.BookAppointment
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -12,14 +12,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.ListItem
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -33,22 +36,26 @@ import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.petplace.thatpetplace.R
 import com.petplace.thatpetplace.auth.presentation.common.components.CustomButton
+import com.petplace.thatpetplace.common.Routes
 import com.petplace.thatpetplace.common.components.LoadingDialogBox
-import com.petplace.thatpetplace.common.components.PrimaryTextInput
 import com.petplace.thatpetplace.homeScreen.explore.presentation.BookAppointment.componenets.PetDropDown
 import com.petplace.thatpetplace.homeScreen.explore.presentation.BookAppointment.data.model.NewAppointmentPayload
 import org.koin.androidx.compose.koinViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BookAppointments(
+    clinicName:String,
+    availableDays: List<String>,
+    navController: NavHostController,
     doctorName: String,
     qualification: String,
     fees: Float,
@@ -57,6 +64,7 @@ fun BookAppointments(
     viewModel: BookAppointmentViewModel = koinViewModel(),
     onBackPress: () -> Unit
 ) {
+    val localContext=LocalContext.current
     val selectedPet = remember {
         mutableStateOf("")
     }
@@ -66,6 +74,9 @@ fun BookAppointments(
     val isLoading by remember {
         viewModel.isLoading
     }
+    val isSuccess by remember {
+        viewModel.isSuccess
+    }
     val userId by remember {
         viewModel.string
     }
@@ -73,9 +84,7 @@ fun BookAppointments(
         mutableStateOf("")
     }
     Scaffold(
-        backgroundColor = Color(
-            0xFFF8F7FB
-        ),
+        backgroundColor = Color(0xFFFDA8A5),
         topBar = {
             Row(modifier = Modifier.fillMaxWidth()) {
                 IconButton(onClick = { onBackPress() }) {
@@ -99,6 +108,7 @@ fun BookAppointments(
 
                 Box(
                     modifier = Modifier
+                        .padding(start = 16.dp, end = 16.dp, top = 16.dp)
                         .fillMaxWidth()
                         .height(400.dp)
                         .shadow(8.dp, RoundedCornerShape(20.dp))
@@ -124,6 +134,10 @@ fun BookAppointments(
                                 drawRect(gradient, blendMode = BlendMode.Multiply)
                             }
                         })
+                    Box(modifier = Modifier.fillMaxSize().padding(top = 18.dp), contentAlignment = Alignment.TopCenter){
+                        Text(text = clinicName.uppercase(), fontSize = 30.sp, fontWeight = FontWeight.Bold, color = Color(0xFFFFCF6F) )
+
+                    }
                 }
                 Column(
                     modifier = Modifier
@@ -138,40 +152,41 @@ fun BookAppointments(
                     ListItem(headlineContent = {
                         Row(
                             modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.Center
                         ) {
                             Text(
                                 text = "Doctor's Name: ",
-                                fontWeight = FontWeight.SemiBold,
-                                fontSize = 18.sp
+                                fontSize = 16.sp,
+                                textAlign = TextAlign.Start,
                             )
                             Text(
                                 text = doctorName,
-                                fontSize = 18.sp,
-                                fontStyle = FontStyle.Italic
+                                fontSize = 16.sp,
                             )
 
                         }
                     }, supportingContent = {
                         Row(
                             modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.Center
                         ) {
                             Text(
                                 text = "Fee: ",
-                                fontWeight = FontWeight.SemiBold,
-                                fontSize = 18.sp
+                                fontSize = 16.sp,
+                                textAlign = TextAlign.Start,
                             )
                             Text(
                                 text = "$$fees",
-                                fontSize = 18.sp
+                                fontSize = 16.sp
                             )
                         }
                     },
                         overlineContent = {
                             Text(
                                 text = qualification,
-                                fontSize = 18.sp
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(bottom = 8.dp),
+                                textAlign = TextAlign.Center,
+                                fontWeight = FontWeight.SemiBold
                             )
                         })
                     PetDropDown(
@@ -183,11 +198,39 @@ fun BookAppointments(
                         },
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(top = 8.dp)
+                            .padding(bottom = 5.dp)
                     )
-                    PrimaryTextInput(label = "Date(dd/mm/yy)", value = date.value) {
-                        date.value = it
+                    Text(
+                        text = "Available this week on ..",
+                        textAlign = TextAlign.Center,
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        modifier = Modifier
+                            .fillMaxWidth(.8f)
+                            .padding(horizontal = 16.dp, vertical = 8.dp)
+                    )
+                    LazyRow(modifier = Modifier.padding(horizontal = 16.dp)) {
+                        items(availableDays) { x ->
+                            IconButton(
+                                onClick = { date.value = x.uppercase() },
+                                modifier = Modifier
+                                    .width(80.dp)
+                                    .height(20.dp)
+                                    .padding(start = 8.dp),
+                                colors = IconButtonDefaults.iconButtonColors(
+                                    containerColor = Color(
+                                        0x7CBBC3CE
+                                    )
+                                )
+                            ) {
+                                Text(text = x.uppercase(), fontSize = 12.sp)
+                            }
+                        }
                     }
+                    Text(
+                        text = "Selected Day: ${date.value}",
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 16.dp)
+                    )
 
                 }
                 Column(
@@ -197,19 +240,24 @@ fun BookAppointments(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     CustomButton(label = "Confirm Booking") {
-
-                        viewModel.bookAppointment(
-                            NewAppointmentPayload(
-                                DoctorName = doctorName,
-                                AppointmentDate = date.value,
-                                PetName = selectedPet.value,
-                                UserID = userId,
-                                Status = "Upcoming",
-                                CLinicID= clinicID,
-                                DoctorQualification = qualification,
-                                Price = fees.toInt()
+                        if (selectedPet.value == "" || date.value == "") {
+                            Toast.makeText(localContext, "Fill all fields", Toast.LENGTH_LONG)
+                                .show()
+                        } else {
+                            viewModel.bookAppointment(
+                                NewAppointmentPayload(
+                                    doctor_name = doctorName,
+                                    appointment_date = date.value,
+                                    pet_name = selectedPet.value,
+                                    user_id = userId,
+                                    status = "Upcoming",
+                                    clinic_id = clinicID,
+                                    doctor_qualification = qualification,
+                                    price = fees
+                                )
                             )
-                        )
+                                .invokeOnCompletion { navController.navigate(Routes.HomeScreenRoutes.APPOINTMENT_SCREEN) }
+                        }
                     }
                 }
             }

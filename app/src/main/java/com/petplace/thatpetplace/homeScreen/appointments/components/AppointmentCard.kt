@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -20,6 +19,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -40,7 +40,7 @@ import com.petplace.thatpetplace.homeScreen.appointments.data.model.GetAllAppoin
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun AppointmentCard(appointment: GetAllAppointmentResponseItem,button: Boolean = true) {
+fun AppointmentCard(appointment: GetAllAppointmentResponseItem, button: Boolean = true, onCancel:()->Unit) {
     Card(
         shape = RoundedCornerShape(8),
         colors = CardDefaults.cardColors(containerColor = Color.White),
@@ -83,14 +83,13 @@ fun AppointmentCard(appointment: GetAllAppointmentResponseItem,button: Boolean =
                         text = appointment.DoctorName,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
-                        fontWeight = FontWeight.Bold,
+                        fontWeight = FontWeight.SemiBold,
                         fontSize = 18.sp
                     )
                     Text(
                         text = appointment.DoctorQualification,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
-                        fontWeight = FontWeight.SemiBold,
                         fontSize = 16.sp
                     )
                     Row(
@@ -100,7 +99,6 @@ fun AppointmentCard(appointment: GetAllAppointmentResponseItem,button: Boolean =
                         horizontalArrangement = Arrangement.Start,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Spacer(modifier = Modifier.width(40.dp))
                         Row {
                             Box(
                                 modifier = Modifier
@@ -115,7 +113,7 @@ fun AppointmentCard(appointment: GetAllAppointmentResponseItem,button: Boolean =
                                     modifier = Modifier.size(15.dp)
                                 )
                             }
-                            Text(text =appointment.Price.toString())
+                            Text(text = "$" + appointment.Price.toString())
                         }
                     }
                 }
@@ -125,89 +123,53 @@ fun AppointmentCard(appointment: GetAllAppointmentResponseItem,button: Boolean =
                     .padding(horizontal = 16.dp, vertical = 8.dp)
                     .fillMaxHeight(.50f)
                     .fillMaxWidth()
+                    .shadow(2.dp, RoundedCornerShape(20))
                     .background(Color(0xFFF8F7FB), RoundedCornerShape(20)),
 
-            ) {
-                Row(
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .fillMaxWidth()
-                        .fillMaxHeight(.5f)
                 ) {
-                    Box(
-                        modifier = Modifier
-                            .clip(CircleShape)
-                            .size(50.dp)
-                            .background(Color(0xFFF0F0F8)), contentAlignment = Alignment.Center
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.work),
-                            contentDescription = "Clinic Details",
-                            modifier = Modifier.size(25.dp)
-                        )
-                    }
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .fillMaxHeight()
-                    ) {
-                        Text(
-                            text = appointment.ClinicName,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                            fontWeight = FontWeight.SemiBold,
-                            fontSize = 16.sp
-                        )
-                        Text(
-                            text = appointment.ClinicAddress,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                        )
-                    }
-
-                }
-                Row(
-                    modifier = Modifier
-                        .padding(horizontal = 8.dp)
-                        .fillMaxWidth()
-                        .fillMaxHeight()
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .clip(CircleShape)
-                            .size(50.dp)
-                            .background(Color(0xFFF0F0F8)), contentAlignment = Alignment.Center
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.clock_outlined),
-                            contentDescription = "Date and Time",
-                            modifier = Modifier.size(25.dp)
-                        )
-                    }
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .fillMaxHeight(),
-                        verticalArrangement = Arrangement.Center
-                    ) {
-                        Text(
-                            text = appointment.AppointmentDate,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                            modifier = Modifier.padding(bottom = 16.dp)
-                        )
-                    }
-
-                }
+                ListItem(headlineContent = {
+                    Text(
+                        text = appointment.ClinicName,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }, leadingContent = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.work),
+                        contentDescription = "Clinic Details",
+                        modifier = Modifier.size(25.dp)
+                    )
+                }, supportingContent = {
+                    Text(
+                        text = appointment.ClinicAddress,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                })
+                ListItem(headlineContent = {
+                    Text(
+                        text = appointment.AppointmentDate,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }, leadingContent = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.clock_outlined),
+                        contentDescription = "Clinic Details",
+                        modifier = Modifier.size(25.dp)
+                    )
+                })
             }
-            Row(modifier = Modifier
-                .padding(bottom = 8.dp)
-                .fillMaxWidth(.8f)
-                .fillMaxHeight(.3f),
+            Row(
+                modifier = Modifier
+                    .padding(bottom = 8.dp)
+                    .fillMaxWidth(.8f)
+                    .fillMaxHeight(.3f),
                 horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically) {
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 Text(text = "Appointment for:  ", fontWeight = FontWeight.Bold, fontSize = 16.sp)
-                Text(text = appointment.PetName,fontSize = 16.sp)
+                Text(text = appointment.PetName, fontSize = 16.sp)
 
             }
             if (button) {
@@ -215,18 +177,21 @@ fun AppointmentCard(appointment: GetAllAppointmentResponseItem,button: Boolean =
                     modifier = Modifier
                         .fillMaxWidth()
                         .fillMaxHeight(.5f)
-                        .padding(horizontal = 16.dp),
-                    horizontalArrangement = Arrangement.End
+                        .padding(horizontal = 16.dp), horizontalArrangement = Arrangement.End
                 ) {
-//                    AppointmentToggle(title = "Pay", isSelected = true, width = .5f) {
-//                        /*TODO*/
-//                    }
                     AppointmentToggle(title = "Cancel", isSelected = false) {
-                        /*TODO*/
+                       onCancel()
                     }
                 }
-            }else
-                Text(text = "Completed", fontSize = 18.sp, fontStyle = FontStyle.Italic, fontWeight = FontWeight.SemiBold, color = Color.LightGray, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())
+            } else Text(
+                text = if(appointment.Status == "cancelled") "Cancelled" else "Completed",
+                fontSize = 18.sp,
+                fontStyle = FontStyle.Italic,
+                fontWeight = FontWeight.SemiBold,
+                color = Color.LightGray,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth()
+            )
         }
     }
 }

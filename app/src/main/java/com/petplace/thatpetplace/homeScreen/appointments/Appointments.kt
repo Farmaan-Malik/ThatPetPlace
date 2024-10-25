@@ -19,9 +19,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -34,6 +32,7 @@ import com.petplace.thatpetplace.R
 import com.petplace.thatpetplace.common.Routes
 import com.petplace.thatpetplace.common.components.LoadingDialogBox
 import com.petplace.thatpetplace.homeScreen.appointments.components.AppointmentCard
+import com.petplace.thatpetplace.homeScreen.appointments.data.model.AppointmentStatusPayload
 import com.petplace.thatpetplace.homeScreen.profile.components.TopBarProfile
 import org.koin.androidx.compose.koinViewModel
 
@@ -52,9 +51,6 @@ fun Appointments(
     }
     val isError by remember {
         viewModel.isError
-    }
-    var appointmentType by remember {
-        mutableStateOf("Past")
     }
     val pastAppointment =
         viewModel.appointments.collectAsState()
@@ -95,8 +91,15 @@ fun Appointments(
                             items(pastAppointment.value.data!!) { appointment ->
                                 AppointmentCard(
                                     appointment = appointment,
-                                    button = appointment.Status == "upcoming"
-                                )
+                                    button = appointment.Status == "Upcoming"
+                                ) {
+                                    viewModel.cancelAppointment(
+                                        appoinmentStatusPayload = AppointmentStatusPayload(
+                                            appointment.ID,
+                                            "cancelled"
+                                        )
+                                    )
+                                }
                             }
                         }
                     } else {

@@ -4,6 +4,7 @@ import android.util.Log
 import com.petplace.thatpetplace.common.utils.Resource
 import com.petplace.thatpetplace.homeScreen.profile.data.model.AddPetPayload
 import com.petplace.thatpetplace.homeScreen.profile.data.model.AddPetResponse
+import com.petplace.thatpetplace.homeScreen.profile.data.model.PetDeleteResponse
 import com.petplace.thatpetplace.homeScreen.profile.data.model.PetListResponse
 import com.petplace.thatpetplace.homeScreen.profile.data.model.UploadPetResponse
 import com.petplace.thatpetplace.homeScreen.profile.domain.ProfileRepository
@@ -38,6 +39,16 @@ class ProfileRepositoryImpl(private val profileApi: ProfileApi): ProfileReposito
         return flow {
             emit(Resource.Loading())
             val result = profileApi.uploadPetProfile(petID, photo)
+            emit(Resource.Success(result))
+        }.catch {
+            emit(Resource.Error(it.localizedMessage))
+        }
+    }
+
+    override fun deletePet(petID: String): Flow<Resource<PetDeleteResponse>> {
+        return flow {
+            emit(Resource.Loading())
+            val result = profileApi.deletePet(petID)
             emit(Resource.Success(result))
         }.catch {
             emit(Resource.Error(it.localizedMessage))

@@ -30,6 +30,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -72,8 +75,7 @@ fun ProfileView(
             LoadingDialogBox()
         } else {
             if (isError) {
-                Toast.makeText(LocalContext.current, "An error occurred", Toast.LENGTH_LONG)
-                    .show()
+                Toast.makeText(LocalContext.current, "An error occurred", Toast.LENGTH_LONG).show()
                 viewModel.updateError()
             } else {
                 Column(
@@ -115,7 +117,9 @@ fun ProfileView(
                                 .padding(horizontal = 5.dp)
                         ) {
                             Text(
-                                text = "My pets", fontSize = 18.sp, modifier = Modifier
+                                text = "My pets",
+                                fontSize = 18.sp,
+                                modifier = Modifier
                                     .fillMaxWidth(.7f)
                                     .padding(start = 8.dp)
                             )
@@ -125,21 +129,34 @@ fun ProfileView(
                     LazyColumn(
                         modifier = Modifier.clip(
                             RoundedCornerShape(
-                                topEndPercent = 15,
-                                topStartPercent = 15
+                                topEndPercent = 15, topStartPercent = 15
                             )
                         )
                     ) {
-                        items(pets.value) { pet ->
-                            DisplayPet(
-                                viewModel = viewModel,
-                                navController = navController,
-                                petName = pet.name,
-                                breed = pet.breed,
-                                gender = pet.gender
-                            )
-
-
+                        if (!pets.value.isNullOrEmpty()) {
+                            items(pets.value!!) { pet ->
+                                DisplayPet(
+                                    viewModel = viewModel,
+                                    navController = navController,
+                                    petName = pet.name,
+                                    breed = pet.breed,
+                                    gender = pet.gender
+                                ) {
+                                    viewModel.deletePet(pet.id)
+                                }
+                            }
+                        } else {
+                            item {
+                                Text(
+                                    text = "No Pets Found!",
+                                    fontWeight = FontWeight.SemiBold,
+                                    fontSize = 18.sp,
+                                    color = Color(0xFFBBC3CE),
+                                    fontStyle = FontStyle.Italic,
+                                    modifier = Modifier.fillMaxWidth(),
+                                    textAlign = TextAlign.Center
+                                )
+                            }
                         }
                     }
                 }

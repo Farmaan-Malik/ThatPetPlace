@@ -37,6 +37,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.app.ActivityCompat
@@ -85,9 +86,7 @@ fun Explore(
     val permissionLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { permissions ->
-        if (permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true ||
-            permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true
-        ) {
+        if (permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true || permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true) {
             getLocation(fusedLocationClient) { lat, lon ->
                 Log.e("Longitude2", lon.toString())
                 latitude = lat
@@ -100,12 +99,9 @@ fun Explore(
 
     fun getNearestStores() {
         if (ActivityCompat.checkSelfPermission(
-                context,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED &&
-            ActivityCompat.checkSelfPermission(
-                context,
-                Manifest.permission.ACCESS_COARSE_LOCATION
+                context, Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                context, Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             permissionLauncher.launch(
@@ -123,9 +119,8 @@ fun Explore(
         }
     }
     LaunchedEffect(Unit) {
-        Log.e("filter",filter)
+        Log.e("filter", filter)
         if (filter == "n") {
-            Log.e("asas","plplpl",)
             getNearestStores()
         } else {
             viewModel.getFilteredShops(filter)
@@ -166,7 +161,7 @@ fun Explore(
                             .background(Color.White)
                     ) {
                         AppointmentToggle(
-                            title = if (filter == "n")"Nearest" else "Refresh",
+                            title = if (filter == "n") "Nearest" else "Refresh",
                             isSelected = true,
                             width = 1f
                         ) {
@@ -175,7 +170,6 @@ fun Explore(
                             } else {
                                 viewModel.getFilteredShops(filter)
                             }
-
                         }
 
                     }
@@ -196,7 +190,10 @@ fun Explore(
                             modifier = Modifier.size(150.dp)
                         )
                         Text(
-                            text = "No Shops here", color = Color(0xFFBBC3CE), fontSize = 20.sp
+                            text = "Oops! No shops seem to\n be available right now.",
+                            color = Color(0xFFBBC3CE),
+                            fontSize = 16.sp,
+                            fontStyle = FontStyle.Italic,
                         )
                     }
                 } else {
@@ -227,22 +224,19 @@ fun Explore(
 }
 
 fun getLocation(
-    fusedLocationClient: FusedLocationProviderClient,
-    onLocationRetrieved: (Double, Double) -> Unit
+    fusedLocationClient: FusedLocationProviderClient, onLocationRetrieved: (Double, Double) -> Unit
 ) {
     try {
-        fusedLocationClient.lastLocation
-            .addOnSuccessListener { location ->
-                if (location != null) {
-                    Log.e("Longitude", location.longitude.toString())
-                    onLocationRetrieved(location.latitude, location.longitude)
-                } else {
-                    Log.d("Location", "Location is null")
-                }
+        fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+            if (location != null) {
+                Log.e("Longitude", location.longitude.toString())
+                onLocationRetrieved(location.latitude, location.longitude)
+            } else {
+                Log.d("Location", "Location is null")
             }
-            .addOnFailureListener {
-                Log.e("Location", "Failed to get location: ${it.message}")
-            }
+        }.addOnFailureListener {
+            Log.e("Location", "Failed to get location: ${it.message}")
+        }
     } catch (e: SecurityException) {
         Log.e("Location", "Location permission not granted")
     }

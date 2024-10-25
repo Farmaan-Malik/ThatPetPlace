@@ -32,8 +32,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.petplace.thatpetplace.R
 import com.petplace.thatpetplace.auth.presentation.common.components.CustomButton
+import com.petplace.thatpetplace.common.Routes
 import com.petplace.thatpetplace.common.components.LoadingDialogBox
-import com.petplace.thatpetplace.common.components.PrimaryDropdown
 import com.petplace.thatpetplace.common.components.PrimaryTextInput
 import com.petplace.thatpetplace.homeScreen.profile.components.AddProfile
 import com.petplace.thatpetplace.homeScreen.profile.components.ColorToggleButton
@@ -51,6 +51,7 @@ fun PetDetailScreen(
     val isLoading by remember {
         viewModel.isLoading
     }
+    val localContext = LocalContext.current
     val isSuccess by remember {
         viewModel.isSuccess
     }
@@ -97,11 +98,6 @@ fun PetDetailScreen(
         if (isLoading) {
             LoadingDialogBox()
         } else {
-//            if (isError) {
-//                Toast.makeText(LocalContext.current, "An error occurred", Toast.LENGTH_LONG)
-//                    .show()
-//            } else {
-//                if (!isSuccess.value){
             Column(
                 modifier = Modifier
                     .verticalScroll(rememberScrollState())
@@ -140,24 +136,18 @@ fun PetDetailScreen(
                         label = "Pet's name",
                         value = petsName.value,
                         onValueChangeEvent = {
-                            Log.e("Pre-change", petsName.value)
                             petsName.value = it
-                            Log.e("Post-change", petsName.value)
                             viewModel.changeName(petsName.value)
                         })
-                    PrimaryDropdown(
-                        selectedValue = species.value,
-                        options = listOf("asd", "sad"),
-                        label = "Species of your pet",
-                        onValueChangedEvent = {
-                            species.value = it
-                            viewModel.changeSpecies(it)
 
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 8.dp)
-                    )
+                    PrimaryTextInput(
+                        label = "Species",
+                        value = species.value,
+                        onValueChangeEvent = {
+                            species.value = it
+                            viewModel.changeSpecies(species.value)
+                        })
+
                     PrimaryTextInput(
                         label = "Breed of your pet",
                         value = breed.value,
@@ -253,8 +243,16 @@ fun PetDetailScreen(
                             horizontalArrangement = Arrangement.Center
                         ) {
                             CustomButton(label = "Next") {
-                                viewModel.addPet()
-                                Log.e("userid", viewModel.string.value)
+                                if (petsName.value.isEmpty() || age.value.isEmpty() || breed.value.isEmpty() || species.value.isEmpty()) {
+                                    Toast.makeText(
+                                        localContext,
+                                        "Some fields might be empty.",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                } else {
+                                    viewModel.addPet()
+                                        .invokeOnCompletion { navController.navigate(Routes.HomeScreenRoutes.PROFILE_VIEW_SCREEN) }
+                                }
                             }
                         }
                     }

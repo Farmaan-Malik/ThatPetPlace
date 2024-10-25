@@ -3,6 +3,7 @@ package com.petplace.thatpetplace.homeScreen.profile.domain
 import com.petplace.thatpetplace.common.utils.Resource
 import com.petplace.thatpetplace.homeScreen.profile.data.model.AddPetPayload
 import com.petplace.thatpetplace.homeScreen.profile.data.model.AddPetResponse
+import com.petplace.thatpetplace.homeScreen.profile.data.model.PetDeleteResponse
 import com.petplace.thatpetplace.homeScreen.profile.data.model.PetListResponse
 import com.petplace.thatpetplace.homeScreen.profile.data.model.UploadPetResponse
 import kotlinx.coroutines.flow.Flow
@@ -16,5 +17,7 @@ interface ProfileRepository {
     fun getPetList(userId: String): Flow<Resource<PetListResponse>>
 
     fun uploadPetProfile(petID: String, photo: MultipartBody.Part): Flow<Resource<UploadPetResponse>>
+
+    fun deletePet(petID: String): Flow<Resource<PetDeleteResponse>>
 
 }

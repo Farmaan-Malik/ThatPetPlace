@@ -1,6 +1,6 @@
 package com.petplace.thatpetplace.homeScreen.explore.presentation.ExploreDetails
 
-import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -20,7 +20,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Person
-import androidx.compose.material.icons.rounded.ShoppingCart
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Scaffold
@@ -41,6 +40,7 @@ import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -54,7 +54,6 @@ import com.petplace.thatpetplace.homeScreen.explore.components.ExploreClinicsCar
 import com.petplace.thatpetplace.homeScreen.explore.components.ExploreDetailCard
 import com.petplace.thatpetplace.homeScreen.explore.components.TopBarExplore
 import com.petplace.thatpetplace.homeScreen.explore.presentation.BookAppointment.BookAppointments
-import com.petplace.thatpetplace.homeScreen.explore.presentation.Store.StoreScreen
 import com.petplace.thatpetplace.homeScreen.profile.components.ColorToggleButton
 import org.koin.androidx.compose.koinViewModel
 
@@ -66,7 +65,6 @@ fun ExploreDetailScreen(
     viewModel: ExploreDetailScreenViewModel = koinViewModel(),
     isProfile: () -> Unit
 ) {
-    Log.e("idsw", id)
     val currentPage = remember {
         mutableStateOf("Clinic")
     }
@@ -75,6 +73,9 @@ fun ExploreDetailScreen(
     }
     val qualification = remember {
         mutableStateOf("")
+    }
+    val availableDays = remember {
+        mutableStateOf(listOf(""))
     }
     val fees = remember {
         mutableStateOf(0)
@@ -85,6 +86,7 @@ fun ExploreDetailScreen(
     val Fab = remember {
         mutableStateOf(true)
     }
+    val localContext = LocalContext.current
     val shopDetails = viewModel.shopDetails.collectAsState()
 
     LaunchedEffect(Unit) {
@@ -169,8 +171,6 @@ fun ExploreDetailScreen(
                                 )
                             }
                         }
-
-
                         Text(
                             text = "Available doctors: ",
                             fontWeight = FontWeight.SemiBold,
@@ -192,12 +192,12 @@ fun ExploreDetailScreen(
                                         selected = selectedDoctor.value == doctor.name,
                                         onClick = {
                                             if (selectedDoctor.value == doctor.name) {
-                                                Fab.value = true
                                                 selectedDoctor.value = ""
                                             } else {
-                                                Fab.value = false
                                                 selectedDoctor.value = doctor.name
                                                 fees.value = doctor.fees
+                                                qualification.value = doctor.qualification
+                                                availableDays.value = doctor.available_days
                                             }
                                         })
                                 }
@@ -233,55 +233,50 @@ fun ExploreDetailScreen(
                             modifier = Modifier.fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            if (Fab.value) {
-                                ListItem(headlineContent = { Text(text = "Shop with us Today!") },
-                                    overlineContent = { Text(text = "We sell Products too!") },
-                                    leadingContent = {
-                                        Icon(
-                                            imageVector = Icons.Rounded.ShoppingCart,
-                                            contentDescription = "Shop"
-                                        )
-                                    },
-                                    trailingContent = {
-                                        ColorToggleButton(
-                                            onClick = {
-                                                currentPage.value = "Store"
-                                            }, label = "Store", selected = true
-                                        )
-                                    })
-                            } else {
-                                ListItem(headlineContent = { Text(text = "Name: " + selectedDoctor.value) },
-                                    supportingContent = {
-                                        Text(
-                                            text = "Fees: " + "$ " + fees.value
-                                        )
-                                    },
-                                    leadingContent = {
-                                        Icon(
-                                            imageVector = Icons.Rounded.Person,
-                                            contentDescription = "Doctor"
-                                        )
-                                    },
-                                    trailingContent = {
-                                        ColorToggleButton(
-                                            onClick = {
-                                                currentPage.value = "Appointments"
 
-                                            }, label = "Book", selected = true
-                                        )
-                                    })
-                            }
+                            ListItem(headlineContent = { Text(text = "Name: " + selectedDoctor.value) },
+                                supportingContent = {
+                                    Text(
+                                        text = "Fees: " + "$ " + if (selectedDoctor.value != "") {
+                                            fees.value
+                                        } else ""
+                                    )
+                                },
+                                overlineContent = {
+                                    Text(text = "Book an Appointment!!")
+                                },
+                                leadingContent = {
+                                    Icon(
+                                        imageVector = Icons.Rounded.Person,
+                                        contentDescription = "Doctor"
+                                    )
+                                },
+                                trailingContent = {
+                                    ColorToggleButton(
+                                        onClick = {
+                                            if (selectedDoctor.value != "") {
+                                                currentPage.value = "Appointments"
+                                            } else {
+                                                Toast.makeText(
+                                                    localContext,
+                                                    "Select a Doctor to Proceed.",
+                                                    Toast.LENGTH_LONG
+                                                ).show()
+                                            }
+                                        }, label = "Book", selected = true
+                                    )
+                                })
                         }
+
                     }
                 }
             }
         }
-    } else if (currentPage.value == "Store") {
-        StoreScreen(paddingValues = paddingValues,
-            navController = navController,
-            navigate = { currentPage.value = "Clinic" })
     } else shopDetails.value.data?.let {
         BookAppointments(
+            clinicName = shopDetails.value.data!!.name,
+            navController = navController,
+            availableDays = availableDays.value,
             doctorName = selectedDoctor.value,
             qualification = qualification.value,
             fees = fees.value.toFloat(),

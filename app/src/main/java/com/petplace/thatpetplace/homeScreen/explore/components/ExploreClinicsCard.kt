@@ -2,6 +2,7 @@ package com.petplace.thatpetplace.homeScreen.explore.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -39,17 +40,25 @@ import com.petplace.thatpetplace.R
 import com.petplace.thatpetplace.homeScreen.explore.presentation.Store.data.model.Doctor
 
 @Composable
-fun ExploreClinicsCard(doctor : Doctor,clinicName: String,distance:String,selected:Boolean=false, onClick:()->Unit={}) {
+fun ExploreClinicsCard(
+    doctor: Doctor,
+    clinicName: String,
+    distance: String,
+    selected: Boolean = false,
+    onClick: () -> Unit = {}
+) {
     Card(
         shape = RoundedCornerShape(8),
-        colors = CardDefaults.cardColors(containerColor =if (selected)Color(0x95D1CCE8)
-        else
-            Color.White),
+        colors = CardDefaults.cardColors(
+            containerColor =
+            Color.White
+        ),
         modifier = Modifier
             .height(120.dp)
             .padding(top = 2.dp, bottom = 8.dp, start = 8.dp, end = 8.dp)
             .width(250.dp)
             .shadow(8.dp, RoundedCornerShape(8))
+            .border(if (selected)4.dp else 0.dp,if (selected)Color(0xFFFDA8A5) else Color.White, shape = RoundedCornerShape(8))
             .clickable { onClick() }
     ) {
         Column(
@@ -142,7 +151,9 @@ fun ExploreClinicsCard(doctor : Doctor,clinicName: String,distance:String,select
                     }
                 }
             }
-            Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)) {
+            Row(modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp)) {
                 Text(
                     text = doctor.years_of_experience.toString(),
                     color = Color(0xFFBBC3CE),

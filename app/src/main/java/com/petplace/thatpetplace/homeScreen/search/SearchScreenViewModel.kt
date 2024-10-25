@@ -17,7 +17,6 @@ class SearchScreenViewModel( private val globalStateDS: GlobalStateDS): ViewMode
     }
     private val _location = mutableStateOf<LocationData?>(null)
     val location: State<LocationData?> = _location
-
     fun updateLocation(newLocationData: LocationData) {
         _location.value = newLocationData
         updateGSLocation(_location.value!!.latitude, _location.value!!.longitude)
@@ -29,6 +28,12 @@ class SearchScreenViewModel( private val globalStateDS: GlobalStateDS): ViewMode
             globalStateDS.updateLatitude(latitude)
             globalStateDS.updateLongitude(longitude)
         }
-
+    }
+    fun logout(){
+        viewModelScope.launch {
+            globalStateDS.updateFirstName("")
+            globalStateDS.updateLoginStatus(false)
+            globalStateDS.updateUserId("")
+        }
     }
 }

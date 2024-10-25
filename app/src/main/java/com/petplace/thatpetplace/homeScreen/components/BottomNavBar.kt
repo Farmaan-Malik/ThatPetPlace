@@ -52,10 +52,10 @@ fun RowScope.AddItems(
     navController: NavHostController
 ) {
     val selected = currentDestination?.hierarchy?.any() {
-        it.route == screen.route
+            it.route == screen.route
     } == true
     BottomNavigationItem(
-        modifier = Modifier.offset(x = 0.dp, y = if(selected) (-10).dp else 0.dp),
+        modifier = Modifier.offset(x = 0.dp, y = if (selected) (-10).dp else 0.dp),
         selected = selected,
         onClick = { navController.navigate(screen.route) },
         icon = {

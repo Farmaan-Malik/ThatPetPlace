@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.petplace.thatpetplace.common.dataStore.GlobalStateDS
 import com.petplace.thatpetplace.common.utils.Resource
+import com.petplace.thatpetplace.homeScreen.appointments.data.model.AppointmentStatusPayload
 import com.petplace.thatpetplace.homeScreen.appointments.data.model.GetAllAppointmentResponse
 import com.petplace.thatpetplace.homeScreen.appointments.data.remote.AppointmentRepositoryImpl
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -65,5 +66,30 @@ class AppointmentScreenViewModel(
                 }
             }
         }
+    }
+
+    fun cancelAppointment(appoinmentStatusPayload: AppointmentStatusPayload) {
+        Log.e("popo", userID.toString())
+
+        viewModelScope.launch {
+            repository.cancelAppointment(appoinmentStatusPayload).collectLatest { result ->
+                when (result) {
+                    is Resource.Loading -> {
+                        _isLoading.value = true
+                    }
+
+                    is Resource.Success -> {
+                        Log.i("Success appointments", result.data.toString())
+                        _isLoading.value = false
+                    }
+
+                    is Resource.Error -> {
+                        _isLoading.value = false
+                        _isError.value = true
+                        Log.i("Error appointments", result.message.toString())
+                    }
+                }
+            }
+        }.invokeOnCompletion { getAllAppointments() }
     }
 }

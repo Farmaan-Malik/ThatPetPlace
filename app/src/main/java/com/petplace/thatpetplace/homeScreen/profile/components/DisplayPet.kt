@@ -2,12 +2,14 @@ package com.petplace.thatpetplace.homeScreen.profile.components
 
 import android.net.Uri
 import android.util.Log
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -31,7 +33,7 @@ import com.petplace.thatpetplace.common.Routes
 import com.petplace.thatpetplace.homeScreen.profile.presentation.ProfileViewViewModel
 
 @Composable
-fun DisplayPet(viewModel: ProfileViewViewModel, navController: NavHostController, petName: String, breed: String, gender:String) {
+fun DisplayPet(viewModel: ProfileViewViewModel, navController: NavHostController, petName: String, breed: String, gender:String,onDelete:()->Unit) {
     var selectedImage by remember {
         mutableStateOf<Uri?>(null)
     }
@@ -57,6 +59,7 @@ fun DisplayPet(viewModel: ProfileViewViewModel, navController: NavHostController
         overlineContent = { Text(text = breed) },
         supportingContent = { Text(text = gender) },
         trailingContent = {
+            Column {
             IconButton(
                     onClick = { navController.navigate(Routes.HomeScreenRoutes.PET_PROFILE_SCREEN) },
                     modifier = Modifier.size(20.dp)
@@ -67,5 +70,17 @@ fun DisplayPet(viewModel: ProfileViewViewModel, navController: NavHostController
                 tint = Color(0xFFFDA8A5)
             )
         }
+                IconButton(
+                    onClick = {onDelete()},
+                    modifier = Modifier.size(20.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Outlined.Delete,
+                        contentDescription = "Delete",
+                        tint = Color(0xFFFDA8A5)
+                    )
+                }
+
+            }
         })
 }

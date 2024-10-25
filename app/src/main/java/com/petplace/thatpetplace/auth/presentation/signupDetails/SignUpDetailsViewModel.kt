@@ -37,6 +37,12 @@ class SignUpDetailsViewModel(
     val isSignupCompleted = globalStateDS.stateStatusFlow.map {
         it.isLoggedIn
     }
+    fun updateUserId(userId: String) {
+        viewModelScope.launch {
+            globalStateDS.updateUserId(userId)
+        }
+
+    }
 
     fun updateIsSignupComplete(completed:Boolean){
         viewModelScope.launch {
@@ -77,17 +83,17 @@ class SignUpDetailsViewModel(
 
                         updateFirstName(first_name)
                         updateIsSignupComplete(true)
-                        Log.i("USEER", result.data.toString())
+                        result.data?.let { updateUserId(it.id) }
+                        Log.i("Success Signup", result.data.toString())
                         _isLoading.value = false
 
 
                     }
 
                     is Resource.Error -> {
-                        _isLoading.value= false
                         _isError.value = true
-                        Log.i("SSSSSSS", result.message.toString())
-
+                        _isLoading.value= false
+                        Log.i("Error Signup", result.message.toString())
                     }
                 }
             }

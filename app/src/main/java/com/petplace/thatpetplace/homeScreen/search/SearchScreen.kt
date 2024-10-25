@@ -112,9 +112,11 @@ fun SearchScreen(
     }
     Scaffold(topBar = {
         TopBarSearch(
-            navController = navController,
             location,
-            address
+            address,
+            trailingFun = {
+                viewModel.logout()
+            }
         ) {
             checkLocation()
         }
