@@ -6,6 +6,7 @@ Our app features an engaging onboarding experience for first-time users, introdu
 <img src="/images/Welcome2.png" alt="Description" width="300"/>
 <img src="/images/Welcome3.png" alt="Description" width="300"/>
 </p>
+
 # Login and Registration Screens
 
 Both screens are built with Jetpack Compose, ensuring a smooth and responsive UI, with form validation managed using **Kotlin**. User authentication is securely handled by backend, ensuring that all user data is encrypted and privacy-protected.
@@ -13,6 +14,7 @@ Both screens are built with Jetpack Compose, ensuring a smooth and responsive UI
 <img src="/images/LoginScreen.png" alt="Description" width="300"/>
 <img src="/images/SignupScreen.png" alt="Description" width="300"/>
 </p>
+
 # Home Screen
 The **Home Screen** serves as the main entry point for users after logging in, providing easy navigation to key app sections and personalized information at a glance.
 
@@ -71,6 +73,7 @@ The Profile Screen is designed for easy viewing and management of user and pet i
 <img src="/images/EditProfile.png" alt="Description" width="300"/>
 <img src="/images/PetInfo.png" alt="Description" width="300"/>
 </p>
+
 # Appointment Screen
 
 The **Appointment Screen** allows users to view and manage their pet-related appointments. Appointments are organized into three categories: **Past**, **Upcoming**, and **Cancelled**, each with a clear and consistent layout to enhance user experience.
