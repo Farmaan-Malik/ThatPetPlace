@@ -185,6 +185,7 @@ Upon selecting a clinic, users are directed to the Explore Detail Screen, which 
 <img src="/images/ExploreDetailScreen.png" alt="Description" width="300"/>
 <img src="/images/BookAppointment.png" alt="Description" width="300"/>
 </p>
+
 # Design inspired by: 
 https://www.figma.com/design/ItS117lPUSDW26OImNdYcE/Pet-Care-UI?node-id=0-1&node-type=canvas&t=DNoIYT5huYITfYqJ-0
 
