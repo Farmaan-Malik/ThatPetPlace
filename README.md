@@ -8,7 +8,7 @@ Our app features an engaging onboarding experience for first-time users, introdu
 
 # Login and Registration Screens
 
-Both screens are built with Jetpack Compose, ensuring a smooth and responsive UI, with form validation managed using **Kotlin**. User authentication is securely handled by [Backend Service - e.g., Firebase Auth, Custom Backend], ensuring that all user data is encrypted and privacy-protected.
+Both screens are built with Jetpack Compose, ensuring a smooth and responsive UI, with form validation managed using **Kotlin**. User authentication is securely handled by backend, ensuring that all user data is encrypted and privacy-protected.
 
 ![ProfileImage](/images/LoginScreen.png)
 ![ProfileImage](/images/SignupScreen.png)
