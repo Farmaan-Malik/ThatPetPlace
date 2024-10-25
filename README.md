@@ -57,7 +57,7 @@ The Profile Screen is designed for easy viewing and management of user and pet i
   - Shows a list of pets added by the user, each represented on a **Pet Card** that includes details like the pet’s name, age, and other relevant information.
   - Each Pet Card contains the following interactive icons:
     - **Edit Icon**: Allows the user to edit the selected pet’s details, including information like name, age, breed, and more.
-    - **Delete Icon**: Enables the user to remove a pet from their profile. A confirmation prompt appears to prevent accidental deletions.
+    - **Delete Icon**: Enables the user to remove a pet from their profile.
 
 - **Add New Pet Button** (Top Right): 
   - A prominent button labeled **Add New Pet** at the top right allows users to easily add a new pet to their profile.
