@@ -50,7 +50,7 @@ The Profile Screen is designed for easy viewing and management of user and pet i
 ### Key Elements
 
 - **User Information Section**: 
-  - Displays basic information about the user, such as their name, profile picture, and contact details (if applicable).
+  - Displays basic information about the user, such as their name and profile picture.
   - Includes an **Edit Button** that lets users update their personal information. Tapping this button opens a form to change details like name, contact info, or profile picture.
 
 - **Pets List**:
